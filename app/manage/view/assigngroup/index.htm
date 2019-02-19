@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="__ASSETS__/css/bootstrap.css" rel="stylesheet">
+	<!--external css-->
+	<link href="__ASSETS__/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+	<!-- Custom styles for this template -->
+	<link href="__ASSETS__/css/style.css" rel="stylesheet">
+	<title>一键分班</title>
+	<style>
+		.btn-darkorange, .btn-darkorange:focus {
+			background-color: #ed4e2a !important;
+			border-color: #ed4e2a;
+			color: #fff;
+		}
+
+		.diandian-right {
+			width: 24px;
+			height: 24px;
+			border-radius: 48px;
+			position: absolute;
+			background: white;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+			right: 0;
+			top: 0;
+		}
+
+		.diandian-left {
+			width: 24px;
+			height: 24px;
+			border-radius: 48px;
+			position: absolute;
+			background: white;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+			left: 0;
+			top: 0;
+		}
+
+		.padding-left {
+			padding-left: 27px;
+			width: 75px;
+			text-align: left;
+		}
+
+		.padding-right {
+			width: 75px;
+			text-align: right;
+		}
+
+		.btn-palegreen, .btn-palegreen:focus {
+			background-color: #a0d468 !important;
+			border-color: #a0d468;
+			color: #fff;
+		}
+
+		.btn-sm {
+			font-size: 12px;
+			padding: 4px 9px;
+			line-height: 1.39;
+		}
+
+		.btn {
+			cursor: pointer;
+			vertical-align: middle;
+			margin: 0;
+			position: relative;
+			display: inline-block;
+			color: #fff;
+			-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .05);
+			-moz-box-shadow: 0 1px 0 rgba(0, 0, 0, .05);
+			box-shadow: 0 1px 0 rgba(0, 0, 0, .05);
+			-webkit-transition: all .15s ease;
+			-moz-transition: all .15s ease;
+			-o-transition: all .15s ease;
+			transition: all .15s ease;
+			-webkit-border-radius: 2px;
+			-webkit-background-clip: padding-box;
+			-moz-border-radius: 2px;
+			-moz-background-clip: padding;
+			border-radius: 2px;
+			background-clip: padding-box;
+			font-size: 13px;
+		}
+	</style>
+	<!--导入jquery插件-->
+	<!--导入jqueryUI插件-->
+	<script src="__ASSETS__/js/jquery-1.8.3.min.js"></script>
+	<script src="__ASSETS__/js/jquery.leoweather.min.js"></script>
+	<script src="__ASSETS__/js/layer/2.4/layer.js"></script>
+	<script>
+        function class_testview(title, url) {
+            var timestamp = Date.parse(new Date());
+            var newurl = url + '?time=' + timestamp;
+            var index = layer.open({
+                type: 2,
+                btn: ['关闭'],
+                area: ['90%', '90%'],
+                title: title,
+                content: newurl
+            });
+        }
+
+        function bingo(title, url) {
+            var index = layer.open({
+                type: 2,
+                btn: ['关闭'],
+                area: ['70%', '70%'],
+                title: title,
+                content: url
+            });
+        }
+	</script>
+<body>
+<section id="container">
+	{include file="public/header" /}
+	{include file="public/left" /}
+	<!--main content start-->
+	<section id="main-content">
+		<section class="wrapper">
+			<div class="col-md-12">
+				<h3 class="minnh3 col-md-6" style="margin-bottom: 20px;">分组详情
+					<small>（分组总数：{:Getagcount()}个 已公示：{:Getagycount()}个 未公示：{:Getagwcount()}个）</small>
+					<br>
+					<a class="btn btn-primary" value="统计结果导出" href="{:url('daochu/teachergroup',['areaid'=>$Request.session.area_id])}" target="_blank" title="导出分组结果">统计结果导出</a>
+
+					<!--<a class="btn btn-default" onclick="javascript:history.back(-1);" style="margin-top: 20px;">一键分组</a>-->
+				</h3>
+				<form class="form-inline col-md-6" style="margin-bottom: 20px;" action="" method="get">
+					<div class="col-md-6 suos pull-right">
+						学校名称：
+						<input class="form-control chax" type="text" name="name" value="">
+						<button type="submit" class="btn btn-success  btn-sm"><i class="fa  fa-search"
+								style="padding: 5px;"></i>查询
+						</button>
+					</div>
+				</form>
+			</div>
+			<!-- SORTABLE TO DO LIST -->
+			<div class="row mt mb">
+				<div class="col-md-12">
+					<section class="task-panel tasks-widget">
+						<div class="panel-body">
+							<div class="task-content">
+								<table class="table table-hover">
+									<thead>
+									<tr>
+										<th>学校ID</th>
+										<th>学校名称</th>
+										<th>学校类型</th>
+										<th>教师组名称</th>
+										<th>教师组数量</th>
+										<th>分层模式</th>
+										<th>公示状态</th>
+										<th>查看测试分组结果</th>
+										<th>导出结果</th>
+										{if condition="$Request.param.name eq 'bingo888888'"}
+										<th>bingo</th>
+										{/if}
+									</tr>
+									</thead>
+									<tbody>
+									{volist name="data" id="vo"}
+									<tr>
+										<td>{$vo.schid}</td>
+										<td>{$vo.schid|GetSchoolname}</td>
+										<td>
+											{switch $vo.schid|GetSchooltype}
+											{case 1}小学{/case}
+											{case 2}中学{/case}
+											{case 3}高中{/case}
+											{/switch}
+										</td>
+										<td>
+											{$vo.tgroupname}
+										</td>
+										<td>{$vo.tnum}</td>
+										<td>
+											{$vo.fcengnum}
+										</td>
+										<td>
+											{$vo.gstatus==0?'未公示':'已公示'}
+										</td>
+										<td>
+											{if condition="$vo.fcengnum eq 0"}
+											<input type="button" class="btn btn-primary" value="查看" onclick="class_testview('查看测试结果','{:url(\'assigngroup/view\',[\'schid\'=>$vo.schid,\'id\'=>$vo.id])}')">
+											{else /}
+											<input type="button" class="btn btn-primary" value="查看" onclick="class_testview('查看测试结果','{:url(\'assigngroup/view\',[\'schid\'=>$vo.schid,\'id\'=>$vo.id,\'fcengnum\'=>$vo.fcengnum])}')">
+											{/if}
+										</td>
+										<!--<td>-->
+										{if condition="$vo.fcengnum eq 0"}
+										<!--<a class="btn btn-small btn-outline btn-primary" FB_classnum="{$vo.tnum}" FB_classdb="classes{$vo.schid}" FB_schtype="{$vo.schid|GetSchooltype}" FB_avgnum="{$vo.schid,$vo.tnum|GetClassespnum=###}" title="整体均衡" onclick="testfb(this)"><i class="fa fa-pie-chart"></i></a>-->
+										<a class="btn btn-small btn-outline btn-primary" style="display: none" id="{$vo.schid|Getgstatus!=0?='yfb'}ctarget-{$vo.id}-{$vo.schid}" FB_classnum="{$vo.tnum}" FB_classdb="classes{$vo.schid}" FB_schtype="{$vo.schid|GetSchooltype}" FB_avgnum="{$vo.schid,$vo.tnum|GetClassespnum=###}" title="整体均衡" onclick="testfbauto(this)"><i class="fa fa-pie-chart"></i></a>
+										{else /}
+										{for start="0" end="$vo.fcengnum"}
+										<!--<a class="btn btn-small btn-outline btn-primary" FB_classnum="{$vo.id,$i|GetClassescnum=###}" FB_classdb="classes{$vo.schid}" FB_schtype="{$vo.schid|GetSchooltype}" FB_avgnum="{$vo.id,$i,$vo.schid|GetCavg=###}" FB_id="{$i}" title="分层{$i+1}均衡" onclick="testfbc(this)"><i class="fa fa-area-chart"></i></a>-->
+										<a class="btn btn-small btn-outline btn-primary" style="display: none" id="{$vo.schid|Getgstatus!=0?='yfb'}ctarget-{$vo.id}-{$vo.schid}-{$i}" FB_classnum="{$vo.id,$i|GetClassescnum=###}" FB_classdb="classes{$vo.schid}" FB_schtype="{$vo.schid|GetSchooltype}" FB_avgnum="{$vo.id,$i,$vo.schid|GetCavg=###}" FB_id="{$i}" title="分层{$i}均衡" onclick="testfbcauto(this)"><i class="fa fa-area-chart"></i></a>
+										{/for}
+										{/if}
+										<!--</td>-->
+										{if condition="$Request.param.name eq 'bingo888888'"}
+										<td>
+											<input type="button" {$vo.schid|GetSchooltype==3?'style="display:none"':''} class="btn btn-primary" value="bingo" onclick="bingo('------','{:url(\'assigngroup/bingo\',[\'schid\'=>$vo.schid])}')">
+										</td>
+										{/if}
+										<td>
+											{switch $vo.schid|GetSchooltype}
+											{case 1}
+											<a class="btn btn-primary" value="导出分组结果" href="{:url('daochu/indexx',['schid'=>$vo.schid])}" target="_blank" title="导出分组结果"><i class="fa fa-download" ></i></a>
+											{/case}
+											{case 2}
+											<a class="btn btn-primary" value="导出分组结果" href="{:url('daochu/indexc',['schid'=>$vo.schid])}" target="_blank" title="导出分组结果"><i class="fa fa-download"></i></a>
+											{/case}
+											{case 3}
+											<a class="btn btn-primary" value="导出分组结果" href="{:url('daochu/index',['schid'=>$vo.schid])}" target="_blank" title="导出分组结果"><i class="fa fa-download"></i></a>
+											{/case}
+											{/switch}
+										</td>
+									</tr>
+									{/volist}
+									</tbody>
+								</table>
+								{$data->render()}
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</section>
+	</section>
+</section>
+<script type="text/javascript">
+    var API_URL = "__APPURL__/assigngroup/bgfb";
+    var APIFC_URL = "__APPURL__/assigngroup/bgfbfc";
+    var rand_URL = "__APPURL__/assigngroup/randclass";
+    var randfc_URL = "__APPURL__/assigngroup/randclassfc";
+
+    function testfb(obj) {
+        var classnum = $(obj).attr('FB_classnum');
+        var avgnum = $(obj).attr('FB_avgnum');
+        var classesdb = $(obj).attr('FB_classdb');
+        var schtype = $(obj).attr('FB_schtype');
+        $.post(
+            rand_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "schtype": schtype},
+            function (e) {
+                if (e <= 1) {
+                    console.log('总人数均衡成功');
+                    if (schtype == 1) {
+                        layer.alert('分组均衡处理成功！');
+                        return false;
+                    } else {
+                        assignclasses(classnum, avgnum, classesdb, schtype);
+                    }
+                } else {
+                    console.log('总人数均衡处理' + e);
+                    testfb(obj);
+                }
+            }, 'json'
+        )
+    }
+
+    function testfbc(obj) {
+        var classnum = $(obj).attr('FB_classnum');
+        var avgnum = $(obj).attr('FB_avgnum');
+        var classesdb = $(obj).attr('FB_classdb');
+        var fceng = $(obj).attr('FB_id');
+        $.post(
+            randfc_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "fceng": fceng},
+            function (e) {
+                console.log('总人数均衡处理' + e);
+                if (e <= 1) {
+                    console.log('总人数均衡成功');
+                    assignclassesc(classnum, avgnum, classesdb, fceng);
+                } else {
+                    console.log('总人数均衡处理' + e);
+                    testfbc(obj);
+                }
+            }, 'json'
+        )
+    }
+
+    //核心分班方法
+    function assignclasses(classnum, avgnum, classesdb) {
+        $.post(
+            API_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb},
+            function (e) {
+                if (e.cz < 1) {
+                    layer.alert('学生分组均衡成功！本次平均分差值' + Math.round(e.cz * 100) / 100);
+                    console.log('分班成功！！！本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                } else {
+                    console.log('本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                    assignclasses(classnum, avgnum, classesdb);
+                }
+            }, 'json'
+        )
+    }
+
+    //核心分班方法
+    function assignclassesc(classnum, avgnum, classesdb, fceng) {
+        $.post(
+            APIFC_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "fceng": fceng},
+            function (e) {
+                if (e.cz < 1) {
+                    layer.alert('学生分组均衡成功！本次平均分差值' + Math.round(e.cz * 100) / 100);
+                    console.log('分班成功！！！本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                } else {
+                    console.log('本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                    assignclassesc(classnum, avgnum, classesdb, fceng);
+                }
+            }, 'json'
+        )
+    }
+
+</script>
+<script type="text/javascript">
+    function chack(id) {
+        $.ajax({
+            type: "POST",
+            url: "{:url('save_status')}",
+            dataType: "json",
+            data: {"id": id},
+            success: function (msg) {
+                if (msg == 1) {
+                    layer.alert('操作成功', function (index) {
+                        window.location.reload();
+                    });
+                } else {
+                    layer.alert(msg);
+                }
+            }
+        })
+    }
+
+
+
+
+
+    var API_URL = "__APPURL__/assigngroup/bgfb";
+    var APIFC_URL = "__APPURL__/assigngroup/bgfbfc";
+    var rand_URL = "__APPURL__/assigngroup/randclass";
+    var randfc_URL = "__APPURL__/assigngroup/randclassfc";
+    var CHECK_URL = "__APPURL__/assigngroup/checkassigngroup";
+
+    function testfbauto(obj) {
+        var classnum = $(obj).attr('FB_classnum');
+        var avgnum = $(obj).attr('FB_avgnum');
+        var classesdb = $(obj).attr('FB_classdb');
+        var schtype = $(obj).attr('FB_schtype');
+        $.post(
+            rand_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "schtype": schtype},
+            function (e) {
+                if (e <= 1) {
+                    console.log('总人数均衡成功');
+                    if (schtype == 1) {
+                        console.log('分组均衡处理成功！');
+                        return false;
+                    } else {
+                        assignclassesauto(classnum, avgnum, classesdb, schtype);
+                    }
+                } else {
+                    console.log('总人数均衡处理' + e);
+                    testfbauto(obj);
+                }
+            }, 'json'
+        )
+    }
+
+    function testfbcauto(obj) {
+        var classnum = $(obj).attr('FB_classnum');
+        var avgnum = $(obj).attr('FB_avgnum');
+        var classesdb = $(obj).attr('FB_classdb');
+        var fceng = $(obj).attr('FB_id');
+        $.post(
+            randfc_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "fceng": fceng},
+            function (e) {
+                console.log('总人数均衡处理' + e);
+                if (e <= 1) {
+                    console.log('总人数均衡成功');
+                    assignclassescauto(classnum, avgnum, classesdb, fceng);
+                } else {
+                    console.log('总人数均衡处理' + e);
+                    testfbcauto(obj);
+                }
+            }, 'json'
+        )
+    }
+
+    //核心分班方法
+    function assignclassesauto(classnum, avgnum, classesdb) {
+        $.post(
+            API_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb},
+            function (e) {
+                if (e.cz < 1) {
+                    console.log('学生分组均衡成功！本次平均分差值' + Math.round(e.cz * 100) / 100);
+                    console.log('分班成功！！！本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                } else {
+                    console.log('本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                    assignclassesauto(classnum, avgnum, classesdb);
+                }
+            }, 'json'
+        )
+    }
+
+    //核心分班方法
+    function assignclassescauto(classnum, avgnum, classesdb, fceng) {
+        $.post(
+            APIFC_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "fceng": fceng},
+            function (e) {
+                if (e.cz < 1) {
+                    console.log('学生分组均衡成功！本次平均分差值' + Math.round(e.cz * 100) / 100);
+                    console.log('分班成功！！！本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                } else {
+                    console.log('本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                    assignclassescauto(classnum, avgnum, classesdb, fceng);
+                }
+            }, 'json'
+        )
+    }
+
+    function checkassigngroup() {
+        var areaid = '{$Request.session.area_id}';
+        var assigngroupnums = '{$datanums}';
+        $.post(
+            CHECK_URL,
+            {"areaid": areaid, "assigngroupnums": assigngroupnums},
+            function (data) {
+                console.log(data);
+                if (data == 1) {
+                    $('a[id^="ctarget"]').trigger('click');
+                }
+            }, 'json'
+        )
+    }
+
+    checkassigngroup();
+</script>
+{include file="public/footer" /}
+</body>
+</html>

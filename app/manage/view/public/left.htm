@@ -1,0 +1,93 @@
+<aside>
+
+	<div id="sidebar" class="nav-collapse ">
+
+
+		<!-- sidebar menu start-->
+
+		<ul class="sidebar-menu" id="nav-accordion">
+
+			<!--			<p class="centered">
+							<a href="profile.html">
+								<img src="__ASSETS__/img/ui-zac.jpg" class="img-circle" width="60">
+							</a>
+						</p>
+						<h5 class="centered">Marcel Newman</h5>-->
+
+			<li class="sub-menu">
+				<a {$Request.param.ac1?='class="active"' } href="{:url('teacher/index',['ac1'=>1])}">
+					<i class="fa fa-address-book-o"></i>
+					<span>教师管理</span>
+				</a>
+			</li>
+
+			<li class="mt">
+				<a {$Request.param.ac2?='class="active"' } href="{:url('students/index',['ac2'=>1])}">
+					<i class="fa fa-user-circle"></i>
+					<span>学生管理</span>
+				</a>
+			</li>
+
+			<li class="sub-menu" {$Request.session.school_id==0?='style="display:none"'}>
+				<a {$Request.param.ac3?='class="active"' } href="{:url('school/index',['ac3'=>1])}">
+					<i class="fa   fa-cogs"></i>
+					<span>分组设置</span>
+				</a>
+			</li>
+
+
+			<li class="sub-menu" {$Request.session.admin!=777888999?='style="display:none"'}>
+				<a {$Request.param.ac4?='class="active"' } href="{:url('assigngroup/index',['ac4'=>1])}">
+					<i class="fa  fa-hand-o-up"></i>
+					<span>测试分组</span>
+				</a>
+			</li>
+
+			<li class="sub-menu" {$Request.session.school_id!=0?='style="display:none"'}>
+				<a {$Request.param.ac5?='class="active"' } href="{:url('qxuser/index',['ac5'=>1])}">
+					<i class="fa  fa-male"></i>
+					<span>分组人员</span>
+				</a>
+			</li>
+
+			<li class="sub-menu" {$Request.session.school_id!=0?='style="display:none"'}>
+				<a {$Request.param.ac6?='class="active"' } href="{:url('bigscr/index',['ac6'=>1])}">
+					<i class="fa  fa-television  "></i>
+					<span>开始分组</span>
+				</a>
+			</li>
+			<li class="sub-menu" {$Request.session.school_id!=0?='style="display:none"'}>
+				<a {$Request.param.ac98?='class="active"' } href="{:url('assignresult/index',['ac98'=>1])}">
+					<i class="fa fa-sitemap"></i>
+					<span>分组结果</span>
+				</a>
+			</li>
+			{if condition="Getcheckyesfb($Request.session.school_id) eq 1"}
+			<li class="sub-menu" {$Request.session.school_id==0?='style="display:none"'}>
+				<a {$Request.param.ac7?='class="active"' } href="{:url('schfb/sone',['ac7'=>1])}" target="_blank">
+					<i class="fa  fa-laptop"></i>
+					<span>现场分班</span>
+				</a>
+			</li>
+			{/if}
+			<li class="sub-menu">
+				<a {$Request.param.ac8?='class="active"' } href="{:url('secondfb/index',['ac8'=>1])}">
+					<i class="fa  fa-laptop"></i>
+					<span>二次分班</span>
+				</a>
+			</li>
+
+
+			<!--<li class="sub-menu" {$Request.session.school_id!=0?='style="display:none"'}>-->
+			<!--<a {$Request.param.ac8?='class="active"' } href="{:url('schfb/index',['ac8'=>1])}" target="_blank">-->
+			<!--<i class="fa fa-sitemap"></i>-->
+			<!--<span>批次管理</span>-->
+			<!--</a>-->
+			<!--</li>-->
+
+
+		</ul>
+
+		<!-- sidebar menu end--> </div>
+
+</aside>

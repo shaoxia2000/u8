@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="__ASSETS__/css/bootstrap.css" rel="stylesheet">
+	<!--external css-->
+	<link href="__ASSETS__/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+	<!-- Custom styles for this template -->
+	<link href="__ASSETS__/css/style.css" rel="stylesheet">
+	<title>教师分组</title>
+	<!--导入jquery插件-->
+	<!--导入jqueryUI插件-->
+	<script src="__ASSETS__/js/jquery-1.8.3.min.js"></script>
+	<script src="__ASSETS__/js/jquery.leoweather.min.js"></script>
+	<script src="__ASSETS__/js/layer/2.4/layer.js"></script>
+	<script>
+        function teacher_view(title, url) {
+            var index = layer.open({
+                type: 2,
+                area: ['80%', '80%'],
+                title: title,
+                content: url,
+                closeBtn: 1,
+                move: false,
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+
+        function excel_import(title, url) {
+            var index = layer.open({
+                type: 2,
+                btn: ['关闭'],
+                area: ['30%', '30%'],
+                title: title,
+                content: url
+            });
+        }
+	</script>
+</head>
+<body>
+<section id="container">
+	{include file="public/header" /}
+	{include file="public/left" /}
+	<!--main content start-->
+	<section id="main-content">
+		<section class="wrapper">
+			<div class="col-md-12">
+				<h3 class="minnh3 col-md-6" style="margin-bottom: 20px;">教师详情
+				</h3>
+				<form class="form-inline col-md-6" style="margin-bottom: 20px;" action="" method="get">
+					
+					<div class="col-md-6 suos pull-right">
+						学校名称：
+						<input class="form-control chax" type="text" name="name" value="">
+						<button type="submit" class="btn btn-success  btn-sm"><i class="fa  fa-search"
+																				 style="padding: 5px;"></i>查询
+						</button>
+					</div>
+				
+				</form>
+			</div>
+			<!-- SORTABLE TO DO LIST -->
+			<div class="row mt mb">
+				<div class="col-md-12">
+					<section class="task-panel tasks-widget">
+						<div class="panel-body">
+							<div class="task-content">
+								<table class="table table-hover">
+									<thead>
+									<tr>
+										<th>学校序号</th>
+										<th>学校名称</th>
+										<th>学校类型</th>
+										<th>所属区域</th>
+										<th>区用户确认</th>
+										<th>学校用户确认</th>
+										<th>教师详情</th>
+										<th>操作</th>
+									</tr>
+									</thead>
+									<tbody>
+									{volist name="data" id="vo"}
+									<tr>
+										<td>{$vo.schid}</td>
+										<td>{$vo.schname}</td>
+										<td>
+											{switch $vo.schtype}
+											{case 1}小学{/case}
+											{case 2}中学{/case}
+											{case 3}高中{/case}
+											{/switch}
+										</td>
+										<td>{$vo.areaid|Getareaname}</td>
+										<td>{$vo.schid|GetcheckGroup}</td>
+										<td>
+											{switch $vo.schid|GetcheckGroup}
+											{case 1}<font color="#006400">已确认</font>{/case}
+											{case 0}<font color="#b22222">未确认</font>{/case}
+											{/switch}
+										</td>
+										<td>
+											[ {$vo.schid|CountTeacher} ]人　
+											<a class="btn btn-small btn-outline btn-primary"
+											   onclick="teacher_view('教师详情查看','{:url(\'tview\',[\'schid\'=>$vo[\'schid\']])}')"
+											   title="查看"><i class="fa fa-eye"></i></a>
+										</td>
+										<td>
+											<a class="btn btn-small btn-outline  btn-primary" title="导入"
+											   onclick="excel_import('教师资料导入','{:url(\'excelteacher/index\',[\'schid\'=>$vo[\'schid\'],\'schtype\'=>$vo[\'schtype\']])}')"><i
+													class="fa  fa-upload"></i></a>
+										
+										</td>
+									
+									</tr>
+									{/volist}
+									</tbody>
+								</table>
+								{$data->render()}
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</section>
+	</section>
+</section>
+{include file="public/footer" /}
+</body>
+</html>

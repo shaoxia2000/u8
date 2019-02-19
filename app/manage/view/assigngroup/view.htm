@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>新增分组人员</title>
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+</head>
+<body>
+<section id="container">
+	<section class="wrapper">
+		<fieldset class="layui-elem-field">
+			<legend>教师分组情况</legend>
+			<div class="layui-field-box">
+				<div class="layui-tab layui-tab-brief" lay-filter="teacher">
+					<ul class="layui-tab-title">
+						{volist name="list" id="vo"}
+						<li {$key==0?='class="layui-this"'}>{$vo.bb+1}班</li>
+						{/volist}
+					</ul>
+					<div class="layui-tab-content">
+						{volist name="list" id="vo"}
+						<div class="layui-tab-item {$key==0?='layui-show'}">
+							{volist name="vo['cc']" id="vos"}
+							<div class="layui-btn layui-btn-primary" style=" margin: 4px;text-align: center;">{$vos.tid|Gettname}({$vos.isheader==1?'<span style="color:#FF5722">班主任</span>':'<span style="color:#009688">科任</span>'})</div>
+							{/volist}
+						</div>
+						{/volist}
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		{if condition="$Request.param.fcengnum neq 0"}
+		<fieldset class="layui-elem-field">
+			<legend>学生组分层情况 <span style="font-size:14px;padding-left:10px;color: #FF5722;">总人数：{$Request.param.schid|Getclassesnums}　　男生数：{$Request.param.schid|Getclassesmalenums}　　女生数：{$Request.param.schid|Getclassesfemalenums}</span></legend>
+			<div class="layui-field-box">
+				<div class="layui-tab layui-tab-brief" lay-filter="teacherfc">
+					<ul class="layui-tab-title">
+						{volist name="listfc" id="vo"}
+						<li {$key==0?='class="layui-this"'}>第{$vo.bb+1}层<span class="layui-badge">{$schid,$vo.bb|Getfcpnumnew=###}人</span></li>
+						{/volist}
+					</ul>
+					<div class="layui-tab-content">
+						{volist name="listfc" id="vo"}
+						<div class="layui-tab-item {$key==0?='layui-show'}">
+							<blockquote class="layui-elem-quote" style="line-height: 0px;"><span style="font-size: 16px; color: #009688;">所属教师班</span></blockquote>
+							<table class="layui-table">
+								<tr>
+									{volist name="vo['cc']" id="vos"}
+									<td style="text-align: center;    border: 1px solid #d6d6d6;">{$vos.tgid+1}班</td>
+									{/volist}
+									<td style="text-align: center;    border: 1px solid #d6d6d6;" id="roundAbc">成绩均衡差值：{$vo.ee,$vo.bb,$schid|Getclassesavg=###}</td>
+								</tr>
+							</table>
+
+							{for start="0" end="$vo['ee']"}
+							<blockquote class="layui-elem-quote" style="line-height: 0px;margin-top: 10px;"><span style="font-size: 16px; color: #009688;">第{$i+1}组学生：{$i+1,$vo.bb,$schid|Getcsexnum=###}</span></blockquote>
+							<table>
+								<tr>
+									{$i+1,$vo.bb,$schid|Getclassesname=###}
+								</tr>
+							</table>
+
+							{/for}
+
+						</div>
+						{/volist}
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		{/if}
+		{if condition="$Request.param.fcengnum eq 0"}
+		<fieldset class="layui-elem-field">
+			{if condition="GetSchooltype($Request.param.schid) eq 1"}
+			<legend>学生分组情况<span style="font-size:14px;padding-left:10px;color: #FF5722;">总人数：{$Request.param.schid|Getclassesnums} 男生数：{$Request.param.schid|Getclassesmalenums} 女生数：{$Request.param.schid|Getclassesfemalenums}</span></legend>
+			{else /}
+			<legend>学生分组情况 <span style="font-size:14px;padding-left:10px;color: #FF5722;">
+			总人数：{$Request.param.schid|Getclassesnums}　　男生数：{$Request.param.schid|Getclassesmalenums}　　女生数：{$Request.param.schid|Getclassesfemalenums} <!--成绩均衡差值:<span id="roundAbc"></span>{$fbnum,$schid|Getclassesavgz=###}--></span></legend>
+			{/if}
+			<div class="layui-field-box">
+				<div class="layui-tab layui-tab-brief" lay-filter="teacher">
+					<ul class="layui-tab-title">
+						{volist name="list" id="vo"}
+						<li {$key==0?='class="layui-this"'}>{$vo.bb|IntToChr}组</li>
+						{/volist}
+					</ul>
+					<div class="layui-tab-content">
+						{volist name="list" id="vo"}
+						<div class="layui-tab-item {$key==0?='layui-show'}">
+							<h1 style="line-height: 3em;color: #009688;">{$vo.bb+1,$schid|viewresultsmall=###}</h1>
+							<table>
+								<tr>
+									{$vo.bb+1,$schid|Getclassesnamenofc=###}
+								</tr>
+							</table>
+						</div>
+						{/volist}
+					</div>
+
+				</div>
+			</div>
+		</fieldset>
+		{/if}
+	</section>
+</section>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+        var layid = location.hash.replace(/^#teacher=/, '');
+    });
+    //table
+    layui.use('table', function () {
+        var table = layui.table;
+
+    });
+</script>
+</body>
+</html>

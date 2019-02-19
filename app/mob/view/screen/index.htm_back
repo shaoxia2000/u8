@@ -1,0 +1,1242 @@
+<!doctype html>
+<html>
+<input type="hidden" id="schid">
+<input type="hidden" id="areaid" value="{$areaid}">
+<input type="hidden" id="fristschid" value="{$fristschid}">
+<input type="hidden" id="schtype" value="{$schtype}">
+<head>
+	<meta charset="utf-8">
+	<title>大庆市教育阳光分班大数据分析统计</title>
+	<link rel="stylesheet" type="text/css" href="__SCR__/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__SCR__/css/daqingcss.css">
+	<link rel="stylesheet" href="__SCR__/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="__SCR__/css/fenbcss.css">
+	<script type="text/javascript" src="__SCR__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__SCR__/js/bootstrap.min.js"></script>
+
+	<!-- 自动时间 -->
+	<script src="__SCR__/js/jquery.leoweather.min.js"></script>
+	<script type="text/javascript">
+	left(0);
+	right();
+	rightcenter();
+	function left(typeid)
+	{
+		var areaid = {$areaid};
+		if(typeid==0)
+		{
+			var type = 0;
+		}else{
+			var type = typeid;
+		}
+		$.ajax({
+		      type:"POST",
+		      url:"{:url('left')}",
+		      dataType:"json",
+		      data:{areaid:areaid,type:type},
+		      success:function (msg)
+		      {							
+		              var box = "";
+		              $.each(msg, function (index, item) 
+		              {		 	              		 
+		              		 box+="<li>";
+		              		 box+="<a href='#' onclick=changeschool("+item.schid+","+item.schtype+")>";
+		              		 box+="<ol>";
+		                     box+="<dt>"+item.schname+"</dt>";
+		                     box+="<dd>教师总人数<span>"+item.teachernum+"</span></dd>";
+		                     box+="<dd>教师团队数<span>"+item.tnum+"</span></dd>";
+		                     box+="<dd>学生总人数<span>"+item.stunum+"</span></dd>";
+		                     box+="<dd>学生分组数<span>"+item.snum+"</span></dd>";
+		                     box+="</ol>";
+		                     box+="</a>";
+		                     box+="</li>";
+		                     
+		              });
+		              $(".leftfenb-ul").html(box);
+		      }
+	  	})
+	}	
+	function  changeschool(schid,schtype) 
+	{
+		$("#schid").val(schid);
+		$("#schtype").val(schtype);
+		right();
+		rightcenter();
+	}
+	function right()
+	{
+		var sid = $("#schid").val();
+		if(sid=='')
+		{
+			var fristschid = $("#fristschid").val();
+		}else
+		{
+			var fristschid = sid;
+		}
+		$.ajax({
+		      type:"POST",
+		      url:"{:url('right')}",
+		      dataType:"json",
+		      data:{fristschid:fristschid},
+		      success:function (msg)
+		      {		
+		      		var type = $("#schtype").val();		
+		      		if(type==3)
+		      		{
+		      			$('.chuzhong').hide();
+		      			$('.gaozhong-bj').show();
+		      			$("#chinese").val(msg.chinese);
+		      			$("#smath").val(msg.smath);
+		      			$("#english").val(msg.english);
+		      			$("#physics").val(msg.physics);
+		      			$("#chemistry").val(msg.chemistry);
+		      			$("#geography").val(msg.geography);
+		      			$("#history").val(msg.history);
+		      			$("#politics").val(msg.politics);
+		      			$("#sports").val(msg.sports);
+		      			$("#biologic").val(msg.biologic);
+
+		      		}else
+		      		{
+		      			$('.chuzhong').show();
+		      			$('.gaozhong-bj').hide();
+		      			 var box = "";
+		      			 box+="<li>";
+	              		 box+="<em>语文</em>";
+	              		 box+="<span>"+msg.chinese+"</span>";
+	                     box+="</li>";
+	                     box+="<li>";
+	              		 box+="<em>数学</em>";
+	              		 box+="<span>"+msg.smath+"</span>";
+	                     box+="</li>";
+	                     box+="<li>";
+	              		 box+="<em>英语</em>";
+	              		 box+="<span>"+msg.english+"</span>";
+	                     box+="</li>";
+
+	                     $('.chuzhong').html(box);
+			
+		      		}	
+		      		var strA = msg.sname+"学生成绩数据分布统计";	
+		      		var strB = msg.sname+"学生分层数据分布统计";
+		            $("#titleA").html(strA);
+		            $("#titleB").html(strB);
+		        
+		      }
+	  	})
+	}	
+	var dcenterData;
+	function rightcenter() 
+	{
+		var sid = $("#schid").val();
+		if(sid=='')
+		{
+			var fristschid = $("#fristschid").val();
+		}else
+		{
+			var fristschid = sid;
+		}
+		$.ajax({
+		      type:"POST",
+		      url:"{:url('rightcenter')}",
+		      dataType:"json",
+		      data:{fristschid:fristschid},
+		      success:function (msg)
+		      {		
+				dcenterData = msg;
+				
+		      }
+	  	})
+	}
+	</script>
+
+</head>
+
+<body style="background:url(__SCR__/images/xiznhi-bjtup.jpg) no-repeat left center;background-attachment:fixed;background-size:cover;width:100%;height:100%;">
+<input type="hidden" id="str" >
+<input type="hidden" id="person" >
+<input type="hidden" id="person" >
+<input type="hidden" id="chinese" >
+<input type="hidden" id="smath" >
+<input type="hidden" id="english" >
+<input type="hidden" id="physics" >
+<input type="hidden" id="chemistry" >
+<input type="hidden" id="geography" >
+<input type="hidden" id="biologic" >
+<input type="hidden" id="history" >
+<input type="hidden" id="politics" >
+<input type="hidden" id="sports" >
+	<div class="container-fluid">
+		<div class="row">
+			<!-- 头部开始 -->
+			<div class="header-bj">
+				<div class="head-tite">大庆市教育阳光分班大数据分析统计</div>
+			</div>
+			<!-- 时间开始 -->
+
+		<!-- 	<div class="times" style="position: absolute; top: 80px; left: 30px;font-size: 28px;">
+				<span id="weather">
+					<span id="colock"> <strong><span id="weather_YY">2018</span>
+							年
+							<span id="weather_MM">04</span>
+							月
+							<span id="weather_DD">13</span>
+							日 <b class="week">星期
+								<span id="weather_ww">五</span></b> </strong> 
+					</span>
+				</span>
+				<script type="text/javascript">
+		    $('#weather').leoweather({format:'<span id="colock"><strong>{年}年{月}月{日}日 <b class="week">星期{周}{时}:{分}:{秒}</b></strong></span>'});
+			</script>
+			</div> -->
+
+			<!-- 时间结束 -->
+			<!-- 头部结束 -->
+			<div class="con-dakuang">
+				<div class="col-sm-12">
+					<!-- 左侧开始 -->
+					<div class="col-sm-3">
+						<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+							<ul class="layui-tab-title">
+								<li class="layui-this" onclick="left(0)">{$areaname}</li>
+								<li onclick="left(1)">小学</li>
+								<li onclick="left(2)">初中</li>
+								<li onclick="left(3)">高中</li>
+							</ul>
+							<!-- left内容开始 -->
+							<div class="layui-tab-content">
+								<!-- 大庆直属开始 -->
+								<div class="layui-tab-item layui-show">
+									<div id="demoa">
+										<div id="demo1a">
+											<ul class="leftfenb-ul">
+												
+											</ul>
+										</div>
+										<div id="demo2a"></div>
+									</div>
+
+								</div>
+								<!-- 大庆直属结束 -->
+								<!-- 小学开始 -->
+								<!-- <div class="layui-tab-item">
+									<div id="demob">
+										<div id="demo1b">
+											<ul class="leftfenb-ul">
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二小学表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二小学表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二小学表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二小学表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二小学表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二小学表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二小学表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+											</ul>
+										</div>
+										<div id="demo2b"></div>
+									</div>
+
+								</div> -->
+								<!-- 小学结束 -->
+								<!-- 初中开始 -->
+								<!-- <div class="layui-tab-item">
+
+									<div id="democ">
+										<div id="demo1c">
+											<ul class="leftfenb-ul">
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属初中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属初中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属初中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属初中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属初中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属初中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属初中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+											</ul>
+										</div>
+										<div id="demo2c"></div>
+									</div>
+
+								</div> -->
+
+								<!-- 初中结束 -->
+								<!-- 高中开始 -->
+								<!-- <div class="layui-tab-item">
+
+									<div id="demod">
+										<div id="demo1d">
+											<ul class="leftfenb-ul">
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二高中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二高中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二高中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二高中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二高中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二高中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+												<li>
+													<a href="">
+														<ol>
+															<dt>让胡路区石油附属第二高中表明情况</dt>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+															<dd>
+																教师总人数
+																<span>36999</span>
+															</dd>
+														</ol>
+													</a>
+												</li>
+											</ul>
+										</div>
+										<div id="demo2d"></div>
+									</div>
+								</div> -->
+								<!-- 高中结束 -->
+
+							</div>
+							<!-- left内容结束 -->
+						</div>
+
+					</div>
+					<!-- 左侧结束 -->
+					<!-- 地图开始 -->
+					<div class="col-sm-4">
+						<div class="map-title">{$areaname}学校</div>
+						<div class="map-con">
+							<!-- 地图开始 -->
+							<div class="map-muod" style="position: relative;">
+								<img src="__SCR__/images/daq-map.png" ></div>
+							<!-- 地图结束 -->
+							<!-- 地图人数开始 -->
+							<div class="map-zongs">
+								<ul class="map-list">
+									<li>
+										{$areaname}参与分班学生
+										<span>{$stunum}</span>
+									</li>
+									<li>
+										{$areaname}参与分班教师
+										<span>{$teachernum}</span>
+									</li>
+
+								</ul>
+							</div>
+							<!-- 地图人数结束 -->
+							<!-- 签到人数开始 -->
+							<div class="qiandao">
+								<div class="qiandschool">
+									{$areaname}
+									<span>
+										参与家长数 <strong>{$pnum}</strong>
+									</span>
+								</div>
+							</div>
+							<!-- 签到人数结束 -->
+							<!-- 进度开始 -->
+
+							<ul class="fenbjindu">
+								<li> <em class="emactive"></em>
+									<span>学生导入</span>
+								</li>
+								<li> <em></em>
+									<span>教师团队</span>
+								</li>
+								<li>
+									<em></em>
+									<span>区学生分组</span>
+								</li>
+								<li>
+									<em></em>
+									<span>学校分班</span>
+								</li>
+								<li>
+									<em></em>
+									<span>结果公示</span>
+								</li>
+							</ul>
+
+							<!-- 进度结束 -->
+						</div>
+					</div>
+
+					<!-- 地图结束 -->
+					<!-- 右侧开始 -->
+					<div class="col-sm-5">
+						<!-- 学生成绩数据分布统计开始 -->
+						<div class="studs">
+							<div class="title" id="titleA">学生成绩数据分布统计</div>
+							<!-- 小学和初中成绩开始 -->
+								<ul class="chuzhong">
+								
+								</ul>
+						
+						<!-- 小学和初中成绩结束-->
+						<!-- 高中成绩 开始-->
+						<div class="gaozhong-bj">
+							<div id="gaongz-chengj" style="height: 100%"></div>
+						</div>
+						<!-- 高中成绩 结束-->
+					</div>
+					<!-- 学生成绩数据分布统计结束 -->
+					<!-- 学生分层数据分布统计开始 -->
+					<div class="studs">
+						<div class="title" id="titleB">学生分层数据分布统计</div>
+
+						<div class="fencheng">
+							<div id="gaozhongfenc" style="height: 100%"></div>
+						</div>
+					</div>
+					<!-- 学生分层数据分布统计结束 -->
+					<!-- 学生分层数据分布统计开始 -->
+					<div class="studs right-bott" >
+						<div class="ercifenb">
+							<div class="title">二次分班数据统计</div>
+							<div class="ercifenb-con">
+								<div id="erchifenb" style="height: 100%"></div>
+							</div>
+						</div>
+
+						<div class="shuangbaot">
+							<div class="title">男女生比例及双胞胎比例</div>
+							<div class="shuangbaot-con">
+								<ul>
+									<li>
+										<div>
+											<img src="__SCR__/images/man.png">
+											<img src="__SCR__/images/weman.png"></div>
+										<div class="shuang-li">
+											<span>男生399</span>
+											<span>女生39999</span>
+										</div>
+									</li>
+									<li>
+										<div>
+											<img src="__SCR__/images/man.png">
+											<img src="__SCR__/images/man.png"></div>
+										<div class="shau">
+											<span>双胞胎<em>39999</em></span>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- 学生分层数据分布统计结束 -->
+				</div>
+				<!-- 右侧结束 -->
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="__SCR__/js/layui.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use('element', function(){
+  var $ = layui.jquery
+  ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+  //触发事件
+  var active = {
+    tabAdd: function(){
+      //新增一个Tab项
+      element.tabAdd('demo', {
+        title: '新选项'+ (Math.random()*1000|0) //用于演示
+        ,content: '内容'+ (Math.random()*1000|0)
+        ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+      })
+    }
+    ,tabDelete: function(othis){
+      //删除指定Tab项
+      element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+      othis.addClass('layui-btn-disabled');
+    }
+    ,tabChange: function(){
+      //切换到指定Tab项
+      element.tabChange('demo', '22'); //切换到：用户管理
+    }
+  };
+
+  $('.site-demo-active').on('click', function(){
+    var othis = $(this), type = othis.data('type');
+    active[type] ? active[type].call(this, othis) : '';
+  });
+
+
+});
+</script>
+<script type="text/javascript" src="__SCR__/js/xiazecharts.min.js"></script>
+<!-- 二次分班 -->
+<script type="text/javascript">
+var dom = document.getElementById("erchifenb");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+	legend: {
+		textStyle:{
+	 	fontWeight: '600',
+        color:'#4187b9',
+        fontSize:14
+        }
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '15%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['复读生', '后转入', '补报生', '未报到'],
+            axisTick: {
+                alignWithLabel: true
+            },
+                 axisLabel:{
+                  textStyle:{
+                     color:"#59bdff",
+                     fontSize:12
+                }
+              },
+               axisLine:{
+                        lineStyle:{
+                            color:'#00b7ee',
+                            width:2,
+                        }
+                    }
+        }
+    ],
+    yAxis : [
+
+        {
+        	axisLabel:{
+                  textStyle:{
+                     color:"#59bdff",
+                     fontSize:12
+                }
+              },
+              axisLine:{
+                        lineStyle:{
+                            color:'#00b7ee',
+                            width:2,
+                        }
+                    },
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'',
+            type:'bar',
+            barWidth: '30%',
+            data:[10, 52, 200, 334]
+        }
+    ]
+};
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+<!-- 高中分层 -->
+<script type="text/javascript">
+	var dom = document.getElementById("gaozhongfenc");
+	var myChart = echarts.init(dom);
+	var app = {};
+	option = null;
+
+	var builderJson = {};
+	builderJson.charts = eval('('+dcenterData+')');
+
+	var downloadJson = {
+	  "echarts.min.js": 17365,
+	  "echarts.simple.min.js": 4079,
+	  "echarts.common.min.js": 6929,
+	  "echarts.js": 14890
+	};
+
+	var waterMarkText = '';
+
+	var canvas = document.createElement('canvas');
+	var ctx = canvas.getContext('2d');
+	canvas.width = canvas.height = 100;
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
+	ctx.globalAlpha = 0.08;
+	ctx.font = '20px Microsoft Yahei';
+	ctx.translate(50, 50);
+	ctx.rotate(-Math.PI / 4);
+	ctx.fillText(waterMarkText, 0, 0);
+
+	option = {
+			legend: {
+			textStyle:{
+		 	fontWeight: '600',
+	        color:'#4187b9',
+	        fontSize:14
+	        }
+	    },
+	    backgroundColor: {
+	        type: 'pattern',
+	        image: canvas,
+	        repeat: 'repeat'
+	    },
+	    tooltip: {},
+	    grid: [{
+	        top: 50,
+	        width: '90%',
+	        bottom: '10%',
+	        left: 10,
+	        containLabel: true
+	    }],
+	    xAxis: [{
+	        type: 'value',
+	        max: builderJson.all,
+	        splitLine: {
+	            show: false
+	        },
+	                 axisLabel:{
+	                  textStyle:{
+	                     color:"#59bdff",
+	                     fontSize:14
+	                }
+	              }, 
+	              axisLine:{
+	                        lineStyle:{
+	                            color:'#00b7ee',
+	                            width:2,
+	                        }
+	                    }
+	    }],
+	    yAxis: [{
+	        type: 'category',
+	        data: Object.keys(builderJson.charts),
+	     
+	        axisLabel: {
+	            interval: 0,
+	            rotate: 20,
+	            textStyle:{
+	                     color:"#59bdff",
+	                     fontSize:14
+	                }
+	        },axisLine:{
+	                        lineStyle:{
+	                            color:'#00b7ee',
+	                            width:2,
+	                        }
+	                    },
+	      
+	        splitLine: {
+	            show: false
+	        }
+	    }],
+	    series: [{
+	        type: 'bar',
+	        stack: 'chart',
+	        z: 3,
+	        label: {
+	            normal: {
+	                position: 'right',
+	                show: true
+	            }
+	        },
+	         barWidth: '50%',
+	        data: Object.keys(builderJson.charts).map(function (key) {
+	            return builderJson.charts[key];
+	        })
+	    }]
+	};
+	if (option && typeof option === "object") {
+	    myChart.setOption(option, true);
+	}	
+
+       </script>
+
+<!-- 高中成绩 -->
+<script type="text/javascript">
+
+var chinese = $("#chinese").val();
+var smath = $("#smath").val();
+var english = $("#english").val();
+var physics = $("#physics").val();
+var chemistry = $("#chemistry").val();
+var geography = $("#geography").val();
+var historyf = $("#history").val();
+var politics = $("#politics").val();
+var sports = $("#sports").val();
+var biologic = $("#biologic").val();
+
+var dom = document.getElementById("gaongz-chengj");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var builderJson = {
+  "charts": {
+    "数学": smath,
+    "语文": chinese,
+    "英语": english,
+    "物理": physics,
+    "化学": chemistry,
+    "生物": biologic,
+    "地理": geography,
+    "历史": historyf,
+    "政治": politics,
+    "体育": sports
+  }
+};
+
+var canvas = document.createElement('canvas');
+var ctx = canvas.getContext('2d');
+canvas.width = canvas.height = 100;
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.globalAlpha = 0.08;
+ctx.font = '20px Microsoft Yahei';
+ctx.translate(50, 50);
+ctx.rotate(-Math.PI / 4);
+ctx.fillText(waterMarkText, 0, 0);
+
+option = {
+		legend: {
+		textStyle:{
+	 	fontWeight: '600',
+        color:'#4187b9',
+        fontSize:14
+        }
+    },
+    backgroundColor: {
+        type: 'pattern',
+        image: canvas,
+        repeat: 'repeat'
+    },
+    tooltip: {},
+    grid: [{
+        top: 50,
+        width: '90%',
+        bottom: '5%',
+        left: 10,
+        containLabel: true
+    }],
+    xAxis: [{
+        type: 'value',
+        max: builderJson.all,
+        splitLine: {
+            show: false
+        },
+                 axisLabel:{
+                  textStyle:{
+                     color:"#59bdff",
+                     fontSize:12,
+
+                }
+              }, 
+              axisLine:{
+                        lineStyle:{
+                            color:'#00b7ee',
+                            width:2,
+                        }
+                    }
+    }],
+    yAxis: [{
+        type: 'category',
+        data: Object.keys(builderJson.charts),
+     
+        axisLabel: {
+            interval: 0,
+            rotate: 25,
+            textStyle:{
+                     color:"#59bdff",
+                     fontSize:12
+                }
+        },axisLine:{
+                        lineStyle:{
+                            color:'#00b7ee',
+                            width:2,
+                        }
+                    },
+      
+        splitLine: {
+            show: false
+        }
+    }],
+    series: [{
+        type: 'bar',
+        stack: 'chart',
+        z: 3,
+        label: {
+            normal: {
+                position: 'right',
+                show: true
+            }
+        },
+         barWidth: '50%',
+        data: Object.keys(builderJson.charts).map(function (key) {
+            return builderJson.charts[key];
+        })
+    }]
+};
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+<!-- 向上滚动js -->
+<script type="text/javascript" src="__SCR__/js/myscroll.js"></script>
+
+</body>
+</html>

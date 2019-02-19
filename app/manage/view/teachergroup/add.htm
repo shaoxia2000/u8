@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>新增教师组</title>
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+</head>
+<body>
+<section id="container">
+	<section class="wrapper" style="width: 90%;padding-top: 5%">
+		<form class="layui-form" action="" lay-filter="teachergroupadd">
+			<div class="layui-form-item">
+				<label class="layui-form-label">教师组名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="tgroupname" lay-verify="required" placeholder="请输入教师组名称" autocomplete="off"
+							class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">分组数量</label>
+				<div class="layui-input-block">
+					<input type="text" name="tnum" lay-verify="required" placeholder="请输入分组数量" autocomplete="off"
+							class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item" {$schtype!=3?='style="display:none"'}>
+				<label class="layui-form-label">分层数量</label>
+				<div class="layui-input-block">
+					<input type="text" name="fcengnum" value="0" lay-verify="required" placeholder="请输入分层数量" autocomplete="off"
+							class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item" {$schid|Getknowledgeset=='off'?='style="display:none"'}>
+				<label class="layui-form-label">科目设置</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="knowledge[chinese]" title="语文" checked>
+					<input type="checkbox" name="knowledge[smath]" title="数学" checked>
+					<input type="checkbox" name="knowledge[english]" title="外语" checked>
+					<input type="checkbox" name="knowledge[physics]" title="物理" checked>
+					<input type="checkbox" name="knowledge[chemistry]" title="化学" checked>
+					<input type="checkbox" name="knowledge[geography]" title="地理" checked>
+					<input type="checkbox" name="knowledge[biologic]" title="生物" checked>
+					<input type="checkbox" name="knowledge[history]" title="历史" checked>
+					<input type="checkbox" name="knowledge[politics]" title="政治" checked>
+					<input type="checkbox" name="knowledge[sports]" title="体育" checked>
+				</div>
+			</div>
+			<div class="layui-form-item" style="height: 10px">
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formDemo" value="{:url('teachergroup/add')}">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div>
+		</form>
+	</section>
+</section>
+{load href="__ASSETS__/js/commonlayui.js"}
+<script>layuu('teachergroupadd');</script>
+</body>
+</html>

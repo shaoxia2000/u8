@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>新增学生</title>
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+</head>
+<body>
+<section id="container">
+	<section class="wrapper">
+		<section class="wrapper" style="width: 90%;padding-top: 5%">
+			<form class="layui-form" action="" lay-filter="studentsadd" enctype="multipart/form-data" >
+				<input type="hidden" name="schid" value="{$Request.param.schid}">
+				<div class="layui-form-item">
+					<label class="layui-form-label">学生姓名</label>
+					<div class="layui-input-block">
+						<input type="text" name="name" lay-verify="required" placeholder="请输入姓名" autocomplete="off"
+								class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-block">
+						<input type="radio" name="sex" value="男" title="男" checked>
+						<input type="radio" name="sex" value="女" title="女">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">身份证类型</label>
+					<div class="layui-input-block">
+						<select name="id_type" lay-verify="required">
+							<option value="居民身份证">居民身份证</option>
+							<option value="香港特区护照">香港特区护照</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">身份证件号</label>
+					<div class="layui-input-block">
+						<input type="text" name="id_num" lay-verify="required" placeholder="请输入身份证件号" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">分班原因</label>
+					<div class="layui-input-block">
+						<input type="text" name="cause" lay-verify="required" placeholder="请输入二次分班原因" autocomplete="off"  class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">上传材料</label>
+					<div class="layui-input-block" >
+						<div id="dp">
+							<input class="layui-input img" type="file" name="img[]" multiple="multiple" />
+						</div>
+						
+						<a class="btn_addPic btn btn-default" href="javascript:void(0);" style="float: left;">
+                            <i class="fa fa-times" id="del">&nbsp;&nbsp;重新选择图片</i>
+                        </a>
+					</div>
+					<div id="dd"></div>
+				</div>
+				<div class="layui-form-item" style="height: 10px">
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit lay-filter="formDemo" value="{:url('students/add')}">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						<a class="layui-btn" href="#" onclick="javascript:history.back(-1);">返回列表页</a>
+					</div>
+				</div>
+			</form>
+		</section>
+	</section>
+</section>
+
+{load href="__ASSETS__/js/commonlayui.js"}
+<script>
+    layuu('studentsadd');
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		var max_size = 7 * 1024 * 1024;
+		var num = 0;
+	    $(".img").change(function () {
+	        var fil = this.files;
+	        for (var i = 0; i < fil.length; i++) {
+
+	        	num += fil[i].size;
+	            if (num > max_size) {
+
+	            	num -= fil[i].size;
+	            	$(".img:last").val("");
+			    	alert("图片总大小不能超过8M!");
+			    	
+   					return false;
+			    }
+			    reads(fil[i]);
+	        }
+
+	        $("#dp").append($(".img:last").clone(true));
+	        $(".img:last").val("");
+	        $(this). hide();
+	    });
+	    
+	});
+
+	function reads(fil){
+	    var reader = new FileReader();
+	    reader.readAsDataURL(fil);
+	    reader.onload = function()
+	    {
+	        document.getElementById("dd").innerHTML += "<img src='"+reader.result+"' style='width:100px;height:100px;'>";
+	    };
+	}
+
+	$("#del").on("click",function(){
+        $("#img").val('');
+        $("#dd").empty();
+    });
+</script>
+</body>
+</html>

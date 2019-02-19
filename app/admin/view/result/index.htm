@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>先知教育预报名分班管理</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid"></head>
+    <style type="text/css">
+.cent{text-align: center;}
+.cent th{text-align: center;}
+
+a {
+    color: #119000;
+    text-decoration: none;
+}
+.modal-body {
+    position: relative;
+    padding: 0 30px 30px;
+   }
+
+    </style>
+
+
+
+<body>
+    <!-- 头部 -->
+    {include file="public/header" /}
+    <!-- /头部 -->
+
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            {include file="public/left" /}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#">学校管理</a>
+                        </li>
+                        <li class="active">分班结果</li>
+                    </ul>
+
+                </div>
+                <!-- /Page Breadcrumb -->
+<!--  返回键开始 -->
+                   <div class="page-header position-relative">
+                    <div class="header-title">
+                        <h1>
+                            分班结果
+                        </h1>
+                    </div>
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                         <a class="sidebar-returnn" href="#">
+                            <i class="fa fa-reply-all"></i>
+                        </a>
+                        <a class="sidebar-toggler" href="#">
+                            <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <a class="refresh" id="refresh-toggler" href="">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End-->
+                </div>
+                  <!--  返回键结束 -->
+                <!-- Page Body -->
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="widget">
+                                <div class="widget-body">
+                                    <div class="flip-scroll">
+                                        <table class="table table-bordered table-hover">
+                                            <thead class="">
+                                                <tr>
+                                                    <th class="text-center">ID</th>
+                                                    <th class="text-center">标题</th>
+                                                    <th class="text-center">班级数量</th>
+                                                   <!--  <th class="text-center">备注</th> -->
+                                                    <th class="text-center">创建时间</th>
+                                                    <th class="text-center">分班结果</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {volist name="res" id="vo"}
+                                                <tr>
+                                                    <td align="center">{$vo.id}</td>
+                                                    <td align="center">{$vo.title}</td>
+                                                    <td align="center">{$vo.classnum}</td>
+                                                    <!-- <td align="center">{$vo.content}</td> -->
+                                                    <td align="center">{$rex[$key][date]}</td>
+                                                    <td align="center">
+                                                    <a href="{:url('result/lst',array('taskid'=>$vo['id']))}"><button name="target-id" class="btn btn-default" data-toggle="modal" value="{$vo.id}"><i class="fa fa-eye"></i>查看</button></a></td>
+
+                                                </tr>
+                                                {/volist}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /Page Body --> </div>
+            <!-- /Page Content --> </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" id="taskdetail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myLargeModalLabel"></h4>
+
+                </div>
+                <!-- 内容开始 -->
+                <div class="modal-body" id="contentnew"></div>
+                <!-- 内容开始 --> </div>
+            <!-- /.modal-content --> </div>
+        <!-- /.modal-dialog --> </div>
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script src="__ADMIN__/style/toastr.js"></script>
+    <script src="__ADMIN__/style/wizard-custom.js"></script>
+    <script src="__ADMIN__/style/bootbox.js"></script>
+    <!--     皮肤互换js -->
+    <script type="text/javascript" src="__ADMIN__/style/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+    <script type="text/javascript">
+
+     $(document).ready(function() {
+        var skins=$.cookie("styleid");
+        if(skins!=null){
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss"+skins+".css");
+
+             }else{
+
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss.css");
+
+           }
+
+     });
+
+        function changestyle(id){
+
+            $("#sid").attr("href","__ADMIN__/style/skins/mycss"+id+".css");
+            $.cookie('styleid', id, { path: '/'});
+        }
+
+    </script>
+
+</body>
+</html>

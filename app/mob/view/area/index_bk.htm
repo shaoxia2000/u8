@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$areaname}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name="description" content="">
+
+    <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+    <link rel="stylesheet" href="__MOB__/css/layer.css" type="text/css">
+    <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+    <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+    <link rel="stylesheet" href="__MOB__/css/demos.css">
+    <style type="text/css">
+    .weui-cell_select-before .weui-select {
+    width: 124px;
+    box-sizing: border-box;
+}
+.weui-cells:before {
+   
+    border-top:none;
+   
+}
+    </style>
+</head>
+
+<body ontouchstart>
+
+
+  <header class='demos-header'>
+    <h1 class="demos-title">{$areaname}教师团队公示</h1>
+  </header>
+
+  <div class="weui-cells formtop" >
+  <form action="{:url('index',array('areaid'=>$areaid))}" method="post">
+    <div class="weui-cell weui-cell_select weui-cell_select-before">
+      <div class="weui-cell__hd">
+        <select class="weui-select" name="schtype">
+          <option value="">学校类型</option>
+          <option value="1">小学</option>
+          <option value="2">中学</option>
+          <option value="3">高中</option>
+        </select>
+      </div>
+      <div class="weui-cell__bd">
+        <input class="weui-input" type="text"  placeholder="请输入学校名称" name="schname" value="{$schname}">
+
+      </div>
+      <button type="sumbit" class="weui-btn weui-btn_mini weui-btn_primary">搜 索</button>
+    </div>
+  </form>
+  </div>
+  <div class="weui-cells margin125" >
+  {volist name="schoollist" id="vo"}
+    <a class="weui-cell weui-cell" href="javascript:;">
+        <div class="weui-cell__bd">
+            <p>{$vo.schname}<p><span style="font-size: 10px;color: gray;">分班数：{$vo.tnum}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间：{$vo.time}</span></p></p>
+        </div>
+        {if condition="$vo.tnum eq null"}
+            <div class="weui-cell__ft"><button type="button" class="weui-btn weui-btn_mini weui-btn_default" id="showTooltips">查 询</button></div>
+        {/if}
+        {if condition="$vo.tnum neq null"}
+        <div class="weui-cell__ft"><button type="button" class="weui-btn weui-btn_mini weui-btn_primary" onclick="find({$vo.schid})">查 询</button></div>
+        {/if}
+    </a>
+  {/volist}
+</div>
+ <div class="kong"></div>
+
+ <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://nfb.xianzhiedu.com.cn/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+
+  <script src="__MOB__/js/jquery-2.1.4.js"></script> 
+  <script src="__MOB__/js/fastclick.js"></script> 
+    
+  <script>   $(function() {     FastClick.attach(document.body);   }); </script>  
+  <script src="__MOB__/js/jquery-weui.min.js"></script>
+  <script src="__MOB__/js/layer.js"></script>
+</body>
+</html>
+<script>
+function find(schid)
+{
+  window.location.href = "{:url('chooes')}?schid="+schid;
+}
+</script>
+<!-- <script>
+  $("#showTooltips").click(function() {
+    $.toptip('该学校分组还未开始!');
+  });
+</script> -->
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>
+<script>
+
+      $(document).on("click", "#showTooltips", function() {
+          //信息框
+          layer.open({
+              content: '该学校教师团队还未分组！'
+              ,btn: '我知道了'
+          });
+      });
+
+    </script>

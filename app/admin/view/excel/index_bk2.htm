@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>先知预报名分班平台</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid"></head>
+<body>
+    <!-- 头部 -->
+    {include file="public/header" /}
+    <!-- /头部 -->
+
+    <div class="main-container container-fluid">
+
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            {include file="public/left" /}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li class="active">控制面板</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div id="tabbedwizard" class="wizard wizard-tabbed" data-target="#tabbedwizardsteps">
+                                <ul class="steps">
+                                    <li data-target="#tabbedwizardstep1" class="active">
+                                        <span class="step">1</span>
+                                        创建分班
+                                        <span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#tabbedwizardstep2">
+                                        <span class="step">2</span>
+                                        导入数据
+                                        <span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#tabbedwizardstep3">
+                                        <span class="step">3</span>
+                                        一键分班
+                                        <span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#tabbedwizardstep4">
+                                        <span class="step">4</span>
+                                        均衡处理
+                                        <span class="chevron"></span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="step-content" id="tabbedwizardsteps">
+                                <div class="step-pane active" id="tabbedwizardstep1">
+
+                                    <div id="myModal" style="width: 30%;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <!-- <input type="hidden" name="nameid" id="nameid" value="{$Request.session.schoolid}"> -->
+                                                    <input type="hidden" name="puid" id="puid" value="{$Request.session.id}">
+                                                    <input type="text" name="title" id="title" class="form-control" placeholder="任务标题" required=""></div>
+
+                                                <div class="form-group">
+                                                    <select name="nameid" id="nameid">
+                                                        <option value="">请选择分班学校</option>
+                                                        {volist name="school" id="v"}
+                                                        <option value="{$v.id}">{$v.name}</option>
+                                                        {/volist}
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="text" name="classnum" id="classnum" class="form-control" placeholder="班级数量" required=""></div>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" name="content" id="content" placeholder="备注" rows="5" required=""></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button id="sub" class="btn btn-default">确认提交</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <style>
+
+
+                                </style>
+                                <div class="step-pane" id="tabbedwizardstep2">
+                                    <a class="btn btn-default" href="{:url('export')}" target="_blank">模板下载</a>
+                                    <form action="{:url('upload')}" method="post" enctype="multipart/form-data">
+                                        <label>Excel表格：</label>
+                                        <!-- 文件上传开始 -->
+                                        <div class="control-group" style="overflow: hidden;">
+                                            <a class="btn_addPic btn btn-default" href="javascript:void(0);" style="float: left;"> <i class="fa fa-plus">&nbsp;&nbsp;选择文件</i>
+
+                                              <input class="filePrew" type="file" name="file" id="myfile">
+                                            </a>
+                                            
+                                        </div>
+
+                                          <span id="Excelname"></span>
+                                        <!-- 文件上传结束 -->
+                                        <!-- 导入按钮开始 -->
+                                        <input type="submit"  value="导入" class="btn btn-warning"  style="line-height: 1.8;" />
+                                       <!--  导入按钮结束 -->
+                                        <div class="control-group"></div>
+
+                                    </form>
+                                </div>
+                                <div class="step-pane" id="tabbedwizardstep3">This is step 3</div>
+                                <div class="step-pane" id="tabbedwizardstep4">This is step 4</div>
+                                <div class="step-pane" id="tabbedwizardstep5">This is step 5</div>
+                            </div>
+                            <div class="actions actions-footer" id="tabbedwizard-actions" style="display: none;">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm btn-prev"> <i class="fa fa-angle-left"></i>
+                                        Prev
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm btn-next" id="next" data-last="Finish">
+                                        Next
+                                        <i class="fa fa-angle-right"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script src="__ADMIN__/style/toastr.js"></script>
+    <script src="__ADMIN__/style/wizard-custom.js"></script>
+    <!-- <script src="__ADMIN__/style/bootbox.js"></script>
+-->
+<script type="text/javascript">
+        jQuery(function ($) {
+            $('#simplewizardinwidget').wizard();
+            $('#simplewizard').wizard();
+            $('#tabbedwizard').wizard().on('finished', function (e) {
+                Notify('Thank You! All of your information saved successfully.', 'bottom-right', '5000', 'blue', 'fa-check', true);
+            });
+            $('#WiredWizard').wizard();
+        });
+
+ $("#sub").on('click', function () {
+        $.ajax({
+            url:"{:url('test')}",
+            type:'post',
+            dataType:'json',
+            data:{title:$('#title').val(),nameid:$('#nameid').val(),puid:$('#puid').val(),classnum:$('#classnum').val(),content:$('#content').val()},
+            success:function(msg) {
+                alert(msg);
+                $("#next").trigger("click");
+                // console.log(msg);
+            }
+        });
+        });
+    </script>
+<!--     皮肤互换js -->
+<script type="text/javascript" src="__ADMIN__/style/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+<script type="text/javascript">
+
+     $(document).ready(function() {
+        var skins=$.cookie("styleid");
+        if(skins!=null){
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss"+skins+".css");
+
+             }else{
+
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss.css");
+
+           }
+
+     });
+
+        function changestyle(id){
+
+            $("#sid").attr("href","__ADMIN__/style/skins/mycss"+id+".css");
+            $.cookie('styleid', id, { path: '/'});
+        }
+
+
+        //获取一个上传文件的扩展名  file
+        var myfile = document.getElementById('myfile');
+        myfile.onchange = function(){
+            //获取文件上传文件的文件名和扩展名
+            if(myfile.files[0] == undefined){
+                alert('未上传文件！');
+            }else{
+                //获取上传文件的文件名
+                var name =myfile.files[0].name;
+                $("#Excelname").html(name);
+              document.getElementById('Excelname').className += 'excname';
+            }
+        }
+    </script>
+</body>
+</html>

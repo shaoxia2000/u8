@@ -1,0 +1,35 @@
+{extend name="public/_template" /}
+{block name="content"}
+<!--Start Breadcrumb-->
+<div class="row">
+    <div class="col-xs-12" id="breadcrumb">
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    结果校验
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    选择单位
+                </a>
+            </li>
+        </ol>
+    </div>
+</div>
+<form method="post">
+<!--End Breadcrumb-->
+{include file="public/list" /}
+	<div class="row">
+	    <div class="col-sm-1">
+	        <button class="btn btn-primary btn-label-left" type="submit">
+	            <span>
+	                <i class="fa fa-clock-o">
+	                </i>
+	            </span>
+	            校验
+	        </button>
+	    </div>
+	</div>
+</form>
+{/block}

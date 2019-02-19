@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>{$sname}</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+      <meta name="description" content="">
+
+      <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+      <link rel="stylesheet" href="__MOB__/css/demos.css">
+  </head>
+
+  <body ontouchstart>
+
+    <header class='demos-header'>
+      <h1 class="demos-title">{$tgname+1}班教师</h1>
+    </header>
+
+    <div class="weui-cells weui-cells_form margin100" style="margin-top:88px;">
+    {volist name="teacherlist" id="vo"}
+        <div class="weui-cell">
+                <div class="weui-cell__hd"><img src="{$vo.thumb}" alt="" style="width:50px;margin-right:5px;display:block;margin:0 auto;"></div>
+                <div class="weui-cell__bd" style="margin-left: 10px;">
+                    <p>{$vo.name}  <span>{$vo.work}</span></p>
+                    <p><span style="font-size: 10px;color: gray;">性别：{$vo.sex}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学科：{$vo.xueke}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学历：{$vo.xueli}</span></p>
+                </div>
+          
+            </div>
+    {/volist}
+    </div>
+     <div class="kong"></div>
+ <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://{$host}/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+
+    <script src="__MOB__/js/jquery-2.1.4.js"></script>
+    <script src="__MOB__/js/fastclick.js"></script> 
+    <script>   $(function() {     FastClick.attach(document.body);   }); </script> 
+    <script src="__MOB__/js/jquery-weui.min.js"></script>
+  </body>
+</html>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>

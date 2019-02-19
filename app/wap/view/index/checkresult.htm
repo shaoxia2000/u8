@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>分班结果</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="__WAP__/css/weui.css" type="text/css">
+  <link rel="stylesheet" href="__WAP__/css/weui.min.css" type="text/css">
+  <link rel="stylesheet" href="__WAP__/css/jquery-weui.min.css" type="text/css">
+
+  <link rel="stylesheet" href="__WAP__/css/demos.css"></head>
+
+<body ontouchstart>
+
+  <header class='demos-header'>
+    <h1 class="demos-title">分班结果</h1>
+  </header>
+  <div class="weui-cells weui-cells_form">
+
+    <!-- 学生姓名 -->
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
+        <label class="weui-label">学生姓名</label>
+      </div>
+      <div class="weui-cell__bd">
+        <div class="weui-input">{$clid.name}</div>
+      </div>
+    </div>
+
+    <!-- 班级号 -->
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
+        <label class="weui-label">班级号</label>
+      </div>
+      <div class="weui-cell__bd">
+        <div class="weui-input">{$clid.cno}</div>
+      </div>
+    </div>
+
+    <!-- 班主任 -->
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
+        <label class="weui-label">班主任</label>
+      </div>
+      <div class="weui-cell__bd">
+        <div class="weui-input">{$teacher}</div>
+
+      </div>
+    </div>
+
+    <!-- 班主任tel -->
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
+        <label class="weui-label">班主任电话</label>
+      </div>
+      <div class="weui-cell__bd">
+        <div class="weui-input">{$tel}</div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 关闭按钮 -->
+  <div class="demos-content-padded" style="margin-top: 40px">
+    <a href="javascript:WeixinJSBridge.call('closeWindow');" class=" weui-btn weui-btn_primary close-popup">关闭</a>
+
+  </div>
+
+</body>
+</html>

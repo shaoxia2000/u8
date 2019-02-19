@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="__ASSETS__/css/bootstrap.css" rel="stylesheet">
+	<!--external css-->
+	<link href="__ASSETS__/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+	<!-- Custom styles for this template -->
+	<link href="__ASSETS__/css/style.css" rel="stylesheet">
+	<title>教师分组</title>
+	<!--导入jquery插件-->
+	<!--导入jqueryUI插件-->
+	<script src="__ASSETS__/js/jquery-1.8.3.min.js"></script>
+	<script src="__ASSETS__/js/jquery.leoweather.min.js"></script>
+	<script type="text/javascript" src="__ASSETS__/js/jquery-ui.js"></script>
+	<script src="__ASSETS__/js/layer/2.4/layer.js"></script>
+	<!--自写脚本-->
+	<script type="text/javascript" language="javascript">
+		var API_URL = "__APPURL__/teachergroup/subgroup";
+		var APIS_URL = "__APPURL__/teachergroup/subsgroup";
+		var API_DEL = "__APPURL__/teacchergroup/delgroup";
+		var APIS_DEL = "__APPURL__/teachergroup/delgroups";
+		var API_DELSINGLE = "__APPURL__/teachergroup/delgroupsingle";
+		var API_DELSINGLES = "__APPURL__/teachergroup/delgroupsingles";
+		var API_CHECKT = "__APPURL__/teachergroup/checkt";
+		var gid = "{$gid}";
+		//在页面加载完之后加载jquery
+		$().ready(function (e) {
+			//拖拽复制体
+			$('div[id^="draggable"]').draggable({
+				helper: "clone",
+				cursor: "move"
+			});
+			//插入分层容器
+			$('span[id^="fcorg"]').draggable({
+				helper: "clone",
+				cursor: "move"
+			});
+			$('div[id^="fctarget"]').droppable({
+
+				drop: function (event, ui) {
+					{if condition = "Getcheckstatus($Request.session.school_id) eq 1"}
+					layer.msg('区管理员已确认状态,禁止操作！', {time: 2000});
+					return
+					{/if}
+                        {if condition="$Request.session.school_id eq 0"}
+                        layer.msg('无权限操作！', {time: 2000});
+                        return
+						{/if}
+
+
+						var topsid = $(this).attr('id');
+						var source = ui.draggable.clone();
+                        var ss = source.context.id.substr(0, 5);
+                        if(ss != 'fcorg'){
+                            layer.alert("拖拽目标错误！");
+                            return
+                        }
+
+						var sfootid = source[0].id;
+						if ($('div[id^="fctarget"]').children("#" + sfootid).length > 0) {
+							layer.alert("该教师组分层内已经存在");
+							return
+						} else {
+//							console.log(sfootid);
+							var fid = topsid.replace('fctarget', '');
+							var tgids = sfootid.replace('fcorg', '');
+							subs(gid, fid, tgids);
+						}
+						$(this).append(source);
+						$('<img/>', {
+							src: '__ASSETS__/img/err.png',
+							style: 'display:block;width:18px;float:right;margin-top: 6px;border:none;margin-right: 4px;',
+							click: function () {
+								source.remove();
+								dels(gid, fid, tgids);
+							}
+						}).appendTo(source);
+					}
+				});
+			//插入分层容器结束
+			//释放后
+			$('div[id^="target"]').droppable({
+				drop: function (event, ui) {
+					{if condition = "Getcheckstatus($Request.session.school_id) eq 1"}
+					layer.msg('区管理员已确认状态,禁止操作！', {time: 2000});
+					return
+					{/if}
+
+                        {if condition="$Request.session.school_id eq 0"}
+                        layer.msg('无权限操作！', {time: 2000});
+                        return
+                        {/if}
+
+					//目标id:topid
+					var topid = $(this).attr('id');
+					var source = ui.draggable.clone();
+					var footid = source[0].id;
+					//console.log(source);
+					if ($("#" + topid).children("#" + footid).length > 0) {
+						layer.msg('该教师已经存在', {time: 1000});
+						return
+					} else {
+						var tgid = topid.replace('target', '');
+						var tid = footid.replace('draggable', '');
+						var isheader = 0;
+						sub(gid, tgid, tid, isheader);
+					}
+					$('<input/>', {
+						type: 'radio',
+						id: tgid + '-' + tid,
+						style: 'float:left;margin-left: 4px;',
+						name: 'laos' + tgid,
+						click: function () {
+							var arr = this.id.split('-');
+							checkt(gid, tgid, arr[1]);
+						}
+					}).prependTo(source);
+					$('<img/>', {
+						src: '__ASSETS__/img/err.png',
+						style: 'display:block;width:18px;float:right;margin-top: 6px;border:none;margin-right: 4px;',
+						click: function () {
+							source.remove();
+							del(gid, tgid, tid, isheader);
+						}
+					}).appendTo(source);
+
+					$(this).append(source);
+				}
+				});
+		});
+
+		/**
+		 * ajax传值给subgroup入库方法
+		 * @param gid 教师外组id
+		 * @param tgid 教师内组id
+		 * @param tid  教师id
+		 * @param isheader 是否为班主任1.是 2.不是
+		 */
+		function sub(gid, tgid, tid, isheader) {
+			$.post(
+				API_URL,
+				{"gid": gid, "tgid": tgid, "tid": tid, "isheader": isheader},
+				function () {
+				}, 'json'
+			)
+		}
+
+		function subs(gid, fid, tgid) {
+			$.post(
+				APIS_URL,
+				{"gid": gid, "fid": fid, "tgid": tgid},
+				function () {
+				}, 'json'
+			)
+		}
+
+		/**
+		 * 前端生成的删除方法
+		 * @param gid,tgid,tid,isheader
+		 */
+		function del(gid, tgid, tid, isheader) {
+			$.post(
+				API_DEL,
+				{"gid": gid, "tgid": tgid, "tid": tid, "isheader": isheader},
+				function () {
+				}, 'json'
+			)
+		}
+
+		/**
+		 * 前端生成的删除方法
+		 * @param gid,tgid,tid,isheader
+		 */
+		function dels(gid, fid, tgid) {
+			$.post(
+				APIS_DEL,
+				{"gid": gid, "fid": fid, "tgid": tgid},
+				function () {
+				}, 'json'
+			)
+		}
+
+		/**
+		 * 程序输出的img删除按钮
+		 * @param obj
+		 */
+		function delt(obj) {
+			var tmp = obj.id;
+			$("#" + tmp).parent().remove();
+			$.post(
+				API_DELSINGLE,
+				{"id": tmp,},
+				function () {
+				}, 'json'
+			)
+		}
+
+		/**
+		 * 程序输出的img删除按钮
+		 * @param obj
+		 */
+		function delts(obj) {
+			var tmp = obj.id;
+			$("#" + tmp).parent().remove();
+			$.post(
+				API_DELSINGLES,
+				{"id": tmp,},
+				function () {
+				}, 'json'
+			)
+		}
+
+		//检查班主任是否已经在别组内被设置
+		function checkt(gid, tgid, tid) {
+			$.post(
+				API_CHECKT,
+				{"gid": gid, "tgid": tgid, "tid": tid},
+				function (e) {
+					if (e == 1) {
+						layer.msg('设置班主任成功', {time: 1000});
+						$('#' + tid).attr('checked', true);
+					} else if (e == 2) {
+						var newid = tgid + '-' + tid;
+						$('#' + newid).attr('checked', false);
+						layer.msg('该教师在其它组内为班主任', {time: 1000});
+					} else {
+						var newid = tgid + '-' + tid;
+						var oldid = e.tgid + '-' + e.tid;
+						console.log(e);
+						console.log(newid + '-' + oldid);
+						$('#' + newid).attr('checked', false);
+						layer.msg('该教师在其它组内为班主任', {time: 1000});
+						$('#' + oldid).prop("checked", "checked");
+					}
+				}, 'json'
+			)
+		}
+	</script>
+	<!--自写脚本-->
+</head>
+<body>
+{if condition="$Request.session.school_id neq 0"}
+	<section id="container">
+		{include file="public/header" /}
+	{include file="public/left" /}
+
+		<section id="main-content">
+			{/if}
+			<section class="wrapper">
+				<div class="laos-weik">
+					<!-- 教师分组开始 -->
+					<div class="pull-right laos-right">
+						{if condition="$resfc neq 0"}
+						<div class="laoshi-kuang" style="margin-bottom: 20px;">
+							<div id="fcbox">
+								<h3>
+									组分层 <font color="#006400"size="2px">[按成绩分层]</font><a href="javascript:history.back(-1);"style="background:#0cb981;font-size:16px;border-radius:8px;color:#fff;padding:8px 14px;float:right;">保存</a>
+								</h3>
+								{volist name="listfc" id="vo"}
+								<div id="fctarget{$vo.bb}" class="fctarget">
+									<div class="fenc-title">第{$vo.bb+1}层：</div>
+									{volist name="vo['cc']" id="vos"}
+								{if condition="(Getcheckstatus($Request.session.school_id) eq 1) || ($Request.session.school_id eq 0)"}
+									<span id="fcorg{$vos.tgid}">
+										{$vos.tgid+1}班
+										<img src="__PIC__/assets/img/err.png" id="{$vos.id}" style="display:block;width:18px;float:right;margin-top: 6px;border:none;margin-right: 4px;"></span>
+									{else /}
+									<span id="fcorg{$vos.tgid}">
+										{$vos.tgid+1}班
+										<img src="__PIC__/assets/img/err.png" id="{$vos.id}" onclick="delts(this)" style="display:block;width:18px;float:right;margin-top: 6px;border:none;margin-right: 4px;"></span>
+									{/if}
+								{/volist}
+								</div>
+								{/volist}
+							</div>
+						</div>
+						{/if}
+						<div class="laoshi-kuang">
+
+							<div style="width: 100%;clear: both;overflow: hidden;">
+							<h3 style="float: left;">教师分组</h3><a href="javascript:history.back(-1);"style="background:#0cb981;font-size:16px;border-radius:8px;color:#fff;padding:8px 14px;float: right;margin: 10px;">保存</a>
+						    </div>
+
+							<div class="teachergroup">
+								{volist name="list" id="vo"}
+								<div class="col-kuang">
+									<div class="laoshi-title">
+										<span id="fcorg{$vo.bb}" style="cursor: pointer">{$vo.bb+1}班</span>
+									</div>
+									<div class="teachergroupl" id="target{$vo.bb}" style="clear: both;height: 160px; overflow: hidden;  overflow-y: auto;" >
+										<!--{$vo.cc}-->
+										{volist name="vo['cc']" id="vos"}
+									{if condition="(Getcheckstatus($Request.session.school_id) eq 1) || ($Request.session.school_id eq 0)"}
+										<div class="clonec ui-draggable ui-draggable-handle" id="sdraggablec{$vos.tid}">
+											<img src="__PIC__/assets/img/1.jpg">
+											<input type="text" id="{$vos.tgid}-{$vos.tid}" style="float:left;margin-left: 4px;" name="laos{$vos.tgid}" {if condition="$vos['isheader'] eq 1" } value="班主任" {else/}value="科任"{/if}>
+											<span>{$vos.tid|Gettname}</span>
+											<img src="__PIC__/assets/img/err.png" id="{$vos.id}" style="display:block;width:18px;float:right;margin-top: 6px;border:none;margin-right: 4px;">
+											</div>
+										{else /}
+										<div class="clonec ui-draggable ui-draggable-handle" id="sdraggable{$vos.tid}">
+											<img src="__PIC__/assets/img/1.jpg">
+											<input type="radio" id="{$vos.tgid}-{$vos.tid}" style="float:left;margin-left: 4px;" name="laos{$vos.tgid}" {if condition="$vos['isheader'] eq 1" }checked{/if}
+										onclick="checkt('{$vos.gid}','{$vos.tgid}','{$vos.tid}')">
+											<span>{$vos.tid|Gettname}</span>
+											<img src="__PIC__/assets/img/err.png" id="{$vos.id}" style="display:block;width:18px;float:right;margin-top: 6px;border:none;margin-right: 4px;" onclick="delt(this)">
+											</div>
+										{/if}
+									{/volist}
+									</div>
+								</div>
+								{/volist}
+							</div>
+						</div>
+					</div>
+					<!-- 教师分组结束 -->
+					<!-- 备选教师 开始-->
+					<div class="pull-left laos-left">
+
+						<div class="laoshi-kuang col-md-12" style="min-height: 550px;">
+							<h3>备选教师</h3>
+							<div class="clone beixian-laos">
+								{volist name="tdata" id="vo"}
+								<div class="clonec" id="draggable{$vo.id}">
+									<img src="__PIC__/{$vo.thumb?$vo.thumb:'groupphoto/nullteacher.jpg'}" style="height: 40px;margin: 10px auto;">
+									<span>{$vo.name}</span>
+								</div>
+								{/volist}
+							</div>
+						</div>
+					</div>
+					<!-- 备选教师 结束-->
+				</div>
+			</section>
+			{if condition="$Request.session.school_id neq 0"}
+		</section>
+	</section>
+{/if}
+	{include file="public/footer" /}
+</body>
+</html>

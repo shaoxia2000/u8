@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$areaname}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name="description" content="">
+    <script src="__MOB__/js/jquery-2.1.4.js"></script> 
+    <script src="__MOB__/js/fastclick.js"></script> 
+    <script src="__MOB__/js/jquery-weui.min.js"></script>
+    <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+    <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+    <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+    <link rel="stylesheet" href="__MOB__/css/demos.css">
+<style type="text/css">
+.weui-cell{padding:4px 15px;}
+.weui-cell:before{border-top:none!important;}
+.weui-cells{background-color:#0cb981;}
+.weui-btn_primary{background-color:#ffffff;color:#20796c;border-radius:30px;}
+.weui-cells:before{border-top:none;}
+.weui-cell{background:#20796c;padding:10px 15px;margin:20px 20px;border-radius:30px;    box-shadow: 1px 3px 5px inset;}
+input::-webkit-input-placeholder{ color:#fff; font-size:14px; text-align:left;}
+    .weui-cells:after {
+   
+    border-bottom:none;
+  
+}
+.demos-title {
+   
+    color: #ffffff;}
+    .seless{    color: #000 !important; font-size: 15px;}
+
+</style>
+</head>
+<script>
+function check(form)
+{
+    if(form.schname.value==0)
+    {
+        $.toptip('请选择学生学校！');
+        return false;
+    }
+    if(form.id_num.value=='') 
+    {
+        $.toptip('请输入学生身份证号码!');
+        return false;
+    }
+    if(form.sname.value=='') 
+    {
+        $.toptip('请输入学生姓名!');
+        return false;
+    }
+    return true;
+}
+</script>
+<body style="background: #0cb981 url(__MOB__/images/footer_04.png) bottom center no-repeat;">
+    <header class='demos-header' style="background:url(__MOB__/images/head_02.png) repeat-x;">
+      <h1 class="demos-title">阳光分班结果查询</h1>
+    </header>
+    
+    <form action="{:url('checkform')}" method="post" onsubmit="return check(this)">
+        <div class="weui-cells weui-cells_form margin100" style="margin-top: 80px;">
+        
+            <!-- <div class="weui-cells__title" style="background: #f5f5f5;padding: 4px 16px;">请输入学生姓名</div> -->
+            <div class="weui-cell">
+                <div class="weui-cell__bd"><img src="__MOB__/images/wap-icon_05.png" style="width: 30px; float: left;    padding-right: 10px;">
+                    <input class="weui-input" type="text" placeholder="请输入学生姓名" name="sname" id="sname" style=" float: left;width: 80%;    color: #fff; padding-top: 5px;">
+                </div>
+            </div>
+           <!-- <div class="weui-cells__title" style="background: #f5f5f5;padding: 4px 16px;">请输入学生身份证</div> -->
+            <div class="weui-cell">
+                <div class="weui-cell__bd"> 
+                <img src="__MOB__/images/wap-icon_09.png" style="width: 30px; float: left;  padding-right: 10px;" >
+                    <input class="weui-input" type="text" placeholder="请输入学生身份证号码"name="id_num" id="id_num"  style="float: left;width: 80%;padding-top: 5px;    color: #fff;">
+                </div>
+            </div>
+              <!-- <div class="weui-cells__title" style="background: #f5f5f5; padding: 4px 16px;">选择学校</div> -->
+           <div class="weui-cell">
+            <img src="__MOB__/images/wap-icon_12.png" style="width: 30px; float: left;padding-right: 10px;" >
+            <select class="weui-select" name="schname" id="schname" style="padding-left:0;height: 20px; line-height: 20px;color: #fff; font-size: 15px;">
+            <option value="0" class="seless">--请选择学生学校--</option>
+            {volist name="schoollist" id="vo"}
+                <option value="{$vo.schid}" class="seless">{$vo.schname}</option>
+            {/volist}
+            </select>
+            </div>
+        <div class="weui-btn-area" style="margin-top: 20px;">
+            <input class="weui-input" type="hidden"  name="areaid" value="{$areaid}" >
+            <button class="weui-btn weui-btn_primary" type="sumbit" style="color:#FDFDFD;">确定</button>
+        </div>
+        </div>
+    </form>
+    <div class="kong"></div>
+    <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://fb.dqedu.net/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>
+

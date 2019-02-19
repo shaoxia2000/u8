@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>{$schname}</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+      <meta name="description" content="">
+
+      <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+      <link rel="stylesheet" href="__MOB__/css/demos.css">
+  </head>
+
+  <body ontouchstart>
+
+    <div class="weui-msg">
+      {if condition="$msg eq 1"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-success weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">签到成功！</h2>
+          <!-- <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p> -->
+        </div>
+      {/if}
+       {if condition="$msg eq 2"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn  weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">签到失败！</h2>
+          <!-- <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p> -->
+        </div>
+      {/if}
+       {if condition="$msg eq 3"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn  weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">该学校无此学生！</h2>
+          <!-- <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p> -->
+        </div>
+      {/if}
+       {if condition="$msg eq 4"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn  weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">该学生不在该分组内！</h2>
+          <!-- <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p> -->
+        </div>
+      {/if}
+       {if condition="$msg eq 5"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn  weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">您已经签到过，请勿重复签到！</h2>
+          <!-- <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p> -->
+        </div>
+      {/if}
+      {if condition="$schtype eq 3"}
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <a href="{:url('index',array('id'=>$schid))}" class="weui-btn weui-btn_primary">确认</a>
+          <a href="{:url('index',array('id'=>$schid))}" class="weui-btn weui-btn_default">返回上一页</a>
+        </p>
+      </div>
+      {/if}
+      {if condition="$schtype neq 3"}
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <a href="{:url('index',array('id'=>$schid))}" class="weui-btn weui-btn_primary">确认</a>
+          <a href="{:url('index',array('id'=>$schid))}" class="weui-btn weui-btn_default">返回上一页</a>
+        </p>
+      </div>
+      {/if}
+     <!--  <div class="weui-msg__extra-area">
+        <div class="weui-footer">
+          <p class="weui-footer__links">
+            <a href="javascript:void(0);" class="weui-footer__link">黑龙江先知教育</a>
+          </p>
+          <p class="weui-footer__text">Copyright © 2017-2018</p>
+        </div>
+      </div> -->
+    </div>
+
+     <div class="kong"></div>
+ <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://nfb.xianzhiedu.com.cn/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+
+    <script src="__MOB__/js/jquery-2.1.4.js"></script> <script src="__MOB__/js/fastclick.js"></script> <script>   $(function() {     FastClick.attach(document.body);   }); </script>  <script src="__MOB__/js/jquery-weui.min.js"></script>
+  </body>
+</html>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>

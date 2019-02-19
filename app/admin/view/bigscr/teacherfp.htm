@@ -1,0 +1,366 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="description" content="">
+
+	<meta name="author" Content="">
+
+	<meta name="renderer" content="webkit">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<title>先知分班大屏演示</title>
+
+	<link rel="stylesheet" type="text/css" href="__BS__/css/bootstrap.css">
+
+	<link rel="stylesheet" type="text/css" href="__BS__/css/fenbmecss.css">
+
+
+
+	<script src="__BS__/js/jquery.min.js"></script>
+
+	<script type="text/javascript" src="__BS__/js/bootstrap.js"></script>
+
+	<!-- 自动时间 -->
+
+	<script src="__BS__/js/jquery.leoweather.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="__BS__/css/loading.css">
+
+	<style type="text/css">
+		.class-list ul {padding: 6px 20px;margin: 0 auto; display: table;}
+
+	</style>
+
+</head>
+
+<body>
+
+{include file="public/bheader" /}
+
+<div class="container-fluid">
+
+	<!-- 内容开始 -->
+
+<section>
+    <div class="steps">
+
+        <!-- 进度条步骤开始 -->
+
+        <div class="stepbj" id="step">
+            <ul class="buzifenz">
+                <li class="onn"><em>1</em></li>
+                <li class="onn"><em>2</em></li>
+                <li class="onn" style=" width: 28%;"><em>3</em></li>
+            </ul>
+        </div><!-- 背景 -->
+
+        <div class="container">
+            <div class="steps-list">
+
+                <ul>
+                    <li><a href="{:url('bigscr/cheader')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_06.png">
+                            <span>机选家长</span>
+                        </div>
+                    </a>
+                    </li>
+
+                    <li><a href="{:url('bigscr/sedheader')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_09.png">
+                            <span>选定家长</span>
+                        </div>
+                    </a></li>
+
+                    <li><a href="{:url('bigscr/teacherfp')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_03.png">
+                            <span>教师分配</span>
+                        </div>
+                    </a></li>
+                    <li><a href="resultinfo/?id=1">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_12.png">
+                            <span>结果公示</span>
+                        </div>
+                    </a></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <!-- 进度条步骤结束 -->
+    </div>
+
+</section>
+
+	<section style="margin-top: 10px;">
+
+		<div class="row">
+
+			<div class="col-md-12">
+
+				<!-- 学生待分配统计列表开始 -->
+
+				<div class="col-md-12">
+
+					<div class="con-kuang">
+
+						<!-- 标题开始 -->
+
+						<div class="fenp-title fenp-title5">班主任分配结果公示<span>待分班人数{$zongnum}个 总教师数{$zongtnum}人</span></div>
+
+						<!-- 标题结束 -->
+
+						<!-- 头像列表开始 -->
+
+						<div class="touxi-list zongjipeidui">
+
+
+
+						</div>
+
+
+
+						<!-- 教师和班级随机分配开始 -->
+
+						<ul class="luck-user-list"></ul>
+
+						<!-- 教师和班级随机分配结束-->
+
+						<!-- 头像列表结束 -->
+
+					</div>
+
+				</div>
+
+				<!-- 学生待分配统计列表结束 -->
+
+
+
+			</div>
+
+		</div>
+
+		<div class="row" style="margin-top: 30px;">
+
+			<div class="col-md-12">
+
+
+
+				<!-- 家长待随机抽取统计列表开始 -->
+
+				<div class="col-md-12">
+
+					<div class="con-kuang">
+
+						<!-- 标题开始 -->
+
+						<div class="fenp-title fenp-title4">班主任待随机抽取统计列表<span>总教师数{$zongtnum}人</span></div>
+
+						<!-- 标题结束 -->
+
+						<!-- 头像列表开始 -->
+
+
+
+						<div class="touxi-list class-list jiaos-bj">
+
+							<ul>
+
+								{volist name="datat" id="vo"}
+
+								<li><img src="../../public/{$vo.thumb}"><span class="banzhur-names">{$vo.name}</span></li>
+
+								{/volist}
+
+							</ul>
+
+
+
+						</div>
+
+						<!-- 头像列表结束 -->
+
+					</div>
+
+				</div>
+
+				<!-- 家长待随机抽取统计列表结束 -->
+
+
+
+
+
+			</div>
+
+
+
+			<div class="clear"></div>
+
+		</div>
+
+	</section>
+
+
+
+	<!-- 按钮开始 -->
+
+	<!-- 		<div class="luck-content-btn">
+
+
+
+			</div> -->
+
+	<div class="fenpeijieg-ann">
+
+		<a class="start" onClick="loading8()">班级分配教师</a>
+
+	<!-- 	<a href="return.htm">查看分班结果</a> -->
+
+	</div>
+
+	<!-- 按钮结束 -->
+
+
+
+	<!-- 内容结束 -->
+
+</div>
+
+</body>
+
+</html>
+
+
+
+<script type="text/javascript" src="__BS__/js/loading.js"></script>
+
+<script type="text/javascript">
+
+
+
+    function loading8() {
+
+
+    	$('.zongjipeidui').html('');
+        $('.zongjipeidui').loading({
+
+            loadingWidth: 220,
+
+            title: '温馨提醒',
+
+            name: 'test',
+
+            titleColor: '#fff',
+
+            discColor: '#EDEEE9',
+
+            discription: '正在分配教师中,请耐心等待一下',
+
+            direction: 'column',
+
+            type: 'origin',
+
+            originBg: '',
+
+            originDivWidth: 40,
+
+            originDivHeight: 40,
+
+            originWidth: 6,
+
+            originHeight: 6,
+
+            smallLoading: false,
+
+            loadingBg: 'rgba(56,43,14,0.8)',
+
+            loadingMaskBg: 'rgba(66,66,66,0.2)'
+
+        });
+
+
+
+        var API_URL = "http://fb.xianzhiedu.com.cn/index/cajax/bindteacher";
+
+        var classesdb = "{$classesdb}";
+
+        var taskid = "{$taskid}";
+
+        var team = {$jsdatat};
+
+        var res = [];
+
+
+
+        function doSetTimeout(i, res, lens) {
+
+            setTimeout(function () {
+
+                var data = res.split("-");
+
+                if (lens == 1) {
+
+                    removeLoading('test');
+
+                }
+
+                $.post(
+
+                    API_URL,
+
+                    {"fromid": data[0], "classesdb": classesdb, "taskid": taskid, "cno": (i + 1)},
+
+                    function () {
+
+
+
+                    }, 'json'
+
+                )
+
+                $(".zongjipeidui").append('<li class="fenzhu-yans"><a href="resultinfo/?id=' + (i + 1) + '"><i>' + (i + 1) + '</i><img src="../../public/' + data[2] + '"><span class="teacher-names">' + data[1] + '</span></a></li>');
+
+            }, i * 2000);
+
+
+
+        }
+
+
+
+
+
+        for (var i = 0, len = team.length; i < len; i++) {
+
+            var randomIndex = Math.floor(Math.random() * team.length);
+
+            // 出列到新队伍
+
+            res[i] = team[randomIndex];
+
+            doSetTimeout(i, res[i], team.length);
+
+            team.splice(randomIndex, 1);
+
+        }
+
+
+
+    }
+
+</script>

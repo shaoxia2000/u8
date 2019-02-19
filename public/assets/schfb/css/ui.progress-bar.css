@@ -1,0 +1,83 @@
+
+@-webkit-keyframes animate-stripes {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+   background-position: 44px 0;
+  }
+}
+
+.ui-progress-bar {
+    width: 100%;
+    float: left;
+  position: relative;
+    height: 30px;
+    padding: 10px;
+  background-color: #17406b;
+
+  border-radius: 35px;
+  -moz-border-radius: 35px;
+  -webkit-border-radius: 35px;
+
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #17406b), color-stop(1, #0f2b47));
+  background: -moz-linear-gradient(#0f2b47 0%, #17406b 100%);
+
+
+}
+
+.ui-progress {
+
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 15px;
+
+  -moz-border-radius: 35px;
+  -webkit-border-radius: 35px;
+  border-radius: 35px;
+
+  -webkit-background-size: 44px 44px; /* Webkit */
+
+
+  background-color: #42b1dd;
+
+  background: -webkit-gradient(linear, 0 0, 44 44,
+    color-stop(0.00, rgba(255,255,255,0.17)),
+    color-stop(0.25, rgba(255,255,255,0.17)),
+    color-stop(0.26, rgba(255,255,255,0)),
+    color-stop(0.50, rgba(255,255,255,0)),
+    color-stop(0.51, rgba(255,255,255,0.17)),
+    color-stop(0.75, rgba(255,255,255,0.17)),
+    color-stop(0.76, rgba(255,255,255,0)),
+    color-stop(1.00, rgba(255,255,255,0))
+  ), -webkit-gradient(linear, left bottom, left top, color-stop(0, #42b1dd), color-stop(1, #379dd5));
+
+  background: -moz-repeating-linear-gradient(top left -30deg,
+    rgba(255,255,255,0.17),
+    rgba(255,255,255,0.17) 15px,
+    rgba(255,255,255,0) 15px,
+    rgba(255,255,255,0) 30px
+  ), -moz-linear-gradient(#9bdd62 0%, #42b1dd 100%);
+
+  -webkit-animation: animate-stripes 2s linear infinite;
+
+}
+
+.ui-progress span.ui-label {
+      font-size: 1em;
+    position: absolute;
+    right: 0;
+    line-height: 15px;
+
+
+  padding-right: 12px;
+  color: rgba(0,0,0,0.6);
+  text-shadow: rgba(255,255,255, 0.45) 0 1px 0px;
+  white-space: nowrap;
+}
+.content{    color: #fff;
+    float: right;
+    font-size: 20px;
+   }

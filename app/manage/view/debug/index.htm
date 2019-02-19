@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>项目debug页面</title>
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+</head>
+<body>
+<section id="container">
+	<section class="wrapper" style="width: 90%;padding-top: 10%;padding-left: 30%">
+		<form class="layui-form" action="" lay-filter="debug" style="font-size: 20px">
+			<div class="layui-form-item">
+			<label class="layui-form-label">AJAX</label>
+			<div class="layui-input-block">
+				<input type="button" class="layui-btn" value="查看最后一次ajax_post" onclick="get_ajax('查看ajax_post控制器接收的值:','{$domain}/log/debugajax.txt')">
+			</div>
+			</div>
+			<div class="layui-form-item" style="height: 10px">
+			</div>
+			<div class="layui-form-item">
+			<label class="layui-form-label">LOGERR</label>
+			<div class="layui-input-block" style="font-size: 18px">
+				{volist name="line" id="vo"}
+				{$vo}<br>
+				{/volist}
+				<br>
+				<input type="button" class="layui-btn" value="清空错误日志" onclick="del_logerror()">
+			</div>
+			</div>
+			<div class="layui-form-item" style="height: 10px">
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">RUNTIME</label>
+				<div class="layui-input-block">
+					<input type="button" class="layui-btn" value="清空rumtime" onclick="del_rumtime()">
+				</div>
+			</div>
+			<div class="layui-form-item" style="height: 10px">
+			</div>
+		</form>
+	</section>
+</section>
+<script>
+	layui.use('layer', function () {
+		var layer = layui.layer;
+	});
+	
+	function get_ajax(title, url) {
+		var timestamp = Date.parse(new Date());
+		var newurl = url+'?time='+timestamp;
+		layer.msg(newurl);
+		layer.open({
+			type: 2,
+			btn: ['关闭'],
+			area: ['50%', '50%'],
+			title: title,
+			content: [newurl, 'yes']
+		});
+	}
+	
+	function del_logerror() {
+		$.post(
+			'{:url(\'delfile\')}',
+			function () {
+				layer.msg('错误日志已经被清除！');
+			}, 'json'
+		)
+	}
+	
+	function del_rumtime() {
+		$.post(
+			'{:url(\'deldir\')}',
+			function () {
+				layer.msg('runtime缓存文件已经被清除！');
+			}, 'json'
+		)
+	}
+</script>
+</body>
+</html>

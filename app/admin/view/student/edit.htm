@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <title>编辑学生档案</title>
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid">
+
+    <!-- 时间插件 -->
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/bootstrap-datetimepicker.css">
+    <style type="text/css">
+    .datetimepicker table tr td.active.active{    background: #53a93f !important;}
+    </style>
+
+</head>
+<body>
+	<!-- 头部 -->
+{include file="public/header" /}
+	<!-- /头部 -->
+
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			            <!-- Page Sidebar -->
+{include file="public/left" /}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                    <li>
+                        <a href="#">系统</a>
+                    </li>
+                    <li>
+                        <a href="#">学校管理</a>
+                    </li>
+                    <li class="active">编辑学生档案</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+<!--  返回键开始 -->
+                <div class="page-header position-relative">
+                    <!--  标题 -->
+                    <div class="header-title">
+                        <h1>编辑学生档案</h1>
+                    </div>
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                        <!--  返回上一页 -->
+                        <a class="sidebar-returnn" href="javascript:history.go(-1)"> <i class="fa fa-reply-all"></i>
+                        </a>
+                        <!--  左侧隐藏 -->
+                        <a class="sidebar-toggler" href="#"> <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <!-- 刷新 -->
+                        <a class="refresh" id="refresh-toggler" href="">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <!--  全屏 -->
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End--> </div>
+                <!--  返回键结束 -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-green">
+                <span class="widget-caption">编辑学生档案</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post">
+                        <input type="hidden" name="id" value="{$res.id}">
+                        <!-- name -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">姓名</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="name" required="" type="text" value="{$res.name}">
+                            </div>
+                            <!-- <p class="help-block col-sm-4 red">* 必填</p> -->
+                        </div>
+
+                        <!-- sex -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">性别</label>
+                            <div class="col-sm-6">
+                            <select name="sex" class="form-control" style="width: 200px;" required="" >
+                                <option value="">——选择性别——</option>
+                                <option value="1" {if condition="$res['sex'] eq 1"}selected{/if} >男</option>
+                                <option value="2" {if condition="$res['sex'] eq 2"}selected{/if} >女</option>
+                            </select>
+                            </div>
+                            <!-- <p class="help-block col-sm-4 red">* 必填</p> -->
+                        </div>
+
+                        <!-- birthday -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">出生日期</label>
+                            <div class="col-sm-6">
+                                <!-- <input class="form-control" type="text" id="birthday" name="birthday" value="" /> -->
+                                <input class="form_datetime form-control" type="text" value="{$res.birthday}" size="16" name="birthday">
+                            </div>
+                        </div>
+
+                        <!-- nation -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">民族</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="nation" required="" type="text" value="{$res.nation}">
+                            </div>
+                            <!-- <p class="help-block col-sm-4 red"> 注意: 字数最多7以内</p> -->
+                        </div>
+
+                        <!-- address -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">户籍地址</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="address" required="" type="text" value="{$res.address}">
+                            </div>
+                        </div>
+
+                        <!-- in_time -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">落户时间</label>
+                            <div class="col-sm-6">
+                             <input class="form_datetime form-control" type="text" value="{$res.in_time}" size="16" name="in_time">
+                            </div>
+                        </div>
+
+
+                        <!-- id_type  -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">身份证类型</label>
+                            <div class="col-sm-6">
+                            <select name="id_type" class="form-control" style="width: 200px;" required="" >
+                                <option value="">——选择身份证类型——</option>
+                                <option value="1" {if condition="$res['id_type'] eq 1"}selected{/if} >居民身份证</option>
+                                <option value="2" {if condition="$res['id_type'] eq 2"}selected{/if}>香港特区护照</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <!-- id_num -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">身份证件号</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="id_num" required="" type="text" value="{$res.id_num}" >
+                            </div>
+                        </div>
+
+                        <!-- single_is -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">是否独生子女</label>
+                            <div class="col-sm-6">
+                            <select name="single_is" class="form-control" style="width: 200px;" required="" >
+                                <option value="">——选择是否是独生子女——</option>
+                                <option value="1" {if condition="$res['single_is'] eq 1"}selected{/if} >是</option>
+                                <option value="2" {if condition="$res['single_is'] eq 2"}selected{/if}>否</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <!-- disabled_is -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">残疾人类型</label>
+                            <div class="col-sm-6">
+                            <select name="disabled_is" class="form-control" style="width: 200px;" required="" >
+                                <option value="">——选择残疾人类型——</option>
+                                <option value="1" {if condition="$res['disabled_is'] eq 1"}selected{/if}>无残疾</option>
+                                <option value="2" {if condition="$res['disabled_is'] eq 2"}selected{/if}>残疾</option>
+                            </select>
+                            </div>
+                        </div>
+
+
+                        <!-- house_owner -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">房屋产权人</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="house_owner" required="" type="text" value="{$res.house_owner}" >
+                            </div>
+                        </div>
+
+
+                        <!-- house_relation -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">房屋产权人与新生关系</label>
+                            <div class="col-sm-6">
+                            <select name="house_relation" class="form-control" style="width: 260px;" required="" >
+                                <option value="">——选择房屋产权人与新生关系——</option>
+                                <option value="1" {if condition="$res['house_relation'] eq 1"}selected{/if}>父亲</option>
+                                <option value="2" {if condition="$res['house_relation'] eq 2"}selected{/if} >母亲</option>
+                                <option value="3" {if condition="$res['house_relation'] eq 3"}selected{/if}>祖父母</option>
+                                <option value="4" {if condition="$res['house_relation'] eq 4"}selected{/if} >外祖父母</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <!-- house_address -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">房屋产权地址</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="house_address" required="" type="text" value="{$res.house_address}" >
+                            </div>
+                        </div>
+
+                        <!-- house_type -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">房屋产权性质</label>
+                            <div class="col-sm-6">
+                            <select name="house_type" class="form-control" style="width: 260px;" required="" >
+                                <option value="">——选择房屋产权性质——</option>
+                                <option value="1" {if condition="$res['house_type'] eq 1"}selected{/if} >私产</option>
+                                <option value="2" {if condition="$res['house_type'] eq 2"}selected{/if} >公产</option>
+                                <option value="3" {if condition="$res['house_type'] eq 3"}selected{/if} >其它</option>
+                            </select>
+                            </div>
+                        </div>
+
+
+                        <!-- buy_time -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">房屋购买时间</label>
+                            <div class="col-sm-6">
+                                <input class="form_datetime form-control" type="text" value="{$res.buy_time}" size="16" name="buy_time">
+                            </div>
+                        </div>
+
+                        <!-- name_two -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">家长1 姓名</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="name_two" required="" type="text" value="{$res.name_two}" >
+                            </div>
+                        </div>
+
+                        <!-- relation_two -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">与学生关系</label>
+                            <div class="col-sm-6">
+                            <select name="relation_two" class="form-control" style="width: 260px;" required="" >
+                                <option value="">——选择与新生的关系——</option>
+                                <option value="1" {if condition="$res['relation_two'] eq 1"}selected{/if} >父亲</option>
+                                <option value="2" {if condition="$res['relation_two'] eq 2"}selected{/if} >母亲</option>
+                                <option value="3" {if condition="$res['relation_two'] eq 3"}selected{/if} >祖父母</option>
+                                <option value="4" {if condition="$res['relation_two'] eq 4"}selected{/if} >外祖父母</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <!-- job_two -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">工作单位</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="job_two" required="" type="text" value="{$res.job_two}">
+                            </div>
+                        </div>
+
+
+                        <!-- tel_two -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">联系电话</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="tel_two" required="" type="text" value="{$res.tel_two}" >
+                            </div>
+                        </div>
+
+
+                        <!-- name_three -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">家长2 姓名</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="name_three" required="" type="text" value="{$res.name_three}" >
+                            </div>
+                        </div>
+
+                        <!-- relation_three -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">与学生关系</label>
+                            <div class="col-sm-6">
+                            <select name="relation_three" class="form-control" style="width: 260px;" required="" >
+                                
+                                <option value="">——选择与新生的关系——</option>
+                                <option value="1" {if condition="$res['relation_three'] eq 1"}selected{/if} >父亲</option>
+                                <option value="2" {if condition="$res['relation_three'] eq 2"}selected{/if} >母亲</option>
+                                <option value="3" {if condition="$res['relation_three'] eq 3"}selected{/if} >祖父母</option>
+                                <option value="4" {if condition="$res['relation_three'] eq 4"}selected{/if} >外祖父母</option>
+
+                            </select>
+                            </div>
+                        </div>
+
+                        <!-- job_three -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">工作单位</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="job_three" required="" type="text" value="{$res.job_three}">
+                            </div>
+                        </div>
+
+                        <!-- tel_three -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">联系电话</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="tel_three" required="" type="text" value="{$res.tel_three}" >
+                            </div>
+                        </div>
+
+                        <!-- writer -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">填表人姓名</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="writer" required="" type="text" value="{$res.writer}">
+                            </div>
+                        </div>
+
+                        <!-- writer_relation -->
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">关系</label>
+                            <div class="col-sm-6">
+                            <select name="writer_relation" class="form-control" style="width: 260px;" required="" >
+                                <option value="">——选择与新生的关系——</option>
+                                <option value="1" {if condition="$res['writer_relation'] eq 1"}selected{/if} >父亲</option>
+                                <option value="2" {if condition="$res['writer_relation'] eq 2"}selected{/if} >母亲</option>
+                                <option value="3" {if condition="$res['writer_relation'] eq 3"}selected{/if} >祖父母</option>
+                                <option value="4" {if condition="$res['writer_relation'] eq 4"}selected{/if} >外祖父母</option>
+                            </select>
+                            </div>
+                        </div>
+                        <!-- end -->
+                        
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>
+	</div>
+
+	<!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+
+    <!-- 时间插件 -->
+
+    <script type="text/javascript" src="__ADMIN__/style/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="__ADMIN__/style/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        todayHighlight: true,
+        showMeridian: true,
+        pickerPosition: "bottom-left",
+        language: 'zh-CN',//中文，需要引用zh-CN.js包
+        startView: 2,//月视图
+        minView: 2//日期时间选择器所能够提供的最精确的时间选择视图
+    }); 
+    </script>
+
+<!--     皮肤互换js -->
+    <script type="text/javascript" src="__ADMIN__/style/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+    <script type="text/javascript">
+
+     $(document).ready(function() {
+        var skins=$.cookie("styleid");
+        if(skins!=null){
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss"+skins+".css");
+
+             }else{
+
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss.css");
+
+           }
+
+     });
+
+        function changestyle(id){
+
+            $("#sid").attr("href","__ADMIN__/style/skins/mycss"+id+".css");
+            $.cookie('styleid', id, { path: '/'});
+        }
+
+    </script>
+</body></html>

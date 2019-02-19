@@ -1,0 +1,31 @@
+<header class="header black-bg">
+	<div class="sidebar-toggle-box">
+		<div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+	</div>
+	<!--logo start-->
+	<a href="index.html" class="logo"><img src="__ASSETS__/img/logo.png" width="200px"></a>
+	<!--logo end-->
+	<!-- 时间开始 -->
+	<div class=" times"><span style="font-size: 20px;">您好，管理员！</span>
+		<span id="weather">
+            <span id="colock"> <strong><span id="weather_YY">2018</span>
+                年
+                <span id="weather_MM">04</span>
+                月
+                <span id="weather_DD">13</span>
+                日 <b class="week">星期
+                  <span id="weather_ww">五</span></b> </strong>
+            </span>
+          </span>
+		<script type="text/javascript">
+            $('#weather').leoweather({format: '<span id="colock"><strong>{年}年{月}月{日}日 <b class="week">星期{周}</b></strong></span>'});
+		</script>
+	</div>
+	<!-- 时间结束 -->
+
+	<div class="top-menu">
+		<ul class="nav pull-right top-menu">
+			<li><a href="http://yg.dqedu.net" class="logout">退出</a></li>
+		</ul>
+	</div>
+</header>

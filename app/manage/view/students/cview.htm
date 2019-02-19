@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>分页</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+	<style>
+		body {
+			overflow-y: scroll;
+		}
+	</style>
+</head>
+<body>
+<div class="demoTable" style="margin-top: 30px">
+	{if condition="$Request.session.school_id eq 0"}
+	<button class="layui-btn layui-btn-danger" data-type="getDelData">批量删除</button>
+	<input type="button" class="layui-btn" value="新增学生" onclick="sadd('新增学生数据','{:url(\'chuzhongadd\',[\'schid\'=>$Request.param.schid])}')">
+	{/if}
+	  <button class="layui-btn" id="sbtbtn" data-type="reloadsbt">双胞胎查看</button>
+	　
+	<a class="layui-btn" href="{:url('exportgstudents',['schid'=>$Request.param.schid])}" target="_parent">数据导出</a>
+	　学生姓名：
+	<div class="layui-inline">
+		<input class="layui-input" name="name" id="nameReload" autocomplete="off">
+	</div>
+	　身份证号：
+	<div class="layui-inline">
+		<input class="layui-input" name="sfz" id="sfzReload" autocomplete="off">
+	</div>
+	　　
+	<button class="layui-btn" data-type="reload">搜索</button>
+</div>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+	<legend>{$Request.param.schid|GetSchoolname}-学生数据</legend>
+</fieldset>
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+<script>
+    layui.use(['table', 'layer'], function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            , url: "{:url('pagedata',['schid'=>$Request.param.schid])}"
+            , cellMinWidth: 40 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , cols: [[
+                {type: 'checkbox',fixed: 'left'} //开启复选框
+                , {
+                    field: 'id',
+                    title: 'ID',
+                    sort: true,
+                    width: 60,
+                    templet: '<div>{{d.id}}</div>',
+                    fixed: 'left'
+                }
+                , {field: 'name', title: '姓名', width: 80,fixed: 'left'{$Request.session.school_id==0?=',edit: "text"'}}
+				, {field: 'sbt', title: '是否双胞胎', width: 140, fixed: 'left'}
+                , {field: 'sex', title: '性别', sort: true, width: 80{$Request.session.school_id==0?=',edit: "text"'}}
+                , {field: 'zcj', title: '总成绩', width: 80{$Request.session.school_id==0?=',edit: "text"'}}
+                , {field: 'chinese', title: '语文', width: 110{$Request.session.school_id==0?=',edit: "text"'}}
+                , {field: 'smath', title: '数学', width: 80{$Request.session.school_id==0?=',edit: "text"'}}
+                , {field: 'english', title: '外语', width: 80{$Request.session.school_id==0?=',edit: "text"'}}
+                , {field: 'graduate', title: '毕业院校', width: 150}
+                , {field: 'graduate_num', title: '毕业标识码', width: 110}
+                , {field: 'student_code', title: '学籍号', width: 200}
+                , {field: 'nation', title: '民族', width: 80, }
+                , {field: 'address', title: '户籍地址', width: 120, align:'center'}
+                , {field: 'in_time', title: '落户时间', width: 120}
+                , {field: 'id_type', title: '身份证类型',  width: 120}
+                , {field: 'id_num', title: '身份证件号',  width: 180{$Request.session.school_id==0?=',edit: "text"'}}
+                , {field: 'house_relation', title: '户主与学生关系',  width: 140}
+                , {field: 'zj_type', title: '证件类型', width: 120}
+                , {field: 'zj_address', title: '证件地址', width: 140}
+                , {field: 'zj_time', title: '证件时间',  width: 120}
+                , {field: 'zj_relation', title: '持证人与学生关系', width: 150}
+                , {field: 'x_name', title: '姓名', width: 120}
+                , {field: 'x_relation', title: '关系',width: 120}
+                , {field: 'x_tel', title: '电话',width: 130}
+                , {field: 'writer', title: '填表人', width: 80}
+                , {field: 'writer_relation', title: '填表人关系', width: 120}
+                , {field: 'type', title: '新生类型', width: 150}
+                , {title: '双胞胎', width: 130,toolbar: '#barDemo', fixed: 'right'}
+
+            ]]
+            , page: true
+            , id: 'testReload'
+            , limits: [15, 20, 30]
+            , limit: 15 //每页默认显示的数量
+        });
+
+
+        var $ = layui.$, active = {
+            reload: function () {
+                var nameReload = $('#nameReload');
+                var sfzReload = $('#sfzReload');
+                var svtval = 0;
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        name: nameReload.val(),
+                        sfz: sfzReload.val(),
+                        sbtval: 0,
+                    }
+                });
+            },
+			reloadsbt: function () {
+				var sbtval = 1;
+				//执行重载
+				table.reload('testReload', {
+					page: {
+						curr: 1 //重新从第 1 页开始
+					}
+					, where: {
+						sbtval: 1,
+					}
+				});
+			}
+            , getDelData: function () { //获取选中数据
+                var checkStatus = table.checkStatus('testReload'),
+                    data = checkStatus.data,
+                    deList = [];
+                data.forEach(function (n, i) {
+                    deList.push(n.id);
+                });
+
+                if (deList != '') {
+                    layer.confirm('确定删除所选项吗？', function (index) {
+                        $.ajax({
+                                url: "{:url('students/pdel')}",
+                                type: 'post',
+                                dataType: 'json',
+                                data: {"id": deList, "schid": {$Request.param.schid}
+                            },
+                            success:function (data, statusText) {
+                            if (data.code == 0) {
+                                layer.msg('删除成功');
+                                table.reload('testReload', {});
+                            } else {
+                                console.log(data.code);
+                                layer.msg('删除失败');
+                            }
+                        },'error':function () {
+                            layer.msg('系统错误');
+                        }
+                    })
+                    })
+                } else {
+                    layer.msg('请选择需要删除的数据');
+                }
+            }
+            , getNoData: function () { //获取选中数据
+                var checkStatus = table.checkStatus('testReload'),
+                    data = checkStatus.data,
+                    deList = [];
+                data.forEach(function (n, i) {
+                    deList.push(n.id);
+                });
+
+                if (deList != '') {
+                    layer.confirm('确定设置所选不参与分班吗？', function (index) {
+                        $.ajax({
+                                url: "{:url('students/pset')}",
+                                type: 'post',
+                                dataType: 'json',
+                                data: {"id": deList, "schid": {$Request.param.schid}
+                            }
+                            , 'success':function (data, statusText) {
+                            if (data.code == 0) {
+                                layer.msg('设置成功');
+                                table.reload('testReload', {});
+                            } else {
+                                layer.msg('设置失败');
+                            }
+                        }
+                    ,'error':function () {
+                            layer.msg('系统错误');
+                        }
+                    })
+                    })
+                } else {
+                    layer.msg('请选择需要设置的数据');
+                }
+            }
+        };
+
+
+        table.on('tool(demo)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'cancelb'){
+                API_URL="{:url('sbtcancel')}";
+                $.post(
+                    API_URL,
+                    {"schid":{$Request.param.schid},"id": data.id},
+                function () {
+                }, 'json'
+                );
+                layer.msg('学生ID：' + data.id + ' 的解绑操作成功');
+                table.reload('testReload', {});
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                var timestamp = Date.parse(new Date());
+                console.log(timestamp);
+                var newurl = "{:url(\"bandsbt\")}?id=" + data.id + "&schid={$Request.param.schid}" + '&sfz=' + data.id_num + '&time=' + timestamp;
+                bandsbt('双胞胎绑定窗口',newurl);
+            }
+        });
+
+
+        table.on('edit(demo)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+
+            layer.confirm('确认修改本条记录吗?', { btn: ['是','否'],btn1: function(index){
+                API_URL="{:url('xiaoxueedit')}";
+                $.post(
+                    API_URL,
+                    {"schid":{$Request.param.schid},"id": data.id,"field":field,"value":value},
+                function (e) {
+                    if(e.code==100){
+                        layer.close(index);
+                        table.reload('testReload', {});
+                    }else{
+                        layer.msg('信息修改有误');
+                        layer.close(index);
+                        table.reload('testReload', {});
+                    }
+                }, 'json'
+            );
+            },
+                btn2: function(index){
+                    layer.close(index);
+                    table.reload('testReload', {});
+                }
+            })
+
+        });
+
+
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+
+    function bandsbt(title, url) {
+        var index = layer.open({
+            type: 2,
+            btn: ['关闭'],
+            area: ['30%', '30%'],
+            title: title,
+            content: url,
+            end: function () {
+                location.reload();
+            }
+        });
+    }
+
+    function sadd(title, url) {
+        var index = layer.open({
+            type: 2,
+            btn: ['关闭'],
+            area: ['80%', '80%'],
+            title: title,
+            content: url,
+            end: function () {
+                location.reload();
+            }
+        });
+    }
+
+
+</script>
+<script type="text/html" id="barDemo">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">绑定</a>
+	<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="cancelb">解绑</a>
+</script>
+</body>
+</html>

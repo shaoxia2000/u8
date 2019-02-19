@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>先知预报名分班平台</title>
+
+  <meta name="description" content="Dashboard">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!--Basic Styles-->
+  <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+  <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+  <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+  <!--Beyond styles-->
+  <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+  <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+  <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+  <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid">
+  <link rel="stylesheet" type="text/css" href="__ADMIN__/style/progress.css"></head>
+
+<body>
+  <!-- 头部 -->
+  {include file="public/header" /}
+  <!-- /头部 -->
+
+  <div class="main-container container-fluid">
+
+    <div class="page-container">
+      <!-- Page Sidebar -->
+      {include file="public/left" /}
+      <!-- /Page Sidebar -->
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Page Breadcrumb -->
+        <div class="page-breadcrumbs">
+          <ul class="breadcrumb">
+            <li class="active">控制面板</li>
+          </ul>
+        </div>
+        <!-- /Page Breadcrumb -->
+
+        <!-- Page Body -->
+        <div class="page-body">
+
+          <div class="row" >
+
+            <div class="col-md-12" >
+
+              <div class="htmleaf-container" style="    margin-top: 50px;">
+
+                <div class="htmleaf-content">
+                  <div class="progress"> <b class="progress__bar"><span class="progress__text">
+                   <ec>分班中</ec>&nbsp;&nbsp;&nbsp;&nbsp;<em>0%</em>
+                      </span></b>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Basic Scripts-->
+  <script src="__ADMIN__/style/jquery_002.js"></script>
+  <script src="__ADMIN__/style/bootstrap.js"></script>
+  <script src="__ADMIN__/style/jquery.js"></script>
+  <!--Beyond Scripts-->
+  <script src="__ADMIN__/style/beyond.js"></script>
+  <script src="__ADMIN__/style/toastr.js"></script>
+  <script src="__ADMIN__/style/wizard-custom.js"></script>
+  <script src="__ADMIN__/style/bootbox.js"></script>
+
+  <!--     皮肤互换js -->
+  <script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+  <script type="text/javascript">
+
+     $(document).ready(function() {
+        var skins=$.cookie("styleid");
+        if(skins!=null){
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss"+skins+".css");
+
+             }else{
+
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss.css");
+
+           }
+
+     });
+
+        function changestyle(id){
+
+            $("#sid").attr("href","__ADMIN__/style/skins/mycss"+id+".css");
+            $.cookie('styleid', id, { path: '/'});
+        }
+
+    </script>
+
+  <!--     加载进度条 -->
+  <script>
+            // var $progress = $('.progress'), $bar = $('.progress__bar'), $text = $('.progress__text'), percent = 0, update, resetColors, speed = 200, orange = 30, yellow = 55, green = 85, timer;
+            // 
+             var $progress = $('.progress'), $bar = $('.progress__bar'), $text = $('.progress__text'), percent = 0, update, resetColors, speed = 200, orange = 10, yellow = 30, green = 56,violet = 76,indigo = 86, timer;
+
+            resetColors = function() {
+                $bar.removeClass('progress__bar--green').removeClass('progress__bar--yellow').removeClass('progress__bar--orange').removeClass('progress__bar--blue').removeClass('progress__bar--violet').removeClass('progress__bar--indigo');
+                $progress.removeClass('progress--complete');
+            };
+            update = function() {
+                timer = setTimeout(function() {
+                    percent += Math.random() * 1.8;
+                    percent = parseFloat(percent.toFixed(1));
+                    $text.find('em').text(percent + '%');
+                    $text.find('ec').text('分班：');
+                      if (percent >= 100) {
+                        percent = 100;
+                        $progress.addClass('progress--complete');
+                        $bar.addClass('progress__bar--indigo');
+                        $text.find('em').text('完成分班');
+
+                        // window.location.href="{:url('step4')}";
+                    } else{
+
+                        if (percent >= green) {
+                            $text.find('em').text(percent + '%');
+                           $text.find('ec').text('男女比例');
+                          
+                            $bar.addClass('progress__bar--green');
+                        } else if (percent >= yellow) {
+                            $text.find('em').text(percent + '%')
+                              $text.find('ec').text('单科成绩');
+                          
+                            $bar.addClass('progress__bar--blue');
+                        } else if (percent >= orange) {
+                            $text.find('em').text(percent + '%')
+                            $text.find('ec').text('成绩均衡');
+
+                            $bar.addClass('progress__bar--orange');
+                        } else if (percent >= violet) {
+                            $text.find('em').text(percent + '%');
+                            $text.find('ec').text('成绩均衡');
+                            $bar.addClass('progress__bar--violet');
+                           
+                        } else if (percent >= indigo) {
+                            $text.find('em').text(percent + '%')
+                            $text.find('ec').text('互斥分散');
+                            $bar.addClass('progress__bar--indigo');
+                        }
+                        speed = Math.floor(Math.random() * 900);
+                        update();
+                    }
+                    $bar.css({width: percent + '%'});
+                }, speed);
+            };
+            setTimeout(function() {
+                $progress.addClass('progress--active');
+                update();
+            }, 5000);
+            $(document).on('click', function(e) {
+                percent = 0;
+                clearTimeout(timer);
+                resetColors();
+                update();
+
+
+            });
+        </script>
+</body>
+</html>

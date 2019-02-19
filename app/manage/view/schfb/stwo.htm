@@ -1,0 +1,458 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="description" content="">
+
+	<meta name="author" Content="">
+
+	<meta name="renderer" content="webkit">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<title>班主任分配结果公示</title>
+
+	{load href="__ASSETS__/bigscr/classes/css/bootstrap.css"}
+
+	{load href="__ASSETS__/bigscr/classes/css/fenbmecss.css"}
+
+	{load href="__ASSETS__/bigscr/classes/js/jquery.min.js"}
+
+	{load href="__ASSETS__/bigscr/classes/js/bootstrap.js"}
+
+	{load href="__ASSETS__/bigscr/classes/js/jquery.leoweather.min.js"}
+
+	<script type="text/javascript">
+
+		$(document).ready(function(e) {
+
+			var counter = 0;
+
+			if (window.history && window.history.pushState) {
+
+				$(window).on('popstate', function () {
+
+					window.history.pushState('forward', null, '#');
+
+					window.history.forward(1);
+
+					//alert("不可回退");
+
+					location.replace(document.referrer);//刷新
+
+				});
+
+			}
+
+			
+
+			window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
+
+			window.history.forward(1);
+
+		});
+
+	</script>
+
+	<style type="text/css">
+
+.bannnn{position:relative!important;}
+.active a{cursor:pointer;}
+a.daocc{border:none!important;}
+.daocc{position:absolute!important;top:8px;right:0; /* background: #29af8a; */color:#41557d;border-radius:10px;cursor:pointer}
+a:hover .daocc{background:transparent!important;cursor:pointer;}
+	</style>
+
+</head>
+
+<body>
+
+<!-- 头部开始 -->
+
+<header class="head">
+
+	<div class="col-md-12">
+
+		<!-- logo开始 -->
+
+		<div class="col-md-8">
+
+			<div class="logo_text"><img src="__ASSETS__/bigscr/classes/images/xianzhi-banlogo.png" style="height: 60px;margin-right: 30px;"{$Request.session.school_id|GetSchoolname}>阳光分班现场</div>
+
+		</div>
+
+		<!-- logo结束 -->
+
+		<!-- 时间开始 -->
+
+		<div class="col-md-4">
+
+			<div class="times">
+
+				<span id="weather"><span id="colock"><strong><span id="weather_YY">2018</span>年<span id="weather_MM">04</span>月<span id="weather_DD">13</span>日 <b class="week">星期<span id="weather_ww">五</span></b></strong></span></span>
+
+				<script type="text/javascript">
+
+					$('#weather').leoweather({format: '<span id="colock"><strong>{年}年{月}月{日}日 <b class="week">星期{周}</b></strong></span>'});
+
+				</script>
+
+			</div>
+
+		</div>
+
+		<!-- 时间结束 -->
+
+	</div>
+
+
+
+</header>
+
+<!-- 头部结束 -->
+
+<div class="container-fluid" style="margin-top: 40px;">
+
+	<!-- 内容开始 -->
+
+	<section>
+
+		<div class="row">
+
+			<!-- 学生待分配统计列表开始 -->
+
+			<div class="col-md-12">
+
+				<div class="con-kuang" style="background: #fff; border-radius: 20px;">
+
+					<!-- 标题开始 -->
+
+					
+
+					<!-- 标题结束 -->
+
+					<div class="col-md-2 jiaoshi-toux">
+
+						<ul id="myTab" class="nav nav-tabs">
+
+							{for start="0" end="$data"}
+
+							<li {$i==0?='class="active"'}>
+
+								<a href="#{$i}" data-toggle="tab" class="bannnn">
+
+									{$i+1}班
+
+									<span class="laoshidaih">{$gid,$i|Getbigtname=###}</span>
+
+								</a>
+
+								<a href="{:url('exportsingle',['tgroupid'=>$i])}" target="_blank" class="daocc">导出</a>
+
+							</li>
+
+							{/for}
+
+						</ul>
+
+					
+
+					
+
+					</div>
+
+					<!-- 头像列表开始 -->
+
+					<div class="touxi-list col-md-10 xuestoux xuesheng-list">
+
+						<div id="myTabContent" class="tab-content">
+
+							{for start="0" end="$data"}
+
+							<div class="tab-pane fade  {$i==0?='in active'}" id="{$i}">
+
+								<!-- 课任教师开始 -->
+
+								<div class="keren-tea">
+
+									<h2 class="mingd-h2">科任教师</h2>
+
+									<ul>
+
+										{$gid,$i|Getsmalltname=###}
+
+									</ul>
+
+								</div>
+
+								<!-- 课任教师结束 -->
+
+								<div class="studmingz">
+
+									<h2 class="mingd-h2 mingd">学生名单</h2>
+
+									<div class="renssss">
+
+										<span>男生数<em>{$schid,$i|getbandmale=###}人</em></span><span>女生数<em>{$schid,$i|getbandfemale=###}人</em></span>
+
+									</div>
+
+								</div>
+
+								<ul>
+
+									{$schid,$i|Gettstudents=###}
+
+								</ul>
+
+							</div>
+
+							{/for}
+
+						</div>
+
+					
+
+					
+
+					</div>
+
+					<!-- 头像列表结束 -->
+
+				</div>
+
+			</div>
+
+			<!-- 学生待分配统计列表结束 -->
+
+		
+
+		</div>
+
+		<!-- 按钮开始 -->
+
+		
+
+		
+
+		<div class="fenpeijieg-ann">
+
+			<a onclick="lockclass()"  class="md-trigger banzhur-bancun" data-modal="modal-1">点击确认保存锁定分班结果</a>
+
+		</div>
+
+		<!-- 按钮结束 -->
+
+	</section>
+
+	
+
+	
+
+	<!-- 内容结束 -->
+
+</div>
+
+
+
+
+
+<!-- 弹出查看结果 开始-->
+
+<div class="md-modal md-effect-1" id="modal-1">
+
+	<div class="md-content">
+
+		<h3>扫描二维码查看分班结果</h3>
+
+		{if condition="$Request.session.area_id eq 1"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/1.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 2"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/2.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 3"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/3.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 4"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/4.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 5"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/5.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 6"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/6.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 7"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/7.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 8"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/8.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 9"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/9.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+		{if condition="$Request.session.area_id eq 10"}
+
+		<div style="width: 478px;  margin: 0 auto;">
+
+			
+
+			<img src="__ASSETS__/areaerweima/10.jpg" style="width: 400px;height:400px;    border-radius: 20px;margin: 0 auto;">
+
+		
+
+		</div>
+
+		{/if}
+
+	</div>
+
+</div>
+
+<div class="md-overlay"></div>
+
+
+
+<script>
+
+	var SUB_URL = "{:url('lockclass')}";
+
+	function lockclass() {
+
+		$.post(
+
+			SUB_URL,
+
+			{"schid": "{$Request.session.school_id}"},
+
+			function () {
+
+			}, 'json'
+
+		)
+
+	}
+
+</script>
+
+
+
+<!-- 弹出查看结果 结束-->
+
+<script src="__ASSETS__/bigscr/classes/js/classie.js"></script>
+
+<script src="__ASSETS__/bigscr/classes/js/modalEffects.js"></script>
+
+</body>
+
+</html>

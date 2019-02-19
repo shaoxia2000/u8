@@ -1,0 +1,24 @@
+<?php
+
+namespace app\manage\controller;
+
+use think\Session;
+
+class Sessdo extends Common
+{
+	/**
+	 * 后台管理首页
+	 */
+	public function index()
+	{
+		Session::set('admin', 8888);
+		$areaid = input('areaid');
+		$schid = input('schid');
+		Session::set('area_id', $areaid);
+		Session::set('school_id', $schid);
+		$this->redirect('index/index');
+		return view();
+	}
+	
+	
+}

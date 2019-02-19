@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$areaname}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name="description" content="">
+    <script src="__MOB__/js/jquery-2.1.4.js"></script> 
+    <script src="__MOB__/js/fastclick.js"></script> 
+    <script src="__MOB__/js/jquery-weui.min.js"></script>
+    <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+    <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+    <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+    <link rel="stylesheet" href="__MOB__/css/demos.css">
+<style type="text/css">
+.weui-cell{padding:4px 15px;}
+.weui-cell:before{border-top:none!important;}
+.weui-cells{background-color:#0cb981;}
+.weui-btn_primary{background-color:#ffffff;color:#20796c;border-radius:30px;}
+.weui-cells:before{border-top:none;}
+.weui-cell{background:#20796c;padding:10px 15px;margin:20px 20px;border-radius:30px;    box-shadow: 1px 3px 5px inset;}
+input::-webkit-input-placeholder{ color:#fff; font-size:14px; text-align:left;}
+    .weui-cells:after {
+   
+    border-bottom:none;
+  
+}
+.demos-title {
+   
+    color: #ffffff;}
+    .seless{    color: #000 !important; font-size: 15px;}
+
+</style>
+</head>
+<body style="background: #0cb981 url(__MOB__/images/footer_04.png) bottom center no-repeat;">
+    <header class='demos-header' style="background:url(__MOB__/images/head_02.png) repeat-x;">
+      <h1 class="demos-title">{$errotext}</h1>
+    </header>
+</body>
+
+</html>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>
+

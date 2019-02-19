@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>编辑分组人员</title>
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+	<style>
+		.layui-badge { padding: 10px 10px;}
+	</style>
+</head>
+<body>
+<section id="container">
+	<section class="wrapper" style="width: 90%;padding-top: 5%">
+		<form class="layui-form" action="" lay-filter="assigngroup">
+			<input type="hidden" name="schid" value="{$Request.param.schid}">
+			{if condition="$stype neq 3"}
+			<div class="layui-form-item">
+				<label class="layui-form-label">双胞胎</label>
+				<div class="layui-input-block">
+					<input type="radio" name="sbt" value="0" title="自然分组" {$res.sbt==0?='checked'}>
+					<input type="radio" name="sbt" value="1" title="在同一组" {$res.sbt==1?='checked'}>
+				</div>
+			</div>
+			{/if}
+			{if condition="$stype eq 3"}
+			<div class="layui-form-item">
+				<label class="layui-form-label">范围设置</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="nofb" lay-skin="switch" {$res.nofb=='on'?='checked'}>
+				</div>
+				<div class="layui-form-mid layui-word-aux">是否允许校级管理员设置不参与分班学生</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">科目设置</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="knowledge" lay-skin="switch" {$res.knowledge=='on'?='checked'}>
+				</div>
+				<div class="layui-form-mid layui-word-aux">是否允许校级管理员设置可选均衡科目</div>
+			</div>
+			{/if}
+			<div class="layui-form-item">
+				<label class="layui-form-label">内置条件</label>
+				<div class="layui-input-block">
+					<span class="layui-badge layui-bg-green">男女比例均衡</span>　
+					<span class="layui-badge layui-bg-green">平均分均衡</span>　
+					<span class="layui-badge layui-bg-green">总成绩均衡</span>　
+					<span class="layui-badge layui-bg-green">总人数均衡</span>　
+					<span class="layui-badge layui-bg-green">单科均衡</span>　
+					<!--<span class="layui-badge layui-bg-green">同名同姓拆分</span>　-->
+					<!--<span class="layui-badge layui-bg-green">分层均衡</span>　-->
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">条件说明</label>
+				<div class="layui-input-block">
+					1.内置条件为系统自带，不可更改<br>
+					{if condition="$stype neq 3"}
+					2.双胞胎、科目设置为可选，双胞胎默认为自然分组,科目设置默认关闭状态<br>
+					{/if}
+				</div>
+			</div>
+			<div class="layui-form-item" style="height: 10px">
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formDemo" value="{:url('students/saveset')}">保存提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">恢复默认</button>
+				</div>
+			</div>
+		</form>
+	</section>
+</section>
+{load href="__ASSETS__/js/commonlayui.js"}
+<script>layuu('assigngroup');</script>
+</body>
+</html>

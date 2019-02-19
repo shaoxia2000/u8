@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="author" Content="">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="__ASSETS__/bigscr/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="__ASSETS__/bigscr/css/fenbmecss.css">
+
+	<script src="__ASSETS__/bigscr/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__ASSETS__/bigscr/js/bootstrap.js"></script>
+	<!-- 自动时间 -->
+	<script src="__ASSETS__/js/jquery.leoweather.min.js"></script>
+</head>
+<body>
+<!-- 头部开始 -->
+<header class="head">
+	<div class="col-md-12">
+		<!-- logo开始 -->
+		<div class="col-md-6 ">
+			<div class="logo_text">2018年大庆市区普通高中阳光分班现场</div>
+		</div>
+		<!-- logo结束 -->
+		<!-- 时间开始 -->
+		<div class="col-md-6">
+			<div class=" times">
+				<span id="weather"><span id="colock"><strong><span id="weather_YY">2018</span>年<span id="weather_MM">04</span>月<span id="weather_DD">13</span>日 <b class="week">星期<span id="weather_ww">五</span></b></strong></span></span>
+				<script type="text/javascript">
+                    $('#weather').leoweather({format:'<span id="colock"><strong>{年}年{月}月{日}日 <b class="week">星期{周}</b></strong></span>'});
+				</script>
+			</div>
+		</div>
+		<!-- 时间结束 -->
+	</div>
+
+</header>
+<!-- 头部结束 -->
+<!-- 头部结束 -->
+<div class="container-fluid">
+	<!-- 内容开始 -->
+
+	<section>
+		<div class="row">
+
+			<!-- 学生待分配统计列表开始 -->
+			<div class="col-md-12">
+				<div class="con-kuang" style="margin: 10% auto;">
+					<div class="col-md-6">
+						<div class="tiao"><img src="__ASSETS__/bigscr/images/xuanz.png">
+
+
+							<div class="tiao-tit" style="height: 50px"><span class="tiao-name name">代用名称</span></div>
+
+						</div>
+
+					</div>
+					<div class="col-md-2">
+						<ul class="tiao-anniu">
+
+							<li class="start" id="btntxt" onclick="start()">选定分组人员</li>
+
+							<li><a href="jieguo.htm">现场分组开始</a></li>
+						</ul>
+
+					</div>
+				</div>
+
+				<!-- 学生待分配统计列表结束 -->
+			</div>
+		</div>
+
+	</section>
+	<!-- 内容结束 -->
+</div>
+<script type="text/javascript" src="__ASSETS__/bigscr/js/cj.js"></script>
+</body>
+</html>
+

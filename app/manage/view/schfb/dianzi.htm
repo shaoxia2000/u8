@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	{load href="__ASSETS__/bigscr/classes/js/jquery-1.9.1.min.js"}
+	{load href="__ASSETS__/js/cookie.js"}
+	<title>抽奖箱</title>
+	{load href="__ASSETS__/bigscr/classes/css/page.css"}
+	<style type="text/css">
+		html, body {
+			height: 100%;
+		}
+
+		.box-bg {
+			position: fixed;
+			z-index: -1;
+			width: 100%;
+			height: 100%;
+			background-image: url('__ASSETS__/bigscr/classes/images/box-bg.jpg');
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			top: 0;
+			left: 0;
+		}
+
+		.header {
+			background: #29af8a top left;
+			height: 140px;
+			background-attachment: fixed;
+			border-bottom: 8px solid #fff;
+		}
+
+		.reel ul li {
+			position: relative;
+		}
+
+		/*红色*/
+		/*.subscript{color:#fff;height:19px;width:36px;position:absolute;right:0px;top:-7px;text-align:center;line-height:30px;font-family:"黑体";background-color:#FF5722;-moz-transform:rotate(90deg);-webkit-transform:rotate(90deg);-o-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg);}*/
+	</style>
+	{load href="__ASSETS__/bigscr/classes/css/bootstrap.css"}
+	{load href="__ASSETS__/bigscr/classes/css/fenbmecss.css"}
+	{load href="__ASSETS__/bigscr/classes/js/bootstrap.js"}
+	{load href="__ASSETS__/bigscr/classes/js/jquery.leoweather.min.js"}
+	{load href="__ASSETS__/js/layer/2.4/layer.js"}
+</head>
+<body>
+
+<div class="qinadao_center">
+
+	<div class="box-bg">
+		<div class="header">
+			<div class="col-md-12">
+				<!-- logo开始 -->
+				<div class="col-md-6 ">
+					<div class="logo_text">{$Request.session.area_id|Getareaname}分班现场抓阄</div>
+				</div>
+				<!-- logo结束 -->
+				<!-- 时间开始 -->
+				<div class="col-md-6">
+					<div class=" times">
+						<span id="weather"><span id="colock"><strong><span id="weather_YY">2018</span>年<span id="weather_MM">04</span>月<span id="weather_DD">13</span>日 <b class="week">星期<span id="weather_ww">五</span></b></strong></span></span>
+						<script type="text/javascript">
+                            $('#weather').leoweather({format: '<span id="colock"><strong>{年}年{月}月{日}日 <b class="week">星期{周}</b></strong></span>'});
+						</script>
+					</div>
+				</div>
+				<!-- 时间结束 -->
+			</div>
+		</div>
+	</div>
+
+	<div class="outBox">
+		<div class="box">
+			<img class="boxImg" src="__ASSETS__/bigscr/classes/images/box.png">
+			<img class="boxLeft" src="__ASSETS__/bigscr/classes/images/box1.png">
+			<img class="boxRight" src="__ASSETS__/bigscr/classes/images/box2.png">
+			<img class="boxFront" src="__ASSETS__/bigscr/classes/images/box3.png"></div>
+		<div class="hand">
+			<div class="hand1"></div>
+			<div class="hand2"></div>
+			<div class="head-box">
+				<img id="jqAwardMemImg" class="head" src="__ASSETS__/bigscr/classes/images/head.jpg">
+				<span id="jqAwardMemName" class="hand-name"></span>
+			</div>
+		</div>
+		<div class="reel reel-moving">
+			<div class="reel-bg">
+				<ul class="reel-list" id="jq_result_list">
+
+				</ul>
+
+			</div>
+			<div>
+				<img class="reel1" src="__ASSETS__/bigscr/classes/images/reel1.png">
+				<span class="zhujiu-span">抓阄产生教师组</span>
+			</div>
+		</div>
+		<div class="option">
+			<div class="option-bg"></div>
+			<div class="options-bg">
+				<!-- <div class="option-num">
+					<span>选择学生组</span>
+					<select id="sltAwardNum">
+						{for start="1" end="$data+1"}
+						<option value="{$i}">{$i}</option>
+						{/for}
+					</select>
+				</div> -->
+				<a href="JavaScript:;" class="option-btn" id="btnStart" style="display: block;">
+					<span>开始抽选教师组</span></a>
+				<!--开始抽奖和停止抽奖，显示添加样式display:block-->
+				<a href="JavaScript:;" class="option-btn btn-disabled" id="btnEnd" style="display: none;">
+					<span>停止抽选教师组</span></a>
+
+			</div>
+		</div>
+	</div>
+	<input type="hidden" id="lotteryUserNum" value="8">
+	<!-- 参与人数 -->
+	<input type="hidden" id="winUserNum" value="1">
+	<!-- 获奖人数 -->
+	<div id="jqAwardPlanB" style="display:none;"></div>
+</div>
+<audio src="" preload="auto" id="media" autoplay="autoplay" loop="loop"></audio>
+<script type="text/javascript">
+    $.cookie("datat", {$datat});
+    var awardData = [];
+    var errorStatus = false;
+    var isGameIng = false;
+    $(function () {
+        $("#btnStart").click(function () {
+//            if ($.cookie("datat") == "") {
+//                layer.msg('该组教师已抽选完毕！');
+//                return;
+//            }
+
+            if (isGameIng) {
+                return;
+            }
+            isGameIng = true;
+            if (awardData.length > 0) {
+                awardData.length = 0;
+            }
+            var lUserNum = parseInt($('#lotteryUserNum').val());
+            var winUserNum = parseInt($('#winUserNum').val());
+            var lotteryNumSel = parseInt($("#sltAwardNum").val());
+            awardData = [];
+            errorStatus = false;
+            $(".box").addClass("box-moving");
+            $(this).addClass("btn-disabled").hide();
+            $("#btnEnd").addClass("btn-disabled").show();
+            GetAwardResult(winUserNum, lotteryNumSel);
+        });
+        $("#btnEnd").click(function () {
+            $(".box").removeClass("box-moving");
+            $(this).addClass("btn-disabled");
+            ShowResult(0);
+
+        });
+        var nextFansNewData = new Array();
+        $("#sltAwardItem").change(function () {
+            if (nextFansNewData.length > 0) {
+                nextFansNewData.length = 0;
+            }
+            var num = $("#sltAwardItem option:selected").attr("data_num");
+        });
+    });
+
+    function GetAwardResult(winUserNum, lotteryNumSel) {
+        var _award_id = $("#sltAwardItem").val();
+        $("#winUserNum").val(1111);
+
+	    {if condition="$xsz neq ''"}
+
+        if ($.cookie("xsz") == {$xsz}) {
+            awardData.push(new Array(_award_id, _award_id, {$jsz}+1));
+        } else {
+            var str = $.cookie("datat");
+            var arr = str.split(',');
+            var index = Math.floor((Math.random() * arr.length));
+            var sy = arr.indexOf(arr[index]);
+            awardData.push(new Array(_award_id, _award_id, arr[index]));
+            arr.splice(sy, 1);//根据下标删除该元素，并重组数组
+            $.cookie("datat", arr);//将新数组赋值给cookie
+        }
+	    {else /}
+            var str = $.cookie("datat");
+            var arr = str.split(',');
+            var index = Math.floor((Math.random() * arr.length));
+            var sy = arr.indexOf(arr[index]);
+            awardData.push(new Array(_award_id, _award_id, arr[index]));
+            arr.splice(sy, 1);//根据下标删除该元素，并重组数组
+            $.cookie("datat", arr);//将新数组赋值给cookie
+		    {/if}
+
+//        console.log(arr[index]);//获取数组中元素具体值
+
+//        console.log(sy);//获取该元素下标
+
+        console.log($.cookie("xsz"));
+//        console.log(arr);
+        $("#btnEnd").removeClass("btn-disabled");
+        return
+        //////////
+    }
+
+    function ShowResult(i) {
+        var API_URL = "__APPURL__/schfb/Getbigtname";
+
+        if (awardData.length > i) {
+            var obj = awardData[i];
+            $.ajax({
+                url: API_URL,
+                async: false, //改为同步方式
+                type: "POST",
+                data: {"gid": '{$gid}', "tgid": obj[2] - 1},
+                success: function (data) {
+                    thumb = data.thumb;
+                    tgname = data.tgname + '组';
+                    if (thumb == '') {
+                        thumb = "groupphoto/nullteacher.jpg";
+                    }
+                },
+                dataType: "json"
+            });
+            $("#jqAwardMemImg").attr("src", "__PIC__/" + thumb);
+            $("#jqAwardMemName").html(tgname);
+            $(".outBox").addClass("moving");
+            $(".reel").addClass("reel-moving");
+            setTimeout(function () {
+                $("#jq_result_list").append('<li class="zua-show"><img src="__PIC__/' + thumb + '"><span>' + tgname + '</span></li>');
+                $(".outBox").removeClass("moving");
+                setTimeout(function () {
+                    ShowResult(++i);
+                }, 100);
+            }, 4100);
+        } else {
+            $("#btnEnd").hide();
+            $("#btnStart").removeClass("btn-disabled").show();
+            isGameIng = false;
+        }
+    }
+
+    function spaceStart() {
+        if (!$("#btnStart").hasClass("btn-disabled")) {
+            $("#btnStart").click();
+        } else {
+            $("#btnEnd").click();
+        }
+    }
+
+</script>
+
+</body>
+</html>

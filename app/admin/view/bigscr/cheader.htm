@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="description" content="">
+
+	<meta name="author" Content="">
+
+	<meta name="renderer" content="webkit">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<title>先知分班大屏演示</title>
+
+	<link rel="stylesheet" href="__BS__/css/index.css" media="screen" type="text/css">
+
+	<script type="text/javascript" src="__BS__/js/jquery.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="__BS__/css/bootstrap.css">
+
+	<link rel="stylesheet" type="text/css" href="__BS__/css/fenbmecss.css">
+
+	<!-- 自动时间 -->
+
+	<script src="__BS__/js/jquery.leoweather.min.js"></script>
+
+</head>
+
+<body>
+
+
+
+{include file="public/bheader" /}
+
+<!-- 步骤开始 -->
+
+<div class="steps">
+
+
+
+	<!-- 进度条步骤开始 -->
+
+	<div class="stepbj">
+
+		<ul class="buzifenz">
+
+			<li class="onn" style=" width: 26%;  margin-right: 75px;"><em>1</em></li>
+
+			<li><em>2</em></li>
+
+			<li><em>3</em></li>
+
+
+
+		</ul>
+
+	</div><!-- 背景 -->
+
+
+
+	<div class="steps-list">
+
+
+
+		<ul>
+
+			<li><a href="{:url('bigscr/cheader')}">
+
+				<div class="steps-list-div">
+
+					<img src="__BS__/images/icon_06.png">
+
+					<span>机选家长</span>
+
+				</div>
+
+			</a>
+
+			</li>
+
+
+
+			<li><a href="{:url('bigscr/sedheader')}" id="sed">
+
+				<div class="steps-list-div">
+
+					<img src="__BS__/images/icon_09.png">
+
+					<span>选定家长</span>
+
+				</div>
+
+			</a></li>
+
+
+
+			<li><a href="fenpeilaos-list.htm">
+
+				<div class="steps-list-div">
+
+					<img src="__BS__/images/icon_03.png">
+
+					<span>教师分配</span>
+
+				</div>
+
+			</a></li>
+
+			<li><a href="return.htm">
+
+				<div class="steps-list-div">
+
+					<img src="__BS__/images/icon_12.png">
+
+					<span>结果公示</span>
+
+				</div>
+
+			</a></li>
+
+
+
+		</ul>
+
+	</div>
+
+
+
+
+
+	<!-- 进度条步骤结束 -->
+
+</div>
+
+<!-- 步骤结束 -->
+
+<!-- 抽选内容开始 -->
+
+<div class="container-fluid">
+
+	<div class="choujing-kuang">
+
+		<div class="container none" style="margin-top:100px;"></div>
+
+		<div class="mask"></div>
+
+		<div id="stop" class="btn_circle none">停止</div>
+
+		<!-- 机选家长代码start -->
+
+		<div class="lucky_list clearfix">
+
+			<!-- 左边开始 -->
+
+			<div class="left lucky_prize">
+
+
+
+				<!-- 标题开始 -->
+
+				<!--  <div class="lucky_prize_title">机选家长</div> -->
+
+				<!-- 标题结束 -->
+
+				<div class="">
+
+
+
+					<div class="select_box" style="display: none">
+
+						一次抽
+
+						<select name="select_lucky_number" class='select_lucky_number'>
+
+							<option selected value="1">1</option>
+
+						</select>
+
+						人
+
+					</div>
+
+				</div>
+
+				<div id="open" class="btn_circle btn_start">开始</div>
+
+			</div>
+
+			<!-- 左边结束 -->
+
+			<!-- 右边开始 -->
+
+			<div class="right lucky_people_list">
+
+
+
+				<div class="lpl_list clearfix none">
+
+				</div>
+
+				<div class="lpl_list clearfix none"></div>
+
+				<div class="lpl_list clearfix none"></div>
+
+
+
+			</div>
+
+<!-- 公共二维码开始 -->
+<div style="margin: 0 auto; display: table; width: 100%;"class="wechattt"><img src="__BS__/images/xianzhijiaoyu.jpg"style=" width:400px;position:absolute;top:7%;left:15%;right:15%;margin:0 auto;"><span style="color:#fff;font-size:30px;text-align:center;width:337px;margin:0 auto;    /* display: table; */position:absolute;bottom:50px;right:15%;left:15%;">扫码关注查看分班结果</span></div>
+<!-- 公共二维码结束 -->
+			<!-- 右边结束 --> </div>
+
+
+
+	</div>
+
+</div>
+
+<!-- 抽选内容结束 -->
+
+<script type="text/javascript" src='__BS__/js/transform.js'></script>
+
+<script type="text/javascript" src='__BS__/js/tick.js'></script>
+
+<!--data为静态数据 如用ajax获取请取消输入引入-->
+
+<!--抽奖动画-->
+
+<script type="text/javascript" src='__BS__/js/3d.js?123'></script>
+
+<!--实际抽奖逻辑代码-->
+
+<script type="text/javascript" src='__BS__/js/lucky.js'></script>
+
+<script type="text/javascript">
+
+// 二维码隐藏
+$(function() {
+
+$("#open").click(function(){
+  $(".wechattt").hide();
+});
+	
+});
+
+    var personArray = new Array;
+
+	{volist name="data" id="vo"}
+
+    personArray.push({
+
+        id: 546,
+
+        image: "../../public/uploads/tx.png",
+
+        thumb_image: "../../public/uploads/tx.png",
+
+        name: "{$vo.name}"
+
+    });
+
+	{/volist}
+
+
+
+
+
+        $("#sed").click(function(){
+
+            var API_URL="http://fb.xianzhiedu.com.cn/index/cajax/upclass";
+
+            var sedname = $(".lpl_userName").text();
+
+            var classesdb = "{$classesdb}";
+
+            var taskid = "{$taskid}";
+
+            $.post(
+
+                API_URL,
+
+                {"sedname":sedname,"classesdb":classesdb,"taskid":taskid},
+
+                function(){
+
+
+
+                },'json'
+
+            )
+
+
+
+
+
+        });
+
+
+
+
+
+        $("#open").click(function(){
+
+            var API_URL="http://fb.xianzhiedu.com.cn/index/cajax/upclasszero";
+
+            var classesdb = "{$classesdb}";
+
+            var taskid = "{$taskid}";
+
+            $.post(
+
+                API_URL,
+
+                {"classesdb":classesdb,"taskid":taskid},
+
+                function(){
+
+
+
+                },'json'
+
+            )
+
+
+
+        });
+
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+
+</html>

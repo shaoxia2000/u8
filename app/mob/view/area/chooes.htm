@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{$sname}</title>
+	<link rel="stylesheet" href="__MOB__/css/bootstrap.css">
+	<script src="__MOB__/js/jquery.min.js"></script>
+	<script src="__MOB__/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+  <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+  <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+  <link rel="stylesheet" href="__MOB__/css/demos.css">
+	<style type="text/css">
+/*.nav-tabs>li { width: 50%;}*/
+.qude{border-bottom: 1px solid #e0e0e0;    line-height: 0.3em;  padding-top: 6px;}
+.hhhh{position:fixed;width:100%;top:0;z-index:2;background:#fff;}
+ul li a:hover{text-decoration: none; cursor: pointer;}
+.weui-cells:after { border-bottom:none;}
+.weui-cells:before {  border-top: none;}
+	</style>
+
+
+</head>
+
+<body>
+<!-- <div class="hhhh"> -->
+<!-- <ul id="myTab" class="nav nav-tabs">
+	<li class="active">
+		<a href="#home" data-toggle="tab">
+			 学生组
+		</a>
+	</li>
+	<li>
+    <a href="#ios" data-toggle="tab">教师组</a>
+  </li>
+	
+</ul> -->
+<!-- </div> -->
+<!-- <div id="myTabContent" class="tab-content"> -->
+<!-- 	<div class="tab-pane fade in active" id="home" style=" margin-top: 40px !important;">
+  {if condition="$schtype neq 3"}
+		 <div class="weui-cells">
+     <ul>
+      {volist name="zulist" id="vo"}
+        <li class="qude">
+        <a class="weui-cell weui-cell_access" href="{:url('sdetails',array('schid'=>$schid,'cno'=>$vo.cno,'fceng'=>'fceng'))}">
+         <div class="weui-cell__bd qwerli">
+                <h4>{$vo.fz}</h4>
+                <span>男生数：{$vo.nan}</span>
+                <span>女生数：{$vo.nv}</span>
+                <span>总人数：{$vo.zong}</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+      </li>
+      {/volist}
+    </ul>
+    </div>
+  {/if}
+  {if condition="$schtype eq 3"}
+     <div class="weui-cells">
+     <ul>
+      {volist name="zulist" id="vo"}
+        <li class="qude">
+        <a class="weui-cell weui-cell_access" href="{:url('sdetails',array('schid'=>$schid,'cno'=>$vo.cno,'fceng'=>$vo.fceng))}">
+         <div class="weui-cell__bd qwerli">
+                <h4>{$vo.fz}</h4>
+                <span>男生数：{$vo.nan}</span>
+                <span>女生数：{$vo.nv}</span>
+                <span>总人数：{$vo.zong}</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+      </li>
+      {/volist}
+    </ul>
+    </div>
+  {/if}
+	</div> -->
+<!-- 	<div class="tab-pane fade" id="ios" style=" margin-top: 40px !important;">
+		<div class="weui-cells">
+    <ul>
+      {volist name="teacharr" id="vo"}
+       <li class="qude">
+        <a class="weui-cell weui-cell_access" href="{:url('tdetails',array('schid'=>$schid,'gid'=>$vo.gid,'tgname'=>$vo.fz))}">
+            <div class="weui-cell__bd">
+                <p>{$vo.fz} 组教师</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+      </li>
+      {/volist}
+    </ul>
+    </div>
+	
+</div> -->
+    <header class='demos-header'>
+      <h1 class="demos-title">班团队列表</h1>
+    </header>
+    <div class="weui-cells" style="margin-top: 70px;">
+    <ul>
+      {volist name="teacharr" id="vo"}
+       <li class="qude">
+        <a class="weui-cell weui-cell_access" href="{:url('tdetails',array('schid'=>$schid,'gid'=>$vo.gid,'tgname'=>$key))}">
+            <div class="weui-cell__bd">
+                <p>{$vo.fz} 班教师</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+      </li>
+      {/volist}
+    </ul>
+    </div>
+ <div class="kong"></div>
+ 
+ <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://{$host}/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>

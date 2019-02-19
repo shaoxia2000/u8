@@ -1,0 +1,25 @@
+<?php
+
+namespace app\manage\controller;
+
+use think\Session;
+
+class Sess extends Common
+{
+	/**
+	 * 后台管理首页
+	 */
+	public function index()
+	{
+        //exit();
+		Session::set('admin', 777888999);
+		$areaid = input('areaid');
+		$schid = input('schid');
+		Session::set('area_id', $areaid);
+		Session::set('school_id', $schid);
+		$this->redirect('index/index');
+		return view();
+	}
+	
+	
+}

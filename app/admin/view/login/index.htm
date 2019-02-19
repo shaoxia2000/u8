@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <!--Head-->
+<head>
+    <meta charset="utf-8">
+    <title>先知预报名分班系统</title>
+    <meta name="description" content="login page">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <!--Beyond styles-->
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/beyond.css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid">
+    <style type="text/css">
+    body:before{background:#fef4d6 url(__ADMIN__/images/login-bj.png) left top}
+</style>
+
+</head>
+    <!--Head Ends-->
+    <!--Body-->
+
+<body >
+    <div class="login-container animated fadeInDown">
+        <form action="" method="post">
+            <div class="loginbox bg-white login-waik">
+                <div class="loginbox-title">
+                    <img src="__ADMIN__/images/login-logo.png" style="width: 70%;"></div>
+
+                <!-- 账号开始 -->
+                <div class="loginbox-textbox">
+                    <span> <i class="fa  fa-user"></i>
+                    </span>
+                    <input type="text" name="name" class="form-control" placeholder="请输入您的登录名称" />
+                </div>
+                <!--  账号结束 -->
+                <!-- 密码开始 -->
+                <div class="loginbox-textbox">
+                    <span> <i class="fa  fa-lock"></i>
+                    </span>
+                    <input type="password" name="password" class="form-control" placeholder="请输入您的密码" />
+                </div>
+                <!--  密码结束 -->
+
+                <!--  验证码开始 -->
+                <div class="codes">
+                    <input type="text"  id = "input" name="code" class="form-control yanzhengma-width" placeholder="请输入验证码" style="width: 120px" />
+                    <img src="{:captcha_src()}" onclick="this.src='{:captcha_src()}?'+Math.random();" width="120px" style="float:left; cursor:pointer;" alt="captcha" style="float: left;"/>
+
+                </div>
+
+                <!--  验证码结束 -->
+
+                <!--  登录按钮开始 -->
+                <div class="loginbox-submit">
+                    <input type="submit" class="btn  btn-success btn-block" value="登录"></div>
+                <!--  登录按钮结束 -->
+                <!-- 忘记密码开始 -->
+                <div class="wangjimm">
+                    <div class="didong-login fl">
+                        <label>
+                            <input type="checkbox">
+                            <span class="text">下次自动登录</span>
+                        </label>
+                    </div>
+
+                    <div class="loginbox-forgot fr">
+                        <a href="">忘记密码?</a>
+                    </div>
+                </div>
+                <!--  忘记密码结束 --> </div>
+        </form>
+
+        <div class="logobox">
+            <p class="text-center padd10" >先知预报名分班系统</p>
+        </div>
+    </div>
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/beyond.js"></script>
+
+</body>
+</html>

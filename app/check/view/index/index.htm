@@ -1,0 +1,230 @@
+{extend name="public/_template" /}
+{block name="content"}
+<!--Start Breadcrumb-->
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb">
+			<li><a href="javascript:void(0);">首页</a></li>
+			<li><a href="javascript:void(0);">概览</a></li>
+		</ol>
+	</div>
+</div>
+<!--End Breadcrumb-->
+<!--Start Dashboard 1-->
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>数据概览</h3>
+	</div>
+	<div class="col-xs-12 col-sm-8 col-md-7">
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="sparkline-dashboard" id="sparkline-1"></div>
+				<div class="sparkline-dashboard-info">
+					{$areas|count}
+					<span class="txt-primary">区县总数</span>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="sparkline-dashboard" id="sparkline-2"></div>
+				<div class="sparkline-dashboard-info">
+					{$data.school_num|default=0}
+					<span class="txt-primary">学校总数</span>
+				</div>
+			</div><!-- 
+			<div class="col-xs-4">
+				<div class="sparkline-dashboard" id="sparkline-3"></div>
+				<div class="sparkline-dashboard-info">
+					{$data.student_num|default=0}
+					<span class="txt-success">平台学生总数</span>
+				</div>
+			</div> -->
+			<!-- <div class="col-xs-2">
+				<div class="sparkline-dashboard" id="sparkline-3"></div>
+				<div class="sparkline-dashboard-info">
+					107.83
+					<span class="has-error">高中待分班总数</span>
+				</div>
+			</div>
+			<div class="col-xs-2">
+				<div class="sparkline-dashboard" id="sparkline-3"></div>
+				<div class="sparkline-dashboard-info">
+					107.83
+					<span class="txt-danger">初中待分班总数</span>
+				</div>
+			</div>
+			<div class="col-xs-2">
+				<div class="sparkline-dashboard" id="sparkline-3"></div>
+				<div class="sparkline-dashboard-info">
+					107.83
+					<span class="has-warning">小学待分班总数</span>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</div>
+<!--End Dashboard 1-->
+<!--Start Dashboard 2-->
+<div class="row-fluid">
+	<div id="dashboard_links" class="col-xs-12 col-sm-2 pull-right">
+		<ul class="nav nav-pills nav-stacked">
+			{volist name="areas" id="area_name" key="area_id"}
+			<li><a href="#" class="tab-link" id="area-{$area_id}">{$area_id}-{$area_name}</a></li>
+			{/volist}
+		</ul>
+	</div>
+	<div id="dashboard_tabs" class="col-xs-12 col-sm-10">
+		{volist name="areas" id="area_name" key="area_id"}
+		<div id="dashboard-area-{$area_id}" class="row" style="visibility: hidden; position: absolute;">
+			<div class="col-sm-12 col-md-12">
+				<div id="ow-marketplace" class="col-sm-12 col-md-12">
+					<!-- <a href="#"><i class="fa fa-folder-open"></i></a>
+					<a href="#"><i class="fa fa-credit-card"></i></a>
+					<a href="#"><i class="fa fa-ticket"></i></a>
+					<a href="#"><i class="fa fa-bookmark-o"></i></a>
+					<a href="#"><i class="fa fa-globe"></i></a> -->
+				</div>
+				<h4 class="page-header">{$area_name}</h4>
+				<table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-{$area_id}">
+					<thead>
+						<tr>
+							<th>学校标识</th>
+							<th>学校名称</th>
+							<th>学校类型</th>
+							<th>分班总数</th>
+							<th>教师总数</th>
+							<th>学生总数</th>
+							<th>男生总数</th>
+							<th>女生总数</th>
+							<th>警告</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		{/volist}
+	</div>
+	<div class="clearfix"></div>
+</div>
+<!--End Dashboard 2 -->
+<div style="height: 40px;"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+	var ids = {$areas|array_keys|json_encode};
+	LoadDataTablesScripts(function(){
+		getAreaData(ids[0]);
+		$('#dashboard-area-'+ids[0]).css('visibility', 'visible').css('position', 'relative');
+		delete ids[0];
+	});
+	DashboardTabChecker(function(attr){
+		var has = false;
+		var id = attr.split('-')[1];
+		for(i in ids){
+			if(ids[i] == id){
+				has = true;
+				delete ids[i];
+			}
+		}
+
+		if(has){
+			getAreaData(id);
+		}
+	});
+	$(".table").beautyHover();
+	$("#dashboard_links li:first").addClass('active');
+});
+
+function getAreaData(id){
+	$.ajax({
+		url:"{:url('ajaxGetAreaDetailsByAid')}",
+		data:{"id":id},
+		type:'post',
+		dataType:'json',
+		async:false,
+		success:function(data){
+			var str = '';
+			var _x=0,_xs=0,_c=0,_cs=0,_g=0,_gs=0;
+			for(i in data){
+				str += '<tr>';
+				str += '<td>'+data[i].schid+'</td>';
+				str += '<td>'+data[i].schname+'</td>';
+				str += '<td>'+getSchoolType(data[i].schtype)+'</td>';
+				switch(data[i].schtype){
+					case 1:
+						_x++;
+						break;
+					case 2:
+						_c++;
+						break;
+					case 3:
+						_g++;
+						break;
+				}
+				str += '<td>'+Number(data[i].class_num)+'</td>';
+				str += '<td>'+Number(data[i].teacher_num)+'</td>';
+				try{
+					detail = data[i].detail;
+					str += '<td>'+Number(detail.count)+'</td>';
+					switch(data[i].schtype){
+						case 1:
+							_xs += Number(detail.count);
+							break;
+						case 2:
+							_cs += Number(detail.count);
+							break;
+						case 3:
+							_gs += Number(detail.count);
+							break;
+					}
+					str += '<td>'+Number(detail.man)+'</td>';
+					str += '<td>'+Number(detail.woman)+'</td>';
+					if(detail.warming == 1){
+						str += '<td class="txt-danger">男女总和不符</td>';
+					}else{
+						str += '<td></td>';
+					}
+				}catch(err){
+					str += '<td>0</td>';
+					str += '<td>0</td>';
+					str += '<td>0</td>';
+					str += '<td></td>';
+				}
+				str += '</tr>';
+			}
+			$("#datatable-"+id+" tbody").html(str);
+			str = '　学校总数:'+(_x+_c+_g)+"所　";
+			str += '学生总数:'+(_xs+_cs+_gs)+"人　";
+			str += '(小学:'+_x+'所 '+_xs+"人)　";
+			str += '(初中:'+_c+'所 '+_cs+"人)　";
+			// str += '(高中:'+_g+'所 '+_gs+"人)";
+
+			$("#dashboard-area-"+id+" .page-header").append(str);
+			$('#datatable-'+id).dataTable({
+				"aaSorting": [[ 2, "asc" ]],
+				"sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+				"sPaginationType": "bootstrap",
+				"bInfo":false,
+				"oLanguage": {
+					"sSearch": "",
+					"sLengthMenu": '每页显示_MENU_条',
+					"sInfoEmpty": "没有记录",
+					"sZeroRecords": "没有找到符合条件的数据",
+					"oPaginate": {
+		            	"sFirst": "首页",
+		            	"sPrevious": "前一页",
+		            	"sNext": "后一页",
+		            	"sLast": "尾页"
+			        }
+				}
+			});
+
+		},
+		error:function(jqXHR, textStatus, errorThrown){
+			alert(errorThrown);
+		}
+	})
+}
+</script>
+{/block}

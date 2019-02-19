@@ -1,0 +1,656 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>大庆市教育阳光分班大数据分析统计</title>
+	<link rel="stylesheet" type="text/css" href="__SCR__/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__SCR__/css/daqingcss.css">
+	<link rel="stylesheet" href="__SCR__/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="__SCR__/css/fenbcss.css">
+	<script type="text/javascript" src="__SCR__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__SCR__/js/bootstrap.min.js"></script>
+
+	<!-- 自动时间 -->
+	<script src="__SCR__/js/jquery.leoweather.min.js"></script>
+
+</head>
+
+<body style="background:url(__SCR__/images/xiznhi-bjtup.jpg) no-repeat left center;background-attachment:fixed;background-size:cover;width:100%;height:100%;">
+
+	<div class="container-fluid">
+		<div class="row">
+			<!-- 头部开始 -->
+			<div class="header-bj">
+				<div class="head-tite">{$areaname}教育阳光分班大数据分析统计</div>
+			</div>
+			<!-- 时间开始 -->
+			<!-- 时间结束 -->
+			<!-- 头部结束 -->
+			<div class="con-dakuang">
+				<div class="col-sm-12">
+					<!-- 左侧开始 -->
+					<div class="col-sm-3">
+						<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+							<ul class="layui-tab-title">
+								<li class="layui-this" onclick="left(0)">{$areaname}</li>
+								<li  onclick="left(1)">小学</li>
+								<li  onclick="left(2)">初中</li>
+								<li  onclick="left(3)">高中</li>
+							</ul>
+							<!-- left内容开始 -->
+							<div class="layui-tab-content">
+								<!-- 大庆直属开始 -->
+								<div class="layui-tab-item layui-show">
+									<div id="demoa">
+										<div id="demo1a">
+											<ul class="leftfenb-ul">
+											</ul>
+										</div>
+										<div id="demo2a"></div>
+									</div>
+
+								</div>
+
+							</div>
+							<!-- left内容结束 -->
+						</div>
+
+					</div>
+					<!-- 左侧结束 -->
+					<!-- 地图开始 -->
+					<div class="col-sm-4">
+						<div class="map-title">{$areaname}教育局直属学校</div>
+						<div class="map-con">
+							<!-- 地图开始 -->
+							<div class="map-muod" style="position: relative;">
+								<img src="{$img}" ></div>
+							<!-- 地图结束 -->
+							<!-- 地图人数开始 -->
+							<div class="map-zongs">
+								<ul class="map-list">
+									<li>
+										{$areaname}参与分班学生
+										<span>{$stunum}</span>
+									</li>
+									<li>
+										{$areaname}参与分班教师
+										<span>{$teachernum}</span>
+									</li>
+
+								</ul>
+							</div>
+							<!-- 地图人数结束 -->
+							<!-- 签到人数开始 -->
+							<div class="qiandao">
+								<div class="qiandschool">
+									{$areaname}
+									<span>
+										参与家长数 <strong>{$pnum}</strong>
+									</span>
+								</div>
+							</div>
+							<!-- 签到人数结束 -->
+							<!-- 进度开始 -->
+
+							<ul class="fenbjindu">
+								<li>
+									<em id='n1'></em>
+									<span>学生导入</span>
+								</li>
+								<li>
+									<em id='n2'></em>
+									<span>教师团队</span>
+								</li>
+								<li>
+									<em id='n3'></em>
+									<span>区学生分组</span>
+								</li>
+								<li>
+									<em id='n4'></em>
+									<span>学校分班</span>
+								</li>
+								<li>
+									<em id='n5'></em>
+									<span>结果公示</span>
+								</li>
+							</ul>
+
+							<!-- 进度结束 -->
+						</div>
+					</div>
+
+					<!-- 地图结束 -->
+					<!-- 右侧开始 -->
+					<div class="col-sm-5">
+						<!-- 学生成绩数据分布统计开始 -->
+						<div class="studs">
+							<div class="title" id="titleA">学生成绩数据分布统计</div>
+							<!-- 小学和初中成绩开始 -->
+							<ul class="chuzhong">
+							
+							</ul>
+						
+						<!-- 小学和初中成绩结束-->
+						<!-- 高中成绩 开始-->
+						<div class="gaozhong-bj">
+							<div id="gaongz-chengj" style="height: 100%"></div>
+						</div>
+						<!-- 高中成绩 结束-->
+					</div>
+					<!-- 学生成绩数据分布统计结束 -->
+					<!-- 学生分层数据分布统计开始 -->
+					<div class="studs">
+						<div class="title" id="titleB">学生分层数据分布统计</div>
+
+						<div class="fencheng">
+							<div id="gaozhongfenc" style="height: 100%"></div>
+						</div>
+					</div>
+					<!-- 学生分层数据分布统计结束 -->
+					<!-- 学生分层数据分布统计开始 -->
+					<div class="studs right-bott" >
+						<div class="ercifenb">
+							<div class="title title2" id="titleC">二次分班数据统计</div>
+							<div class="ercifenb-con">
+								<div id="erchifenb" style="height: 100%"></div>
+							</div>
+						</div>
+
+						<div class="shuangbaot">
+							<div class="title title2" id="titleD">男女生比例及双胞胎比例</div>
+							<div class="shuangbaot-con">
+								<ul>
+									<li>
+										<div>
+											<img src="__SCR__/images/man.png">
+											<img src="__SCR__/images/weman.png"></div>
+										<div class="shuang-li">
+											
+										</div>
+									</li>
+									<li>
+										<div>
+											<img src="__SCR__/images/man.png">
+											<img src="__SCR__/images/man.png"></div>
+										<div class="shau">
+											
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- 学生分层数据分布统计结束 -->
+				</div>
+				<!-- 右侧结束 -->
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://nfb.xianzhiedu.com.cn/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+<script src="__SCR__/js/layui.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/javascript" src="__SCR__/js/xiazecharts.min.js"></script>
+<!-- 二次分班 -->
+<script type="text/javascript">
+
+// 开始加载
+left(0);
+getSchoolInfo({$fristschid});
+function getSchoolInfo(id){
+	$.ajax({
+		url:"{:url('ajaxGetSchoolInfo')}",
+		data:{sid:id},
+		type:"post",
+		dataType:'json',
+		success:function(res){
+			$(".qiandschool").html(res.school.schname + "<span>参与家长数<strong>"+res.jzcyrs+"</strong></span>");
+			$("#titleA").html(res.school.schname +"学生成绩数据分布统计");
+			$("#titleB").html(res.school.schname +"学生分层数据分布统计");
+			$("#titleC").html(res.school.schname +"二次分班数据统计");
+			$("#titleD").html(res.school.schname +"男女生及双胞胎人数");
+			var right_top = res.right_top;
+			var str = "";
+			console.log(res);
+			if(res.school.schtype != '3')
+			{
+				$('.chuzhong').show();
+		      	$('.gaozhong-bj').hide();
+		      	var box = "";
+      			 box+="<li>";
+          		 box+="<em>语文</em>";
+          		 box+="<span>"+right_top['语文']+"</span>";
+                 box+="</li>";
+                 box+="<li>";
+          		 box+="<em>数学</em>";
+          		 box+="<span>"+right_top['数学']+"</span>";
+                 box+="</li>";
+                 box+="<li>";
+          		 box+="<em>英语</em>";
+          		 box+="<span>"+right_top['英语']+"</span>";
+                 box+="</li>";
+
+                 $('.chuzhong').html(box);
+			}else{
+				// 这个位置用高中的柱状图
+				$('.chuzhong').hide();
+		      	$('.gaozhong-bj').show();
+		      	 
+			}
+			var bili = res.bili;
+			var boxs = "";
+			boxs+="<span>男生"+bili.nan+"</span><span>女生"+bili.nv+"</span>";
+
+			$('.shuang-li').html(boxs);
+	  		$('.shau').html("<span>双胞胎<em>"+bili.twins+"</em></span>");
+
+
+	  		console.log(res.status.status);
+	  		if(res.status.status==1)
+	  		{
+	  			$("#n1").addClass("emactive");
+	  		}
+	  		if(res.status.status==2)
+	  		{
+	  			$("#n1").addClass("emactive");
+	  			$("#n2").addClass("emactive");
+	  		}
+	  		if(res.status.status==3)
+	  		{
+	  			$("#n1").addClass("emactive");
+	  			$("#n2").addClass("emactive");
+	  			$("#n3").addClass("emactive");
+	  		}
+	  		if(res.status.status==4)
+	  		{
+	  			$("#n1").addClass("emactive");
+	  			$("#n2").addClass("emactive");
+	  			$("#n3").addClass("emactive");
+	  			$("#n4").addClass("emactive");
+	  			$("#n5").addClass("emactive");
+	  		}
+
+
+			// 分层数据
+			var fcdata = res.fcdata;
+			var gzfcdom = document.getElementById("gaozhongfenc");
+			var gzfc = echarts.init(gzfcdom);
+			gzfc.setOption(getGzFenc(fcdata), true);
+
+
+
+
+			var gzdom = document.getElementById("gaongz-chengj");
+			var gzcj = echarts.init(gzdom);
+			gzcj.setOption(getGzOption(right_top),true)
+
+
+			var secondfb  = res.secondfb;
+			var erchifenb = document.getElementById("erchifenb");
+			var ecfb = echarts.init(erchifenb);
+			ecfb.setOption(getSecFb(secondfb), true);
+
+		},
+		error:function(err){
+			// setTimeout(getSchoolInfo(id),500);
+		}
+	})
+
+
+}
+
+function left(typeid)
+{
+	var areaid = {$areaid};
+	if(typeid==0)
+	{
+		var type = 0;
+	}else{
+		var type = typeid;
+	}
+	$.ajax({
+	      type:"POST",
+	      url:"{:url('left')}",
+	      dataType:"json",
+	      data:{areaid:areaid,type:type},
+	      success:function (msg)
+	      {							
+	              var box = "";
+	              $.each(msg, function (index, item) 
+	              {		 	              		 
+	              		 box+="<li>";
+	              		 box+="<a href='#' onclick=getSchoolInfo("+item.schid+")>";
+	              		 box+="<ol>";
+	                     box+="<dt>"+item.schname+"</dt>";
+	                     box+="<dd>教师总人数<span>"+item.teachernum+"</span></dd>";
+	                     box+="<dd>教师团队数<span>"+item.tnum+"</span></dd>";
+	                     box+="<dd>学生总人数<span>"+item.stunum+"</span></dd>";
+	                     box+="<dd>学生分组数<span>"+item.snum+"</span></dd>";
+	                     box+="</ol>";
+	                     box+="</a>";
+	                     box+="</li>";
+	                     
+	              });
+	              $(".leftfenb-ul").html(box);
+	      }
+  	})
+}	
+
+
+function getSecFb(param){
+	console.log(param);
+
+	var bstu = param.bstu;
+	var fstu = param.fstu;
+	var hstu = param.hstu;
+	var wstu = param.wstu;
+
+	console.log(bstu);
+	console.log(fstu);
+	console.log(hstu);
+	console.log(wstu);
+	option = null;
+	option = {
+		legend: {
+			textStyle:{
+		 	fontWeight: '600',
+	        color:'#4187b9',
+	        fontSize:14
+	        }
+	    },
+	    tooltip : {
+	        trigger: 'axis',
+	        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+	            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+	        }
+	    },
+	    grid: {
+	        left: '3%',
+	        right: '4%',
+	        bottom: '15%',
+	        containLabel: true
+	    },
+	    xAxis : [
+	        {
+	            type : 'category',
+	            data : ['复读生', '后转入', '补报生', '未报到'],
+	            axisTick: {
+	                alignWithLabel: true
+	            },
+	                 axisLabel:{
+	                  textStyle:{
+	                     color:"#59bdff",
+	                     fontSize:12
+	                }
+	              },
+	               axisLine:{
+	                        lineStyle:{
+	                            color:'#00b7ee',
+	                            width:2,
+	                        }
+	                    }
+	        }
+	    ],
+	    yAxis : [
+
+	        {
+	        	axisLabel:{
+	                  textStyle:{
+	                     color:"#59bdff",
+	                     fontSize:12
+	                }
+	              },
+	              axisLine:{
+	                        lineStyle:{
+	                            color:'#00b7ee',
+	                            width:2,
+	                        }
+	                    },
+	            type : 'value'
+	        }
+	    ],
+	    series : [
+	        {
+	            name:'',
+	            type:'bar',
+	            barWidth: '30%',
+	            data:[fstu,hstu,bstu,wstu]
+	        }
+	    ]
+	};
+	return option;
+}
+
+function getGzFenc(param){
+	option = null;
+	var builderJson = {};
+	// builderJson.charts = eval('('+param+')');
+	builderJson.charts = param;
+
+	var downloadJson = {
+	  "echarts.min.js": 17365,
+	  "echarts.simple.min.js": 4079,
+	  "echarts.common.min.js": 6929,
+	  "echarts.js": 14890
+	};
+
+	var waterMarkText = '';
+
+	var canvas = document.createElement('canvas');
+	var ctx = canvas.getContext('2d');
+	canvas.width = canvas.height = 100;
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
+	ctx.globalAlpha = 0.08;
+	ctx.font = '20px Microsoft Yahei';
+	ctx.translate(50, 50);
+	ctx.rotate(-Math.PI / 4);
+	ctx.fillText(waterMarkText,0,0);
+
+	option = {
+			legend: {
+			textStyle:{
+		 	fontWeight: '600',
+	        color:'#4187b9',
+	        fontSize:14
+	        }
+	    },
+	    backgroundColor: {
+	        type: 'pattern',
+	        image: canvas,
+	        repeat: 'repeat'
+	    },
+	    tooltip: {},
+	    grid: [{
+	        top: 50,
+	        width: '90%',
+	        bottom: '10%',
+	        left: 10,
+	        containLabel: true
+	    }],
+	    xAxis: [{
+	        type: 'value',
+	        max: builderJson.all,
+	        splitLine: {
+	            show: false
+	        },
+	                 axisLabel:{
+	                  textStyle:{
+	                     color:"#59bdff",
+	                     fontSize:14
+	                }
+	              }, 
+	              axisLine:{
+	                        lineStyle:{
+	                            color:'#00b7ee',
+	                            width:2,
+	                        }
+	                    }
+	    }],
+	    yAxis: [{
+	        type: 'category',
+	        data: Object.keys(builderJson.charts),
+	     
+	        axisLabel: {
+	            interval: 0,
+	            rotate: 20,
+	            textStyle:{
+	                     color:"#59bdff",
+	                     fontSize:14
+	                }
+	        },axisLine:{
+	                        lineStyle:{
+	                            color:'#00b7ee',
+	                            width:2,
+	                        }
+	                    },
+	      
+	        splitLine: {
+	            show: false
+	        }
+	    }],
+	    series: [{
+	        type: 'bar',
+	        stack: 'chart',
+	        z: 3,
+	        label: {
+	            normal: {
+	                position: 'right',
+	                show: true
+	            }
+	        },
+	         barWidth: '50%',
+	        data: Object.keys(builderJson.charts).map(function (key) {
+	            return builderJson.charts[key];
+	        })
+	    }]
+	};
+
+	return option;
+}
+
+function getGzOption(param){
+	option = null;
+	var builderJson = {};
+	// builderJson.charts = eval('('+param+')');
+	builderJson.charts = param;
+	// var builderJson = {
+	//   "charts": {
+	//     "数学": 7778,
+	//     "语文": 7355,
+	//     "英语": 2405,
+	//     "物理": 1842,
+	//     "化学": 90,
+	//     "生物": 590,
+	//     "地理": 890,
+	//     "历史": 1090,
+	//     "政治": 1890,
+	//     "体育": 2090
+	//   }
+	// };
+	var waterMarkText = '';
+	var canvas = document.createElement('canvas');
+	var ctx = canvas.getContext('2d');
+	canvas.width = canvas.height = 100;
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
+	ctx.globalAlpha = 0.08;
+	ctx.font = '20px Microsoft Yahei';
+	ctx.translate(50, 50);
+	ctx.rotate(-Math.PI / 4);
+	ctx.fillText(waterMarkText, 0, 0);
+
+	option = {
+			legend: {
+			textStyle:{
+		 	fontWeight: '600',
+	        color:'#4187b9',
+	        fontSize:14
+	        }
+	    },
+	    backgroundColor: {
+	        type: 'pattern',
+	        image: canvas,
+	        repeat: 'repeat'
+	    },
+	    tooltip: {},
+	    grid: [{
+	        top: 50,
+	        width: '90%',
+	        bottom: '5%',
+	        left: 10,
+	        containLabel: true
+	    }],
+	    xAxis: [{
+	        type: 'value',
+	        max: builderJson.all,
+	        splitLine: {
+	            show: false
+	        },
+	                 axisLabel:{
+	                  textStyle:{
+	                     color:"#59bdff",
+	                     fontSize:12,
+
+	                }
+	              }, 
+	              axisLine:{
+	                        lineStyle:{
+	                            color:'#00b7ee',
+	                            width:2,
+	                        }
+	                    }
+	    }],
+	    yAxis: [{
+	        type: 'category',
+	        data: Object.keys(builderJson.charts),
+	     
+	        axisLabel: {
+	            interval: 0,
+	            rotate: 25,
+	            textStyle:{
+	                     color:"#59bdff",
+	                     fontSize:12
+	                }
+	        },axisLine:{
+	                        lineStyle:{
+	                            color:'#00b7ee',
+	                            width:2,
+	                        }
+	                    },
+	      
+	        splitLine: {
+	            show: false
+	        }
+	    }],
+	    series: [{
+	        type: 'bar',
+	        stack: 'chart',
+	        z: 3,
+	        label: {
+	            normal: {
+	                position: 'right',
+	                show: true
+	            }
+	        },
+	         barWidth: '50%',
+	        data: Object.keys(builderJson.charts).map(function (key) {
+	            return builderJson.charts[key];
+	        })
+	    }]
+	};
+
+	return option;
+}
+       </script>
+
+<!-- 向上滚动js -->
+<script type="text/javascript" src="__SCR__/js/myscroll.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="navbar-container">
+            <!-- Navbar Barnd -->
+            <div class="navbar-header pull-left">
+                <a href="#" class="navbar-brand">
+                    <small>
+                        <img src="__ADMIN__/images/logo.png" alt=""></small>
+                </a>
+            </div>
+
+            <div class="sidebar-collapse" id="sidebar-collapse"> <i class="collapse-icon fa fa-bars"></i>
+            </div>
+
+            <div class="navbar-header pull-right">
+                <div class="navbar-account">
+
+                    <ul class="account-area">
+                  
+                        <!-- 皮肤切换开始 -->
+
+                        <li>
+                            <a class="" data-toggle="dropdown"> <i style=" font-size: 25px;" class="icon fa fa-dashboard"></i>
+
+                            </a>
+
+                            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+
+                                <li class="theme-area">
+                                    <ul class="colorpicker" id="skin-changer">
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" onclick="changestyle(1)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" onclick="changestyle(2)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#03B3B2;" onclick="changestyle(3)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#53a93f;" onclick="changestyle(4)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn"  href="#" style="background-color:#FF8F32;" onclick="changestyle(5)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#cc324b;" onclick="changestyle(6)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#AC193D;" onclick="changestyle(7)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#8C0095;" onclick="changestyle(8)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#0072C6;" onclick="changestyle(9)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#585858;" onclick="changestyle(10)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#474544;" onclick="changestyle(11)"></a>
+                                        </li>
+                                        <li>
+                                            <a class="colorpick-btn" href="#" style="background-color:#001940;" onclick="changestyle(12)"></a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+
+                        </li>
+                        <!--  皮肤切换结束 --> 
+      <!--  头像开始 -->
+                        <li>
+                            <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                                <div class="avatar" title="View your public profile">
+                                    <img src="__ADMIN__/images/adam-jansen.jpg"></div>
+                                <section>
+                                    <h2>
+                                        <span class="profile">
+                                            <span>欢迎管理员:{$Request.session.name}</span>
+                                        </span>
+                                    </h2>
+                                </section>
+                            </a>
+
+                            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                <li class="username">
+                                    <a>David Stevenson</a>
+                                </li>
+                                <li class="dropdown-footer" style="text-align: center;">
+                                    <a href="{:url('admin/logout')}">退出登录</a>
+                                </li>
+                                <li class="dropdown-footer" style="text-align: center;">
+                                    <a href="{:url('admin/edit',array('id'=>$Request.session.id))}">修改密码</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--  头像结束 -->
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

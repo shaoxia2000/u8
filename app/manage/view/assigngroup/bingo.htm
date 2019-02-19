@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>----------</title>
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+</head>
+<body>
+<section id="container">
+	<section class="wrapper" style="width: 90%;padding-top: 5%">
+		<form class="layui-form" action="" lay-filter="bingo">
+			<input type="hidden" name="schid" value="{$Request.param.schid}">
+			<div class="layui-form-item">
+				<label class="layui-form-label">学生组选定</label>
+				<div class="layui-input-block">
+					{for start="1" end="$data.tnum+1"}
+					<input type="radio" name="xsz" value="{$i}" title="{$i}组" {$xsz==$i?='checked'}>
+					{/for}
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">教师组选定</label>
+				<div class="layui-input-block">
+					{for start="0" end="$data.tnum"}
+					<input type="radio" name="jsz" value="{$i}" {$jsz==$i?='checked'} title="{$data.id,$i|Getbigtname=###}-{$i|IntToChr} 教师组">
+					{/for}
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">学生录入</label>
+				<div class="layui-input-block">
+					<textarea name="studentscon" placeholder="请录入学生身份证号以|线分割" class="layui-textarea">{$studentscon}</textarea>
+				</div>
+			</div>
+			<div class="layui-form-item" style="height: 10px">
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formDemo" value="{:url('assigngroup/bingo')}">保存提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">恢复默认</button>
+				</div>
+			</div>
+		</form>
+	</section>
+</section>
+{load href="__ASSETS__/js/commonlayui.js"}
+<script>layuu('bingo');</script>
+</body>
+</html>

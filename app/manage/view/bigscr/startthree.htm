@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="author" Content="">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title></title>
+	{load href="__ASSETS__/bigscr/css/bootstrap.css"}
+	{load href="__ASSETS__/bigscr/css/fenbmecss.css"}
+	{load href="__ASSETS__/bigscr/js/jquery.min.js"}
+	{load href="__ASSETS__/bigscr/js/bootstrap.js"}
+	{load href="__ASSETS__/bigscr/js/jquery.leoweather.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+	{load href="__ASSETS__/js/cookie.js"}
+	<!-- 自动时间 -->
+	<style>
+		.layui-bg-blue {
+			background-color: #42b1dd;
+			background: -webkit-gradient(linear, 0 0, 44 44, color-stop(0.00, rgba(255, 255, 255, 0.17)), color-stop(0.25, rgba(255, 255, 255, 0.17)), color-stop(0.26, rgba(255, 255, 255, 0)), color-stop(0.50, rgba(255, 255, 255, 0)), color-stop(0.51, rgba(255, 255, 255, 0.17)), color-stop(0.75, rgba(255, 255, 255, 0.17)), color-stop(0.76, rgba(255, 255, 255, 0)), color-stop(1.00, rgba(255, 255, 255, 0))), -webkit-gradient(linear, left bottom, left top, color-stop(0, #42b1dd), color-stop(1, #379dd5));
+			background: -moz-repeating-linear-gradient(top left -30deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.17) 15px, rgba(255, 255, 255, 0) 15px, rgba(255, 255, 255, 0) 30px), -moz-linear-gradient(#9bdd62 0%, #42b1dd 100%);
+			-webkit-animation: animate-stripes 2s linear infinite;
+		}
+
+		.anniu a:hover {
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+<!-- 头部开始 -->
+<header class="head">
+	<div class="col-md-12">
+		<!-- logo开始 -->
+		<div class="col-md-8">
+			<div class="logo_text"><img src="__ASSETS__/bigscr/images/xianzhilogo.png" style="height: 60px;margin-right: 30px;">{$Request.session.area_id|Getareaname}阳光分班现场</div>
+		</div>
+		<!-- logo结束 -->
+		<!-- 时间开始 -->
+		<div class="col-md-4">
+			<div class=" times">
+				<span id="weather"><span id="colock"><strong><span id="weather_YY">2018</span>年<span id="weather_MM">04</span>月<span id="weather_DD">13</span>日 <b class="week">星期<span id="weather_ww">五</span></b></strong></span></span>
+				<script type="text/javascript">
+                    $('#weather').leoweather({format: '<span id="colock"><strong>{年}年{月}月{日}日 <b class="week">星期{周}</b></strong></span>'});
+				</script>
+			</div>
+		</div>
+		<!-- 时间结束 -->
+	</div>
+</header>
+<!-- 头部结束 -->
+<div class="container-fluid">
+	<!-- 内容开始 -->
+	<div class="row">
+		<div class="col-md-12" style=" margin: 50px auto 0;overflow: hidden;overflow-y: auto; height:670px;">
+
+			{volist name="data" id="vo"}
+			<fieldset class="layui-elem-field layui-field-title" style="color: #FFFFFF; border: none;">
+				<legend style="color: #FFFFFF;border-bottom:none;padding:0;">{$vo.tgroupname}:<span style="font-size:12px;color: #FFFFFF;padding-left: 10px;" id="dtarget-{$vo.id}-{$vo.schid}">正在大屏分组中...</span><span style="font-size:12px;display: none" id="classes{$vo.schid}"></span><span style="font-size:12px;display: none" id="kclasses{$vo.schid}"></span></legend>
+			</fieldset>
+			<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="ctarget-{$vo.id}-{$vo.schid}" style="box-shadow: 5px 5px 5px rgba(0,0,0,0.5);background:rgba(0,0,0,0.5);">
+				<div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+			</div>
+			<div class="site-demo-button" style="display: none">
+				<button class="layui-btn site-demo-active" data-type="loading" id="ctarget-{$vo.id}-{$vo.schid}">loading</button>
+			</div>
+			<div class="site-demo-button" style="display: none">
+				{if condition="$vo.fcengnum eq 0"}
+				<a class="btn btn-small btn-outline btn-primary" style="display: none" id="ctarget-{$vo.id}-{$vo.schid}" FB_classnum="{$vo.tnum}" FB_znums="{$vo.schid|Getclassesnums}" FB_malenums="{$vo.schid|Getclassesmalenums}" FB_femalenums="{$vo.schid|Getclassesfemalenums}" FB_classdb="classes{$vo.schid}" FB_schtype="{$vo.schid|GetSchooltype}" FB_avgnum="{$vo.schid,$vo.tnum|GetClassespnum=###}" title="整体均衡" onclick="testfbauto(this)"><i class="fa fa-pie-chart"></i></a>
+				{else /}
+				{for start="0" end="$vo.fcengnum"}
+				<a class="btn btn-small btn-outline btn-primary" style="display: none" id="ctarget-{$vo.id}-{$vo.schid}-{$i}" FB_classnum="{$vo.id,$i|GetClassescnum=###}" FB_znums="{$vo.schid|Getclassesnums}" FB_malenums="{$vo.schid|Getclassesmalenums}" FB_femalenums="{$vo.schid|Getclassesfemalenums}" FB_classdb="classes{$vo.schid}" FB_schtype="{$vo.schid|GetSchooltype}" FB_avgnum="{$vo.id,$i,$vo.schid|GetCavg=###}" FB_id="{$i}" title="分层{$i}均衡" onclick="testfbcauto(this)"><i class="fa fa-area-chart"></i></a>
+				{/for}
+				{/if}
+			</div>
+			{/volist}
+
+		</div>
+		<!--<div class="anniu"><a href="{:url('startfour')}">查看分组详情</a></div>-->
+	</div>
+	<!-- 内容结束 -->
+</div>
+<script>
+    $.cookie("bigscrnum", 0);
+    layui.use(['element', 'layer'], function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //触发事件
+        var active = {
+            loading: function (othis) {
+                var DISABLED = 'layui-btn-disabled';
+                if (othis.hasClass(DISABLED)) return;
+                //模拟loading
+                var n = 0, timer = setInterval(function () {
+                    var cname = othis.context.id;
+                    var arr = othis.context.id.split('-');
+                    var dname = cname.replace('ctarget', 'dtarget');
+                    n = n + Math.random() * 20 | 0;
+                    if (n > 0 && n < 10) {
+                        $("#" + dname).text('　　男女比例均衡中...');
+                    }
+                    if (n > 10 && n < 20) {
+                        $("#" + dname).text('　　总成绩均衡中...');
+                    }
+                    if (n > 20 && n < 30) {
+                        $("#" + dname).text('　　人数均衡中...');
+                    }
+                    if (n > 30 && n < 40) {
+                        $("#" + dname).text('　　单科成绩均衡中...');
+                    }
+                    if (n > 40 && n < 50) {
+                        $("#" + dname).text('　　同名同姓处理中...');
+                    }
+                    if (n > 50 && n < 60) {
+                        $("#" + dname).text('　　S形算法计算中...');
+                    }
+                    if (n > 60 && n < 70) {
+                        $("#" + dname).text('　　调度逐步均衡处理...');
+                    }
+                    if (n > 70 && n < 80) {
+                        $("#" + dname).text('　　逐步均衡处理...');
+                    }
+                    if (n > 80 && n < 90) {
+                        $("#" + dname).text('　　分组条件均衡处理...');
+                    }
+                    if (n > 90 && n < 100) {
+                        $("#" + dname).text('　　全局均衡处理...');
+                    }
+                    if (n >= 100) {
+                        n = 100;
+                        clearInterval(timer);
+                        othis.removeClass(DISABLED);
+                        $("#" + dname).text($("#kclasses" + arr[2]).text() + $("#classes" + arr[2]).text());
+                        var vv = parseInt($.cookie("bigscrnum")) + 1;
+                        $.cookie("bigscrnum", vv);
+                        if ($.cookie("bigscrnum") == "{$bigscrnum}") {
+                            layer.open({
+                                content: '大屏分组全部完成！'
+                                ,skin: 'msg'
+                                ,end: function () {
+
+                                    window.location.href='{:url(\'startfour\')}';
+                                }
+                            });
+                        }
+                    }
+                    element.progress(othis.context.id, n + '%');
+                }, 300 + Math.random() * 1000);
+                othis.addClass(DISABLED);
+            }
+        };
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = $(this).data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+        $('button[id^="ctarget"]').trigger('click');
+        $('a[id^="ctarget"]').trigger('click');
+    });
+</script>
+<script type="text/javascript">
+    var API_URL = "__APPURL__/assigngroup/bgfb";
+    var APIFC_URL = "__APPURL__/assigngroup/bgfbfc";
+    var rand_URL = "__APPURL__/assigngroup/randclass";
+    var randfc_URL = "__APPURL__/assigngroup/randclassfc";
+
+    function testfbauto(obj) {
+        var classnum = $(obj).attr('FB_classnum');
+        var avgnum = $(obj).attr('FB_avgnum');
+        var classesdb = $(obj).attr('FB_classdb');
+        var schtype = $(obj).attr('FB_schtype');
+        var znums = $(obj).attr('FB_znums');
+        var malenums = $(obj).attr('FB_malenums');
+        var femalenums = $(obj).attr('FB_femalenums');
+        $.post(
+            rand_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "schtype": schtype},
+            function (e) {
+                if (e <= 1) {
+                    console.log('总人数均衡成功');
+                    if (schtype == 1) {
+                        console.log('分组均衡处理成功！');
+                        $("#" + classesdb).append('分组均衡处理成功!　分组数：' + classnum + '　总人数：' + znums + '　男生数:' + malenums + '　女生数：' + femalenums);
+                        return false;
+                    } else {
+                        assignclassesauto(classnum, avgnum, classesdb, schtype, znums, malenums, femalenums);
+                    }
+                } else {
+                    console.log('总人数均衡处理' + e);
+                    testfbauto(obj);
+                }
+            }, 'json'
+        )
+    }
+
+    function testfbcauto(obj) {
+        var classnum = $(obj).attr('FB_classnum');
+        var avgnum = $(obj).attr('FB_avgnum');
+        var classesdb = $(obj).attr('FB_classdb');
+        var fceng = $(obj).attr('FB_id');
+        var znums = $(obj).attr('FB_znums');
+        var malenums = $(obj).attr('FB_malenums');
+        var femalenums = $(obj).attr('FB_femalenums');
+        $.post(
+            randfc_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "fceng": fceng, "znums": znums, "malenums": malenums, "femalenums": femalenums},
+            function (e) {
+                var fcengplus = parseInt(fceng) + 1;
+                console.log('总人数均衡处理' + e);
+                if (e <= 1) {
+                    console.log('总人数均衡成功');
+                    $("#k" + classesdb).html('分组均衡处理成功！　总人数：' + znums + '　男生数：' + malenums + '　女生数：' + femalenums + '　');
+                    $("#" + classesdb).append('第' + fcengplus + '层分组数：' + classnum + '　');
+                    assignclassescauto(classnum, avgnum, classesdb, fceng, znums, malenums, femalenums);
+                } else {
+                    console.log('总人数均衡处理' + e);
+                    testfbcauto(obj);
+                }
+            }, 'json'
+        )
+    }
+
+    //核心分班方法
+    function assignclassesauto(classnum, avgnum, classesdb, schtype, znums, malenums, femalenums) {
+        $.post(
+            API_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb},
+            function (e) {
+                if (e.cz < 1) {
+                    $("#" + classesdb).append('分组均衡处理成功！　分组数:' + classnum + '　总人数：' + znums + '　男生数：' + malenums + '　女生数' + femalenums + '　成绩均衡差' + Math.round(e.cz * 100) / 100);
+                    console.log('学生分组均衡成功！本次平均分差值' + Math.round(e.cz * 100) / 100);
+                    console.log('分班成功！！！本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                } else {
+                    console.log('本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                    assignclassesauto(classnum, avgnum, classesdb, schtype, znums, malenums, femalenums);
+                }
+            }, 'json'
+        )
+    }
+
+    //核心分班方法
+    function assignclassescauto(classnum, avgnum, classesdb, fceng, znums, malenums, femalenums) {
+        $.post(
+            APIFC_URL,
+            {"classnum": classnum, "avgnum": avgnum, "classesdb": classesdb, "fceng": fceng, "znums": znums, "malenums": malenums, "femalenums": femalenums},
+            function (e) {
+                var fcengplus = parseInt(fceng) + 1;
+                if (e.cz < 1) {
+                    $("#" + classesdb).append('第' + fcengplus + '层成绩均衡差：' + Math.round(e.cz * 100) / 100 + '　');
+                    console.log('学生分组均衡成功！本次平均分差值' + Math.round(e.cz * 100) / 100);
+                    console.log('分班成功！！！本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                } else {
+                    console.log('本次平均分差值：' + e.cz + '---完美随机差范围:' + e.pp_start + '到' + e.pp_end + '-----随机差选定值：' + e.rand + '最大班级信息：' + e.newmax + '-' + e.cmaxno + '最小班级信息：' + e.newmin + '-' + e.cminno);
+                    assignclassescauto(classnum, avgnum, classesdb, fceng);
+                }
+            }, 'json'
+        )
+    }
+</script>
+</body>
+</html>

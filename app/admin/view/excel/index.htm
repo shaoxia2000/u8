@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>先知预报名分班平台</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid">
+    <style type="text/css">
+    .clas{
+        position: absolute;
+        right:-90px;
+        color:blue;
+
+    }
+
+
+</style>
+
+</head>
+<body>
+    <!-- 头部 -->
+    {include file="public/header" /}
+    <!-- /头部 -->
+
+    <div class="main-container container-fluid">
+
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            {include file="public/left" /}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li><a href="">分班管理</a></li>
+                        <li class="active">创建分班</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+<!--  返回键开始 -->
+                <div class="page-header position-relative">
+                    <!--  标题 -->
+                    <div class="header-title">
+                        <h1>创建分班</h1>
+                    </div>
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                        <!--  返回上一页 -->
+                        <a class="sidebar-returnn" href="javascript:history.go(-1)"> <i class="fa fa-reply-all"></i>
+                        </a>
+                        <!--  左侧隐藏 -->
+                        <a class="sidebar-toggler" href="#"> <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <!-- 刷新 -->
+                        <a class="refresh" id="refresh-toggler" href="">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <!--  全屏 -->
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End--> </div>
+                <!--  返回键结束 -->
+                <!-- Page Body -->
+                <div class="page-body">
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div id="tabbedwizard" class="wizard wizard-tabbed" data-target="#tabbedwizardsteps">
+                                <ul class="steps">
+                                    <li data-target="#tabbedwizardstep1" class="active">
+                                        <span class="step">1</span>
+                                        创建分班
+                                        <span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#tabbedwizardstep2">
+                                        <span class="step">2</span>
+                                        导入数据
+                                        <span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#tabbedwizardstep3">
+                                        <span class="step">3</span>
+                                        一键分班
+                                        <span class="chevron"></span>
+                                    </li>
+                                    <!--  <li data-target="#tabbedwizardstep4">
+                                    <span class="step">4</span>
+                                    均衡处理
+                                    <span class="chevron"></span>
+                                </li>
+                                -->
+                            </ul>
+
+                        </div>
+                        <div class="step-content" id="tabbedwizardsteps">
+                            <div class="step-pane active" id="tabbedwizardstep1">
+
+                                <div id="myModal">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <!-- 任务标题开始 -->
+                                            <div class="form-group" >
+                                                <span class="red " id="titlespan" style="position: absolute; right:20px;">* 必填</span>
+                                                <input type="hidden" name="nameid" id="nameid" value="{$Request.session.schoolid}">
+
+                                                <input type="hidden" name="puid" id="puid" value="{$Request.session.id}">
+                                                <input type="text" name="title"  id="title" class="form-control" placeholder="任务标题" id="title" name="title" onBlur ="checkv()" ></div>
+                                            <!-- 任务标题结束 -->
+                                            <!-- 班级数量开始 -->
+
+                                            <!-- <div class="form-group">
+                                                <span class="red "  id="classnumspan" style="position: absolute; right: 20px;">* 必填</span>
+                                                <input type="text" name="classnum" id="classnum" class="form-control" placeholder="班级数量" onBlur ="checkv()" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/"></div> -->
+                                            <!-- 班级数量结束 -->
+
+                                            <div class="form-group">
+                                                <select id="planset">
+                                                    <option value="">-请选择招生设置编号-</option>
+                                                    {volist name="planset" id="v"}
+                                                        <option value="{$v.id}">{$v.title}</option>
+                                                    {/volist}
+                                                </select>
+                                            </div>
+
+                                            <!-- 备注开始 -->
+                                            <div class="form-group">
+                                                <span class="red " id="contentspan" style="position: absolute; right:20px;">* 必填</span>
+                                                <textarea class="form-control" name="content" id="content" placeholder="备注" rows="5"  onBlur="checkv()"></textarea>
+                                            </div>
+                                            <!--  备注结束 --> </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-6 col-sm-4">
+                                                <button id="sub" class="btn btn-default btn-success">确认提交</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <style></style>
+                            <div class="step-pane" id="tabbedwizardstep2">
+                                {if condition="$schooltype eq 1"}
+                                <a class="btn btn-default" href="{:url('sexport')}" target="_blank">模板下载</a>
+                                {else \}
+                                <a class="btn btn-default" href="{:url('export')}" target="_blank">模板下载</a>
+                                {/if}
+                                <form action="{:url('upload')}" method="post" enctype="multipart/form-data">
+                                    <label>Excel表格：</label>
+                                    <!-- 文件上传开始 -->
+                                    <div class="control-group" style="overflow: hidden;">
+                                        <a class="btn_addPic btn btn-default" href="javascript:void(0);" style="float: left;"> <i class="fa fa-plus">&nbsp;&nbsp;选择文件</i>
+
+                                            <input class="filePrew" type="file" name="file" id="myfile"></a>
+
+                                    </div>
+
+                                    <span id="Excelname"></span>
+                                    <!-- 文件上传结束 -->
+                                    <!-- 导入按钮开始 -->
+                                    <input type="submit"  value="导入" class="btn btn-warning"  style="line-height: 1.8;" />
+                                    <!--  导入按钮结束 -->
+                                    <div class="control-group"></div>
+
+                                </form>
+                            </div>
+                            <!--   <div class="step-pane" id="tabbedwizardstep3">This is step 3</div>
+                        <div class="step-pane" id="tabbedwizardstep4">This is step 4</div>
+                        <div class="step-pane" id="tabbedwizardstep5">This is step 5</div>
+                        -->
+                    </div>
+                    <div class="actions actions-footer" id="tabbedwizard-actions" style="display: none;">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm btn-prev"> <i class="fa fa-angle-left"></i>
+                                Prev
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm btn-next" id="next" data-last="Finish">
+                                Next
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<!--Basic Scripts-->
+<script src="__ADMIN__/style/jquery_002.js"></script>
+<script src="__ADMIN__/style/bootstrap.js"></script>
+<script src="__ADMIN__/style/jquery.js"></script>
+<!--Beyond Scripts-->
+<script src="__ADMIN__/style/beyond.js"></script>
+<script src="__ADMIN__/style/toastr.js"></script>
+<script src="__ADMIN__/style/wizard-custom.js"></script>
+
+<script type="text/javascript">
+        jQuery(function ($) {
+            $('#simplewizardinwidget').wizard();
+            $('#simplewizard').wizard();
+            $('#tabbedwizard').wizard().on('finished', function (e) {
+                Notify('Thank You! All of your information saved successfully.', 'bottom-right', '5000', 'blue', 'fa-check', true);
+            });
+            $('#WiredWizard').wizard();
+       });
+
+$("#sub").on('click', function () {
+
+// 任务标题
+if($('#title').val()==""){
+       $('#titlespan').html("标题不能为空！");
+       return false;
+}else{
+        $('#titlespan').html("<i class='fa fa-check green'></i>");
+}
+
+// // 班级数量
+// if($('#classnum').val()=="" || $('#classnum').val()=="1"){
+//        $('#classnumspan').html("数量不符合规定！");
+//          return false;
+// }else{
+//         $('#classnumspan').html("<i class='fa fa-check green'></i>");
+// }
+
+// 备注
+if($('#content').val()==""){
+       $('#contentspan').html("备注不能为空！");
+       return false;
+}else{
+        $('#contentspan').html("<i class='fa fa-check green'></i>");
+}
+
+
+
+        $.ajax({
+            url:"{:url('test')}",
+            type:'post',
+            dataType:'json',
+            data:{title:$('#title').val(),nameid:$('#nameid').val(),puid:$('#puid').val(),classnum:$('#classnum').val(),planset:$('#planset').val(),content:$('#content').val()},
+            success:function(msg) {
+                // alert(msg);
+                $("#next").trigger("click");
+                // console.log(msg);
+            }
+        });
+        });
+
+function checkv() {
+
+// 任务标题
+if($('#title').val()!=""){
+      $('#titlespan').html("<i class='fa fa-check green'></i>");
+      }else{
+      $('#titlespan').html("标题不能为空！");
+
+}
+
+// 班级数量
+if($('#classnum').val()!="" && $('#classnum').val()!="1"){
+       $('#classnumspan').html("<i class='fa fa-check green'></i>");
+       }
+       else {
+         $('#classnumspan').html("数量不符合规定！");
+
+}
+
+
+// 备注
+if($('#content').val()!=""){
+    $('#contentspan').html("<i class='fa fa-check green'></i>");
+     }else{
+     $('#contentspan').html("备注不能为空！");
+}
+
+
+
+}
+    </script>
+<!--     皮肤互换js -->
+<script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+<script type="text/javascript">
+
+     $(document).ready(function() {
+        var skins=$.cookie("styleid");
+        if(skins!=null){
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss"+skins+".css");
+             }else{
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss.css");
+           }
+
+     });
+
+        function changestyle(id){
+            $("#sid").attr("href","__ADMIN__/style/skins/mycss"+id+".css");
+            $.cookie('styleid', id, { path: '/'});
+        }
+
+
+        //获取一个上传文件的扩展名  file
+        var myfile = document.getElementById('myfile');
+        myfile.onchange = function(){
+            //获取文件上传文件的文件名和扩展名
+            if(myfile.files[0] == undefined){
+                alert('未上传文件！');
+            }else{
+                //获取上传文件的文件名
+                var name =myfile.files[0].name;
+                $("#Excelname").html(name);
+              document.getElementById('Excelname').className += 'excname';
+            }
+        }
+
+
+     
+    </script>
+</body>
+</html>

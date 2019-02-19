@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>新增教师</title>
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/layui/layui.js"}
+	{load href="__ASSETS__/layui/css/layui.css"}
+	<style>
+		.layui-upload-img {
+			width: 90px;
+			height: 90px;
+			margin: 0;
+		}
+		
+		.pic-more {
+			width: 100%;
+			left;
+			margin: 10px 0px 0px 0px;
+		}
+		
+		.pic-more li {
+			width: 90px;
+			float: left;
+			margin-right: 5px;
+		}
+		
+		.pic-more li .layui-input {
+			display: initial;
+		}
+		
+		.pic-more li a {
+			position: absolute;
+			top: 0;
+			display: block;
+		}
+		
+		.pic-more li a i {
+			font-size: 24px;
+			background-color: #008800;
+		}
+		
+		#slide-pc-priview .item_img img {
+			width: 90px;
+			height: 90px;
+		}
+		
+		#slide-pc-priview li {
+			position: relative;
+		}
+		
+		#slide-pc-priview li .operate {
+			color: #000;
+			display: none;
+		}
+		
+		#slide-pc-priview li .toleft {
+			position: absolute;
+			top: 40px;
+			left: 1px;
+			cursor: pointer;
+		}
+		
+		#slide-pc-priview li .toright {
+			position: absolute;
+			top: 40px;
+			right: 1px;
+			cursor: pointer;
+		}
+		
+		#slide-pc-priview li .close {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			cursor: pointer;
+		}
+		
+		#slide-pc-priview li:hover .operate {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+<section id="container">
+	<section class="wrapper">
+		<section class="wrapper" style="width: 90%;padding-top: 5%">
+			<form class="layui-form" action="" lay-filter="secondfbadd">
+				<div class="layui-form-item">
+					<label class="layui-form-label">学生姓名</label>
+					<div class="layui-input-block">
+						<input type="text" name="name" lay-verify="required" placeholder="请输入姓名" autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-block">
+						<input type="radio" name="sex" value="1" title="男" checked>
+						<input type="radio" name="sex" value="2" title="女">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label">身份证号</label>
+					<div class="layui-input-block">
+						<input type="text" name="id_num" lay-verify="required" placeholder="请输入身份证号码" autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+				{if condition="Getfcnum($Request.session.school_id) neq 0"}
+				<div class="layui-form-item">
+					<label class="layui-form-label">选择分层</label>
+					<div class="layui-input-block">
+						<select name="fcengid">
+							<option value="">请选择分层</option>
+							{for start="0" end="$Request.session.school_id|Getfcnum"}
+							<option value="{$i}">第{$i+1}层</option>
+							{/for}
+						</select>
+					</div>
+				</div>
+				{/if}
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">分班类型</label>
+					<div class="layui-input-block">
+						<select name="fbtype">
+							<option value="1">复学生</option>
+							<option value="2">后转入</option>
+							<option value="3">补报生</option>
+							<option value="4">未报到</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">分班备注</label>
+					<div class="layui-input-block">
+						<textarea name="content" lay-verify="required" placeholder="请输入二次分班原因" class="layui-textarea"></textarea>
+					</div>
+				</div>
+				
+				<div class="layui-form-item" id="pics">
+					<div class="layui-form-label">上传材料</div>
+					<div class="layui-input-block" style="width: 70%;">
+						<div class="layui-upload">
+							<button type="button" class="layui-btn layui-btn-primary pull-left" id="slide-pc">选择多图
+							</button>
+							<div class="pic-more">
+								<ul class="pic-more-upload-list" id="slide-pc-priview">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="layui-form-item" style="height: 10px">
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit lay-filter="formDemo" value="{:url('secondfb/add')}">立即提交
+						</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+		</section>
+	</section>
+</section>
+<script>
+	layui.use('upload', function () {
+		var $ = layui.jquery;
+		var upload = layui.upload;
+		upload.render({
+			elem: '#slide-pc',
+			url: "{:url('secondfb/upload')}",
+			size: 500,
+			exts: 'jpg|png|jpeg',
+			multiple: true,
+			before: function (obj) {
+				layer.msg('图片上传中...', {
+					icon: 16,
+					shade: 0.01,
+					time: 0
+				})
+			},
+			done: function (res) {
+				layer.close(layer.msg());//关闭上传提示窗口
+				if (res.status == 0) {
+					return layer.msg(res.message);
+				}
+				//$('#slide-pc-priview').append('<input type="hidden" name="pc_src[]" value="' + res.filepath + '" />');
+				$('#slide-pc-priview').append('<li class="item_img"><div class="operate"><i class="toleft layui-icon"></i><i class="toright layui-icon"></i><i  class="close layui-icon"></i></div><img src="' + res.filepath + '" class="img" ><input type="hidden" name="pc_src[]" value="' + res.filepath + '" /></li>');
+			}
+		});
+	});
+	//点击多图上传的X,删除当前的图片
+	$("body").on("click", ".close", function () {
+		var DEL_URL = "{:url('secondfb/delimg')}";
+		$(this).closest("li").remove();
+		var imgurl = $(this).closest("li").children("img").attr("src");
+		$.post(
+			DEL_URL,
+			{"imgurl": imgurl},
+			function () {
+			}, 'json'
+		)
+	});
+	//多图上传点击<>左右移动图片
+	$("body").on("click", ".pic-more ul li .toleft", function () {
+		var li_index = $(this).closest("li").index();
+		if (li_index >= 1) {
+			$(this).closest("li").insertBefore($(this).closest("ul").find("li").eq(Number(li_index) - 1));
+		}
+	});
+	$("body").on("click", ".pic-more ul li .toright", function () {
+		var li_index = $(this).closest("li").index();
+		$(this).closest("li").insertAfter($(this).closest("ul").find("li").eq(Number(li_index) + 1));
+	});
+</script>
+{load href="__ASSETS__/js/commonlayui.js"}
+<script>
+	layuu('secondfbadd');
+</script>
+</body>
+</html>

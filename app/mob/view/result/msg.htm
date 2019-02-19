@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>{$schname}</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+      <meta name="description" content="">
+
+      <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+      <link rel="stylesheet" href="__MOB__/css/demos.css">
+  </head>
+
+  <body ontouchstart>
+
+    <div class="weui-msg">
+       {if condition="$status eq 4"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn  weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">该区查询已经关闭！</h2>
+        </div>
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <a href="javascript:history.back(-1)" class="weui-btn weui-btn_default">返回上一页</a>
+        </p>
+      </div>
+      {/if}
+      {if condition="$status eq 3"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn  weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">该学校查询已经关闭！</h2>
+        </div>
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <a href="javascript:history.back(-1)" class="weui-btn weui-btn_default">返回上一页</a>
+        </p>
+      </div>
+      {/if}
+      {if condition="$status eq 2"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn  weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">该学校无此学生！</h2>
+          <!-- <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p> -->
+        </div>
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <!-- <a href="http://{$host}/mob/Enter/index/areaid/{$areaid}/type/bb" class="weui-btn weui-btn_default">返回上一页</a> -->
+          <a href="javascript:history.back(-1)" class="weui-btn weui-btn_default">返回上一页</a>
+        </p>
+      </div>
+      {/if}
+      {if condition="$status eq 1"}
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn  weui-icon_msg"></i>
+        </div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">该学校还未进行分组！</h2>
+          <!-- <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p> -->
+        </div>
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <a href="javascript:history.back(-1)" class="weui-btn weui-btn_default">返回上一页</a>
+        </p>
+      </div>
+      {/if}
+    </div>
+
+     <div class="kong"></div>
+ <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://{$host}/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+
+    <script src="__MOB__/js/jquery-2.1.4.js"></script> <script src="__MOB__/js/fastclick.js"></script> <script>   $(function() {     FastClick.attach(document.body);   }); </script>  <script src="__MOB__/js/jquery-weui.min.js"></script>
+  </body>
+</html>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>

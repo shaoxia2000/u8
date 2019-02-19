@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>先知预报名分班平台</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid">  
+<style type="text/css">
+    .junhh label{ display: block; }
+    .junhh label i {    padding: 0 10px;}
+
+</style>
+
+      </head>
+<body>
+    <!-- 头部 -->
+    {include file="public/header" /}
+    <!-- /头部 -->
+
+    <div class="main-container container-fluid">
+
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            {include file="public/left" /}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li class="active">控制面板</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div id="tabbedwizard" class="wizard wizard-tabbed" data-target="#tabbedwizardsteps">
+                                <ul class="steps">
+                                    <li data-target="#tabbedwizardstep1">
+                                        <span class="step">1</span>
+                                        创建分班
+                                        <span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#tabbedwizardstep2">
+                                        <span class="step">2</span>
+                                        导入数据
+                                        <span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#tabbedwizardstep3" class="active">
+                                        <span class="step">3</span>
+                                        一键分班
+                                        <span class="chevron"></span>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                            <div class="step-content" id="tabbedwizardsteps">
+                                <div class="step-pane" id="tabbedwizardstep1">
+                                </div>
+                                <div class="step-pane" id="tabbedwizardstep2">
+                                </div>
+                                <div class="step-pane active" id="tabbedwizardstep3">
+                                    <br>
+                                    <p><a href="{:url('fb')}" class="btn btn-success">一键分班</a></p>
+                                    <div class="checkbox junhh">
+                                        <label style="margin-right: 10px">
+                                            <input type="checkbox" class="colored-success" checked="checked">
+                                            <span class="text">男女比例<i class="red">*保证各班的男女生人数均衡</i></span>
+                                        </label>
+                                       
+                                        <label style="margin-right: 10px">
+                                        <input type="checkbox" class="colored-success" checked="checked">
+                                        <span class="text">人数均衡<i class="red">*各班男生数，女生数均衡相差人数小于等于1人</i></span>
+                                        </label>
+                                        <label style="margin-right: 10px">
+                                            <input type="checkbox" class="colored-success" checked="checked">
+                                            <span class="text">平均分均衡<i class="red">*分班结束后各班的平均分相差不超过1</i></span>
+                                        </label>
+                                        
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="actions actions-footer" id="tabbedwizard-actions" style="display: none;">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm btn-prev"> <i class="fa fa-angle-left"></i>
+                                        Prev
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm btn-next" id="next" data-last="Finish">
+                                        Next <i class="fa fa-angle-right"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+
+
+
+
+
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script src="__ADMIN__/style/toastr.js"></script>
+    <script src="__ADMIN__/style/wizard-custom.js"></script>
+    <!-- <script src="__ADMIN__/style/bootbox.js"></script> -->
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('#simplewizardinwidget').wizard();
+            $('#simplewizard').wizard();
+            $('#tabbedwizard').wizard().on('finished', function (e) {
+                Notify('Thank You! All of your information saved successfully.', 'bottom-right', '5000', 'blue', 'fa-check', true);
+            });
+            $('#WiredWizard').wizard();
+        });
+    </script>
+	<!--     皮肤互换js -->
+<!--     <script type="text/javascript" src="__ADMIN__/style/jquery-1.8.3.min.js"></script> -->
+    <script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+    <script type="text/javascript">
+
+     $(document).ready(function() {
+        var skins=$.cookie("styleid");
+        if(skins!=null){
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss"+skins+".css");
+
+             }else{
+
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss.css");
+
+           }
+
+     });
+
+        function changestyle(id){
+
+            $("#sid").attr("href","__ADMIN__/style/skins/mycss"+id+".css");
+            $.cookie('styleid', id, { path: '/'});
+        }
+
+    </script>
+</body>
+</html>

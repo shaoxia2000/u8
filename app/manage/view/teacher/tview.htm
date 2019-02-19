@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="__ASSETS__/css/bootstrap.css" rel="stylesheet">
+	<link href="__ASSETS__/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+	<link href="__ASSETS__/css/style.css" rel="stylesheet">
+	<title>教师分组</title>
+	<script src="__ASSETS__/js/jquery-1.8.3.min.js"></script>
+	<script src="__ASSETS__/js/jquery.leoweather.min.js"></script>
+	<script src="__ASSETS__/js/layer/2.4/layer.js"></script>
+	<style type="text/css">
+		.checkbox-custom {
+			position: relative;
+			padding: 0 0 0 25px;
+			margin-bottom: 7px;
+			margin-top: 0;
+		}
+		
+		/*
+		将初始的checkbox的样式改变
+		*/
+		.checkbox-custom input[type="checkbox"] {
+			opacity: 0; /*将初始的checkbox隐藏起来*/
+			position: absolute;
+			cursor: pointer;
+			z-index: 2;
+			margin: -6px 0 0 0;
+			top: 50%;
+			left: 3px;
+		}
+		
+		/*
+		设计新的checkbox，位置
+		*/
+		.checkbox-custom label:before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 0;
+			margin-top: -9px;
+			width: 19px;
+			height: 18px;
+			display: inline-block;
+			border-radius: 2px;
+			border: 1px solid #bbb;
+			background: #fff;
+		}
+		
+		/*
+		点击初始的checkbox，将新的checkbox关联起来
+		*/
+		.checkbox-custom input[type="checkbox"]:checked + label:after {
+			position: absolute;
+			display: inline-block;
+			font-family: 'FontAwesome';
+			content: '\F00C';
+			top: 50%;
+			left: 4px;
+			margin-top: -5px;
+			font-size: 11px;
+			line-height: 1;
+			width: 16px;
+			height: 16px;
+			color: #333;
+		}
+		
+		.checkbox-custom label {
+			cursor: pointer;
+			line-height: 1.2;
+			font-weight: normal; /*改变了rememberme的字体*/
+			margin-bottom: 0;
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+<section id="container">
+	<!--main content start-->
+	<section class="wrapper">
+		<form class="form-inline" style="margin-bottom: 20px;" action="" method="get">
+			<div class="col-md-12">
+				<div class="col-md-8">
+					{if condition="Getcheckstatus($Request.session.school_id) neq 1"}
+					<a href="{:url('add',['schid'=>$Request.param.schid])}" class="btn btn-primary" {$Request.session.school_id==0?='style="display:none"'}>新增教师</a>
+					<input type="button" class="btn btn-danger" id="Delete" name="Delete" value="批量删除"
+						   onClick="app_del(this)" del_url="{:url('teacher/del')}" {$Request.session.school_id==0?='style="display:none"'}>
+				    {/if}
+				</div>
+				<div class="col-md-4 suos pull-right">教师名称：<input class="form-control chax" type="text" name="name"
+																  value=""/>
+					<button type="submit" class="btn btn-success  btn-sm"><i class="fa  fa-search"
+																			 style="padding: 5px;"></i>查询
+					</button>
+				</div>
+			</div>
+		</form>
+		<!-- SORTABLE TO DO LIST -->
+		<div class="row mt mb">
+			<div class="col-md-12">
+				<section class="task-panel tasks-widget">
+					<div class="panel-body">
+						<div class="task-content">
+							<table class="table table-hover">
+								<thead>
+								<tr>
+									<th>
+										<div class="mycheck">
+											<input id="CheckAll" name='CheckAll' type='checkbox' value=""
+												   id="CheckAll"/>
+											<label for="CheckAll"></label>
+										</div>
+									</th>
+									<th>教师序号</th>
+									<th>教师照片</th>
+									<th>教师姓名</th>
+									<th>教师性别</th>
+									<th>职称</th>
+									<th>所属学校</th>
+									<th>毕业院校</th>
+									<th>年龄</th>
+									<th>教龄</th>
+									<th>联系方式</th>
+									<th>操作</th>
+								</tr>
+								</thead>
+								<tbody>
+								{volist name="data" id="vo"}
+								<tr>
+									<td>
+										<div class="mycheck">
+											<input id='Check{$vo.id}[]' name='Check[]' type='checkbox'
+												   value="{$vo.id}"/>
+											<label for="Check{$vo.id}[]"></label>
+										</div>
+									</td>
+									<td>{$vo.id}</td>
+									<td>
+										{if condition="$vo.thumb neq ''"}
+										<img src="__PIC__/{$vo.thumb}" class="img-circle" width="30">
+										{else/}
+										<img src="__PIC__/groupphoto/nullteacher.jpg" class="img-circle" width="30">
+										{/if}
+									
+									</td>
+									<td>{$vo.name}</td>
+									<td>
+										{switch $vo.sex}
+										{case 1}男{/case}
+										{case 2}女{/case}
+										{/switch}
+									</td>
+									<td>
+										{switch $vo.duty}
+										{case 1}班主任{/case}
+										{case 2}科任{/case}
+										{/switch}
+									</td>
+									<td>{$vo.schid|GetSchoolname}</td>
+									<td>{$vo.school}</td>
+									<td>{$vo.age}</td>
+									<td>{$vo.teachage}</td>
+									<td>{$vo.tel}</td>
+									{if condition = "Getcheckstatus($Request.session.school_id) neq 1"}
+									<td>
+										<a href="{:url('edit',['id'=> $vo.id,'schid'=>$vo.schid])}" title="编辑" class="btn btn-outline btn-primary"><i class="fa fa-pencil"></i></a>
+									</td>
+								    {/if}
+								</tr>
+								{/volist}
+								</tbody>
+							</table>
+							{$data->render()}
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</section>
+</section>
+{include file="public/footer" /}
+<script src="__ASSETS__/js/common.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+    function changeState(el) {
+        if (el.readOnly) el.checked = el.readOnly = false;
+        else if (!el.checked) el.readOnly = el.indeterminate = true;
+    }
+</script>

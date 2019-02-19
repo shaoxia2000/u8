@@ -1,0 +1,24 @@
+<div class="well">
+	<h3>选择单位</h3>
+	{taglib name="app\check\taglib\LoadDatas" /}
+	{LoadDatas:areas areaid="0" /}
+</div>
+<script type="text/javascript">
+	$(function(){
+		$(":checkbox").change(function(){
+			var _b = $(this).prop('checked');
+			if($(this).attr('pid')){
+				// 子元素
+				if(_b){
+					$("#"+$(this).attr('pid')).prop('checked', _b);
+				}else{
+					var _l = $(":checkbox[pid='"+$(this).attr('pid')+"']:checked").length;
+					$("#"+$(this).attr('pid')).prop('checked', _l > 0 );
+				}
+			}else{
+				// 父级元素
+				$(":checkbox[pid='"+$(this).attr('id')+"']").prop('checked', _b);
+			}
+		})
+	})
+</script>

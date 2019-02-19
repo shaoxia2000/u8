@@ -1,0 +1,159 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="description" content="">
+
+<meta name="author" Content="">
+
+<meta name="renderer" content="webkit">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<title>先知分班大屏演示</title>
+
+<link rel="stylesheet" type="text/css" href="__BS__/css/bootstrap.css">
+
+<link rel="stylesheet" type="text/css" href="__BS__/css/fenbmecss.css">
+
+
+
+<script src="__BS__/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="__BS__/js/bootstrap.js"></script>
+
+<!-- 自动时间 -->
+
+<script src="__BS__/js/jquery.leoweather.min.js"></script>
+
+
+
+</head>
+
+<body>
+
+{include file="public/bheader" /}
+
+<div class="container-fluid">
+
+<!-- 内容开始 -->
+<section>
+    <div class="steps">
+
+        <!-- 进度条步骤开始 -->
+
+        <div class="stepbj" id="step">
+            <ul class="buzifenz">
+                <li class="onn"><em>1</em></li>
+                <li class="onn" style=" width: 28%;margin-right: 75px;"><em>2</em></li>
+                <li><em>3</em></li>
+            </ul>
+        </div><!-- 背景 -->
+
+        <div class="container">
+            <div class="steps-list">
+
+                <ul>
+                    <li><a href="{:url('bigscr/cheader')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_06.png">
+                            <span>机选家长</span>
+                        </div>
+                    </a>
+                    </li>
+
+                    <li><a href="{:url('bigscr/sedheader')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_09.png">
+                            <span>选定家长</span>
+                        </div>
+                    </a></li>
+
+                    <li><a href="{:url('bigscr/teacherfp')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_03.png">
+                            <span>教师分配</span>
+                        </div>
+                    </a></li>
+                    <li><a href="resultinfo/?id=1">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_12.png">
+                            <span>结果公示</span>
+                        </div>
+                    </a></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <!-- 进度条步骤结束 -->
+    </div>
+
+</section>
+
+
+
+<section>
+
+	<div class="container">
+
+		<div class="col-md-12">
+
+
+
+<!-- 家长头像开始 -->
+
+			<div class="wechat-img show" id="show"><img src="__BS__/images/jiazhang-wechat_03.png">
+
+
+
+			</div>
+
+			<!-- 名称开始 -->
+
+			<div class="zuixiauangjjj"><span class="fenbzjz">{$resname}</span><em style="font-size: 24px; color: #fff; line-height: 0.2em;">同学的家长</em></div>
+
+			<!-- 名称结束 -->
+
+
+
+
+
+<!-- 家长头像结束 -->
+
+		<div class="jiaz-button">
+
+
+
+		</div>
+
+		</div>
+
+		<div class="clear"></div>
+
+
+
+	</div>
+
+
+
+</section>
+
+<!-- 内容结束 -->
+
+</div>
+
+</body>
+
+</html>
+

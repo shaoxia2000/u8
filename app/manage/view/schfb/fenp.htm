@@ -1,0 +1,193 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="description" content="">
+
+<meta name="author" Content="">
+
+<meta name="renderer" content="webkit">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<title>首页</title>
+
+<link rel="stylesheet" type="text/css" href="__ASSETS__/schfb/css/bootstrap.css">
+
+<link rel="stylesheet" type="text/css" href="__ASSETS__/schfb/css/fenbmecss.css">
+
+
+
+<script src="__ASSETS__/schfb/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="__ASSETS__/schfb/js/bootstrap.js"></script>
+
+<!-- 自动时间 -->
+
+<script src="__ASSETS__/schfb/js/jquery.leoweather.min.js"></script>
+
+<style type="text/css">
+
+.button{width:150px;line-height:40px;display:inline-block;color:#fff;font-family:"Microsoft Yahei";background-color:#29af8a;position:absolute;border-radius:20px;cursor:pointer;bottom:54px;left:65px;border-radius:20px;cursor:pointer;text-align:center;border:5px solid #fff;font-size:18px;}
+
+.button:hover{background-color:#244169;}
+
+.target{border:4px solid #fff;width:88px;height:43px;position:absolute;top:0;left:0;}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<div class="container-fluid">
+
+<h1 class="stu-list">学生分组01组</h1>
+
+<ul class="stu-ul">
+
+		<li id="0">学生一</li>
+
+		<li id="1">学生二</li>
+
+		<li id="2">学生三</li>
+
+		<li id="3">学生四</li>
+
+		<li id="4">学生五</li>
+
+		<li id="5">学生六</li>
+
+		<li id="6">学生七</li>
+
+		<li id="7">学生八</li>
+
+		<li id="8">学生九</li>
+
+		<li id="9">学生十</li>
+
+		<li id="10">学生十一</li>
+
+
+
+		<li id="11">学生十二</li>
+
+		<li id="12">学生十三</li>
+
+		<li id="13">学生十四</li>
+
+		<li id="14">学生十五</li>
+
+		<li id="15">学生十六</li>
+
+		<li id="16">学生十七</li>
+
+		<li id="17">学生十八</li>
+
+	
+
+
+</ul>
+
+		<div id="19"></div>
+
+			<div class="button staBtn" onClick="startRun()">学生抽选</div>
+
+<div class="fenpeijieg-ann"><a href="javascript:;" >学生抽选确认</a></div>
+
+		<div id="18" ></div>
+
+
+
+<!--游戏区域结束-->
+
+<!--目标游戏开始-->
+
+<div class="target"></div>
+
+<!--目标游戏结束-->
+
+</div>
+
+<!--引入外部jquery类库文件-->
+
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript">
+
+//变量
+
+//数据类型
+
+//条件判断
+
+//循环
+
+//API
+
+//对象
+
+//json
+
+var n=0;
+
+init();
+
+function init(){
+
+	moveToNext(0);
+
+}
+
+function moveToNext(i){
+
+	var $target = $('div.target');//代表找到div.target的元素
+
+	var offset = $('#'+(i%20)).offset();
+
+	$target.animate({top:offset.top-2,left:offset.left-2},50);
+
+	n = i;
+
+}
+
+function startRun(){
+
+	var randomNumber = Math.random(10)*20;//随机生成0-20之间的数字
+
+	randomNumber = Math.ceil(randomNumber)+50;//+上一个50的基数
+
+	var m = n;
+
+	for(var i=m;i<randomNumber+m;i++){
+
+		moveToNext(i);
+
+	}
+
+}
+
+</script>
+
+
+
+
+
+</body>
+
+</html>
+
+
+

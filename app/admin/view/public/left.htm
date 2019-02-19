@@ -1,0 +1,319 @@
+<div class="page-sidebar" id="sidebar">
+    <!-- Page Sidebar Header-->
+    <div class="sidebar-header-wrapper">
+        <input class="searchinput" type="text"> <i class="searchicon fa fa-search"></i>
+        <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
+    </div>
+    <!-- /Page Sidebar Header -->
+    <!-- Sidebar Menu -->
+    <ul class="nav sidebar-menu">
+
+        <!-- 系统管理开始 -->
+        <li class="active open">
+            <a href="#" class="menu-dropdown"> <i class="menu-icon fa fa-gear"></i>
+                <span class="menu-text">系统管理</span>
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <!-- 通知管理开始 -->
+                <li>
+                    <a href="{:url('Notice/index')}" class="menu-dropdown">
+                        <span class="menu-text">
+                            发站内信
+                        </span>
+                        <i class="menu-expand"></i>
+                    </a>
+                </li>
+                <li>
+                    
+                    <a href="{:url('NoticeReceive/index')}" class="menu-dropdown">
+                        <span class="menu-text" id="ReceiveBox">
+                            收信箱
+                        </span>
+                        <i class="menu-expand"></i>
+                    </a>
+                </li>
+
+
+            <!--   通知管理结束 -->
+
+            <!--   通知管理结束 -->
+            <!-- 数据库管理开始 -->
+            <li class="active open">
+                <a href="#" class="menu-dropdown">
+                    <span class="menu-text">数据库管理</span>
+                    <i class="menu-expand"></i>
+                </a>
+
+                <ul class="submenu">
+                    <li>
+                        <a href="{:url('backup/exportDatabase')}">
+                            <i class="menu-icon fa fa-cloud-upload"></i>
+                            <span class="menu-text">备份</span>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="">
+                            <i class="menu-icon fa fa-cloud-download"></i>
+                            <span class="menu-text">恢复</span>
+                        </a>
+                    </li>
+                    -->
+                </ul>
+            </li>
+
+            <!--  数据库管理结束 -->
+
+            <!-- 日志管理开始 -->
+            <li>
+                <a href="{:url('logs/index')}" class="menu-dropdown">
+                    <span class="menu-text">日志管理</span>
+                    <i class="menu-expand"></i>
+                </a>
+            </li>
+            <!-- 日志管理结束 --> </ul>
+
+</li>
+<!-- 系统管理结束 -->
+<!-- 微信管理开始 -->
+      <!--
+<li class="active open">
+    <a href="#" class="menu-dropdown">
+        <i class="menu-icon fa  fa-tags"></i>
+        <span class="menu-text">公众号管理</span>
+        <i class="menu-expand"></i>
+    </a>
+
+    <ul class="submenu">
+        <li class="active open">
+            <a href="{:url('Wx/setting')}" class="menu-dropdown">
+                <span class="menu-text">公众号设置</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li class="active open">
+            <a href="{:url('Wx/index')}" class="menu-dropdown">
+                <span class="menu-text">菜单设置</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+        <li class="active open">
+            <a href="{:url('Wx/fs')}" class="menu-dropdown">
+                <span class="menu-text">粉丝管理</span>
+                <i class="menu-expand"></i>
+            </a>
+        </li>
+    </ul>
+</li>
+ -->
+<!-- 微信管理结束 -->
+<!-- 用户管理开始 -->
+<li class="active open">
+    <a href="#" class="menu-dropdown">
+        <i class="menu-icon fa fa-table"></i>
+        <span class="menu-text">用户管理</span>
+
+        <i class="menu-expand"></i>
+    </a>
+
+    <ul class="submenu">
+        <li>
+            <a href="{:url('admin/lst')}">
+                <span class="menu-text">用户管理</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:url('authgroup/lst',array('uu'=>
+                1))}">
+                <span class="menu-text">用户组管理</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:url('authrule/lst',array('uu'=>
+                1))}">
+                <span class="menu-text">用户权限管理</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<!-- 用户管理结束 -->
+<!-- 栏目管理开始 -->
+<!--         <li {empty name="Request.param.cc"}class=""{else /}class="active open"{/empty}>
+<a href="#" class="menu-dropdown">
+    <i class="menu-icon fa fa-folder"></i>
+    <span class="menu-text">栏目管理</span>
+    <i class="menu-expand"></i>
+</a>
+<ul class="submenu">
+    <li>
+        <a href="{:url('cate/lst',array('cc'=>
+            1))}">
+            <span class="menu-text">栏目列表</span>
+            <i class="menu-expand"></i>
+        </a>
+    </li>
+</ul>
+</li>
+-->
+<!-- 栏目管理结束 -->
+<!-- 学校管理开始 -->
+<li class="active open" >
+<a href="" class="menu-dropdown">
+    <i class="menu-icon fa  fa-building-o"></i>
+    <span class="menu-text">学校管理</span>
+    <i class="menu-expand"></i>
+</a>
+
+<ul class="submenu">
+    <li>
+        <a href="{:url('Schoolarea/index',array('sch'=>
+            1))}">
+            <span class="menu-text">校区管理</span>
+        </a>
+    </li>
+    <li class=" open">
+        <a href="#" class="menu-dropdown">
+            <span class="menu-text">学校管理</span>
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu" >
+            <li>
+                <a href="{:url('School/index',array('sch'=>
+                    2))}">
+                    <i class="menu-icon fa  fa-home"></i>
+                    <span class="menu-text">学校管理</span>
+                </a>
+            </li>
+            <li>
+                <a href="{:url('Planset/index',array('sch'=>
+                    2))}">
+                    <i class="menu-icon fa  fa-home"></i>
+                    <span class="menu-text">招生设置</span>
+                </a>
+            </li>
+            <li>
+                <a href="{:url('Student/index',array('sch'=>
+                    2))}">
+                    <i class="menu-icon fa  fa-male"></i>
+                    <span class="menu-text">学生档案</span>
+                </a>
+            </li>
+            <li>
+                <a href="{:url('Teacher/index',array('sch'=>
+                    2))}">
+                    <i class="menu-icon fa  fa-user"></i>
+                    <span class="menu-text">教师档案</span>
+                </a>
+            </li>
+            <li>
+                <a href="{:url('Result/index')}">
+                    <i class="menu-icon fa  fa-info"></i>
+                    <span class="menu-text">分班结果</span>
+                </a>
+            </li>
+            <!--      <li>
+            <a href="">
+                <i class="menu-icon fa fa-book"></i>
+                <span class="menu-text">考试管理</span>
+            </a>
+        </li>
+        -->
+        <li>
+            <a href="{:url('Mark/index',array('mark'=>
+                2))}">
+                <i class="menu-icon fa  fa-file-text-o"></i>
+                <span class="menu-text">成绩管理</span>
+            </a>
+        </li>
+        <li>
+
+            <a href="{:url('Placement/index')}">
+                <i class="menu-icon fa  fa-book"></i>
+                <span class="menu-text">分班结果</span>
+            </a>
+        </li>
+    </ul>
+</li>
+
+</ul>
+
+</li>
+<!-- 学校管理结束 -->
+<!--  分班管理开始 -->
+<li class="active open">
+<a href="" class="menu-dropdown">
+
+<i class="menu-icon fa fa-users"></i>
+<span class="menu-text">分班管理</span>
+
+<i class="menu-expand"></i>
+</a>
+
+<ul class="submenu">
+<li>
+    <a href="{:url('excel/index',array('fb'=>
+        2))}">
+        <span class="menu-text">创建任务</span>
+    </a>
+</li>
+<li>
+    <a href="{:url('task/index',array('fb'=>
+        2))}">
+        <span class="menu-text">任务列表</span>
+    </a>
+</li>
+
+<!--           <li>
+<a href="">
+    <span class="menu-text">教学通知</span>
+</a>
+</li>
+-->
+<!--
+                <li>
+<a href="#" class="menu-dropdown">
+<span class="menu-text">作业发布</span>
+<i class="menu-expand"></i>
+</a>
+
+<ul class="submenu">
+<li>
+    <a href="">
+        <i class="menu-icon fa fa-male"></i>
+        <span class="menu-text">学生档案</span>
+    </a>
+</li>
+
+</ul>
+</li>
+-->
+</ul>
+
+</li>
+<!-- 分班管理结束 -->
+<!-- 预报名管理开始 -->
+<li>
+<a href="" class="menu-dropdown">
+
+<i class="menu-icon fa fa-file-text"></i>
+<span class="menu-text">预报名管理</span>
+
+<i class="menu-expand"></i>
+</a>
+</li>
+<!-- 预报名管理结束 -->{/if}</ul>
+<!-- /Sidebar Menu -->
+</div>
+<script type="text/javascript" src="__ADMIN__/style/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.post("{:url('NoticeReceive/num')}",function(t){
+            if (t!=0) {
+                var box = '<xx class="zhannxx" id="Box">'+ t +'</xx>';
+                $("#ReceiveBox").append(box);
+            }
+        })
+    })
+</script>

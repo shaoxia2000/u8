@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Dashboard">
+	<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	{load href="__ASSETS__/css/bootstrap.css"}
+	{load href="__ASSETS__/font-awesome/css/font-awesome.css"}
+	{load href="__ASSETS__/css/style.css"}
+	<title>学生展示</title>
+
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+	{load href="__ASSETS__/js/jquery.leoweather.min.js"}
+	{load href="__ASSETS__/js/layer/2.4/layer.js"}
+	<script>
+        function add_qxuser(title, url) {
+            var index = layer.open({
+                type: 2,
+                area: ['30%', '40%'],
+                title: title,
+                content: url
+            });
+        }
+        function edit_qxuser(title, url) {
+            var index = layer.open({
+                type: 2,
+                area: ['30%', '40%'],
+                title: title,
+                content: url
+            });
+        }
+	</script>
+</head>
+<body>
+<section id="container">
+	{include file="public/header" /}
+	{include file="public/left" /}
+	<!--main content start-->
+	<section id="main-content">
+		<section class="wrapper">
+			<h3 class="minnh3" style="margin-bottom: 20px;">分组人员管理
+				<small>（人员详情：100人）</small>
+			</h3>
+			<form class="form-inline" style="margin-bottom: 20px;" action="" method="get">
+				<div class="col-md-12">
+					<div class="col-md-8">
+						<a onclick="add_qxuser('新增分组人员','{:url(\'add\')}')" class="btn btn-primary ">新增分组人员</a>
+						<input type="button" class="btn btn-danger" id="Delete" name="Delete" value="批量删除"
+								onClick="app_del(this)" del_url="{:url('qxuser/del')}"></div>
+					<div class="col-md-4 suos pull-right">
+						人员名称：
+						<input class="form-control chax" type="text" name="name" value="">
+						<button type="submit" class="btn btn-success  btn-sm"><i class="fa  fa-search"
+								style="padding: 5px;"></i>查询
+						</button>
+					</div>
+				</div>
+			</form>
+			<!-- SORTABLE TO DO LIST -->
+			<div class="row mt mb">
+				<div class="col-md-12">
+					<section class="task-panel tasks-widget">
+						<div class="panel-body">
+							<div class="task-content">
+								<table class="table table-hover">
+									<thead>
+									<tr>
+										<th>
+											<div class="mycheck">
+												<input id="CheckAll" name='CheckAll' type='checkbox' value=""
+														id="CheckAll"/>
+												<label for="CheckAll"></label>
+											</div>
+										</th>
+
+										<th>人员序号</th>
+										<th>人员类型</th>
+										<th>人员照片</th>
+										<th>人员姓名</th>
+										<th>联系方式</th>
+										<th>操作</th>
+									</tr>
+									</thead>
+									<tbody>
+									{volist name="data" id="vo"}
+									<tr>
+										<td>
+											<div class="mycheck">
+												<input id='Check{$vo.id}[]' name='Check[]' type='checkbox'
+														value="{$vo.id}"/>
+												<label for="Check{$vo.id}[]"></label>
+											</div>
+										</td>
+
+										<td>{$vo.id}</td>
+										<td>
+											{switch $vo.type}
+											{case 1}人大政协{/case}
+											{case 2}家长代表{/case}
+											{case 3}教师代表{/case}
+											{case 4}新闻媒体代表{/case}
+											{/switch}
+
+										</td>
+										<td><img src="__PIC__/{$vo.thumb}" class="img-circle" width="30"></td>
+										<td>{$vo.name}</td>
+										<td>{$vo.tel}</td>
+										<td>
+											<a onclick="add_qxuser('编辑分组人员','{:url(\'edit\',[\'id\'=>$vo.id])}')"
+													class="btn btn-primary ">编辑</a>
+										</td>
+									</tr>
+									{/volist}
+									</tbody>
+								</table>
+								{$data->render()}
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</section>
+	</section>
+</section>
+{include file="public/footer" /}
+<script src="__ASSETS__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="__ASSETS__/css/bootstrap.css" rel="stylesheet">
+    <link href="__ASSETS__/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="__ASSETS__/css/style.css" rel="stylesheet">
+    <title>学生分组</title>
+    <script src="__ASSETS__/js/jquery-1.8.3.min.js"></script>
+    <script src="__ASSETS__/js/jquery.leoweather.min.js"></script>
+    <script src="__ASSETS__/js/layer/2.4/layer.js"></script>
+</head>
+<body>
+<section id="container">
+    <!--main content start-->
+    <section class="wrapper">
+
+        <h3 class="minnh3" style="margin-bottom: 20px;">学生详情
+            <small>（学生总数：100人）</small>
+        </h3>
+        <form class="form-inline" style="margin-bottom: 20px;" action="" method="get">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <input type="button" class="btn btn-danger" id="Delete" name="Delete" value="批量删除"
+                           onClick="students_del(this)" del_schid="{$Request.param.schid}"
+                           del_url="{:url('students/del')}">
+                </div>
+                <div class="col-md-4 suos pull-right">学生姓名：<input class="form-control chax" type="text" name="name"
+                                                                  value=""/>
+                    <button type="submit" class="btn btn-success  btn-sm"><i class="fa  fa-search"
+                                                                             style="padding: 5px;"></i>查询
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+        <!-- SORTABLE TO DO LIST -->
+
+        <div class="row mt mb">
+
+            <div class="col-md-12">
+
+                <section class="task-panel tasks-widget">
+
+                    <div class="panel-body">
+                        <div class="task-content">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input id="CheckAll" name='CheckAll' type='checkbox'></th>
+                                    <th>学生姓名</th>
+                                    <th>语文成绩</th>
+                                    <th>数学成绩</th>
+                                    <th>英语成绩</th>
+                                    <th>总分</th>
+                                    <th>性别</th>
+                                    <th>民族</th>
+                                    <th>户籍地址</th>
+                                    <th>身份证号</th>
+                                    <th>出生日期</th>
+                                    <th>操作</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="data" id="vo"}
+                                <tr>
+                                    <td><input id='Check[]' name='Check[]' type='checkbox' value="{$vo.id}"></td>
+                                    <td>{$vo.name}</td>
+                                    <td>{$vo.chinese}</td>
+                                    <td>{$vo.smath}</td>
+                                    <td>{$vo.english}</td>
+                                    <td>{$vo.zcj}</td>
+                                    <td>{$vo.sex}</td>
+                                    <td>{$vo.nation}</td>
+                                    <td>{$vo.address}</td>
+                                    <td>{$vo.id_num}</td>
+                                    <td>{$vo.birthday}</td>
+                                    <td><a href="{:url('edit',['id'=>$vo.id,'schid'=>$vo.schid])}">编辑</a></td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                            {$data->render()}
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </section>
+</section>
+{include file="public/footer" /}
+<script src="__ASSETS__/js/common.js"></script>
+</body>
+</html>

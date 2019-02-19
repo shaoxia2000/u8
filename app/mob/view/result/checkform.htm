@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>{$sname}</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+      <meta name="description" content="">
+
+      <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+      <link rel="stylesheet" href="__MOB__/css/demos.css">
+      <style type="text/css">
+      /*.weui-cell:nth-child(2n){background: #f5f5f5}*/
+      .weui-cell{color: #fff}
+       .weui-cells { background-color: #0cb981;}
+    .weui-cells:before {
+  
+    border-top:none;}
+    .weui-cell:before {
+   
+    border-top:none;}
+    .weui-cells:after {
+   
+    border-bottom:none;
+  
+}
+.demos-title {
+   
+    color: #ffffff;}
+      </style>
+  </head>
+
+  <body  style="background: #0cb981 url(__MOB__/images/footer_04.png) bottom center no-repeat;">
+
+    <header class='demos-header' style="background:url(__MOB__/images/head_02.png) repeat-x;">
+      <h1 class="demos-title">查询结果</h1>
+    </header>
+  <!--   <div class="weui-cells weui-cells_form margin100">
+    {volist name="teahlist" id="vo"}
+       <a class="weui-cell weui-cell_access" href="javascript:;">
+          <div class="weui-cell__hd"><img src="{$vo.thumb}" alt="" style="width:50px;margin-right:5px;display:block"></div>
+          <div class="weui-cell__bd">
+          <p>{$vo.name}{$vo.workname}</p>
+          </div>
+      </a>
+    {/volist}
+    </div> -->
+    
+
+    <div class="weui-cells weui-cells_form" style="margin-top: 100px;    padding: 0 20px;">
+    {volist name="slist" id="vo"}
+        <!-- <div class="weui-cell"> -->
+                <!-- <div class="weui-cell__bd xinxi-span">  
+                  <span>{$vo.name}</span><span>{$vo.sex}</span><span>{$vo.idnum}</span>
+                </div>
+                <div class="weui-cell__ft"></div> -->
+            <!-- </div> -->
+            <div class="weui-cell" style="    border-bottom: 1px dashed #fff">
+                <div class="weui-cell__hd"><label class="weui-label">学生姓名：</label></div>
+                <div class="weui-cell__bd">
+                    <span style="    font-size: 24px;">{$vo.name}</span>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">学生性别：</label></div>
+                <div class="weui-cell__bd">
+                    <span>{$vo.sex}</span>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">身份证号：</label></div>
+                <div class="weui-cell__bd">
+                    <span>{$vo.id_num}</span>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">学校名称：</label></div>
+                <div class="weui-cell__bd">
+                    <span>{$sname}</span>
+                </div>
+            </div>
+            {if condition = '$rtype eq 0'}
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">所在分组：</label></div>
+                <div class="weui-cell__bd">
+                    <span>{$fname}</span>
+                </div>
+            </div>
+            {/if}
+    {/volist}
+    {if condition = '$cstatus eq 1'}
+      {if condition = '$rtype eq 1'}
+        {volist name="teahlist" id="v"}
+                <div class="weui-cell">
+                  <div class="weui-cell__hd"><label class="weui-label">所在分班：</label></div>
+                  <div class="weui-cell__bd">
+                      <span>{$v.cname}</span>
+                  </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">班级教师：</label></div>
+                    <div class="weui-cell__bd">
+                        <!-- <span>{$vo.name}{$vo.workname}</span> -->
+                        <span>{$v.name}</span>
+                    </div>
+                </div>
+               <!--  <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">教师头像：</label></div>
+                    <div class="weui-cell__bd">
+                        <span>{$vo.name}{$vo.workname}</span>
+                        <span><img src="{$v.thumb}" alt="" style="width:50px;margin-right:5px;display:block"></span>
+                    </div>
+                </div> -->
+        {/volist}
+      {/if}
+    {/if}
+    </div>
+     <div class="kong"></div>
+    <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://fb.dqedu.net/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+    <script src="__MOB__/js/jquery-2.1.4.js"></script>
+    <script src="__MOB__/js/fastclick.js"></script> 
+    <script>   $(function() {     FastClick.attach(document.body);   }); </script> 
+    <script src="__MOB__/js/jquery-weui.min.js"></script>
+  </body>
+</html>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>

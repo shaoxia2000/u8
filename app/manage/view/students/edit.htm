@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="__ASSETS__/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="__ASSETS__/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="__ASSETS__/css/style.css" rel="stylesheet">
+    <title>新增教师</title>
+    <script src="__ASSETS__/js/jquery-1.8.3.min.js"></script>
+    <script src="__ASSETS__/js/jquery.leoweather.min.js"></script>
+
+</head>
+
+<body>
+
+<section id="container">
+    {include file="public/header" /}
+    {include file="public/left" /}
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+
+            <h3 class="minnh3" style="margin-bottom: 20px;">新增教师 </h3>
+
+            <div class="row mt mb">
+
+                <div class="col-md-12">
+
+                    <section class="task-panel tasks-widget">
+
+                        <div class="panel-body">
+                            <div class="task-content">
+
+                                <div class="col-sm-10">
+                                    <form method="post" action="" class="form-horizontal" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" value="{$res.id}"/>
+                                        <input type="hidden" name="schid" value="{$Request.param.schid}"/>
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-1 control-label no-padding-right">教师名称</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="name" value="{$res.name}"
+                                                       placeholder=""
+                                                       required="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-1 control-label no-padding-right">性别</label>
+                                            <div class="col-sm-10">
+                                                <label class="radio-inline">
+                                                    <input type="radio" {if condition="$res.sex eq 1" } checked {/if}
+                                                    value="1" id="optionsRadios1" name="sex">男</label>
+                                                <label class="radio-inline"><input type="radio" {if
+                                                                                   condition="$res.sex eq 2" } checked {/if}
+                                                    value="2" id="optionsRadios2" name="sex">女</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-1 control-label no-padding-right">教师照片</label>
+                                            <div class="col-sm-10">
+                                                <div class="col-sm-6">
+                                                    <input style="float:left;" placeholder="" name="thumb" type="file">
+                                                    {if condition="$res['thumb'] neq ''"}
+                                                    <img style="float:left;margin-left: 50px;"
+                                                         src="__PIC__/{$res.thumb}" class="img-circle" width="50">
+                                                    {else /}
+                                                    暂无缩略图
+                                                    {/if}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-1 control-label no-padding-right">职称</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="duty" value="{$res.duty}"
+                                                       placeholder=""
+                                                       required="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-1 control-label no-padding-right">毕业院校</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="school"
+                                                       value="{$res.school}" placeholder=""
+                                                       required="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-1 control-label no-padding-right">年龄</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="age" placeholder=""
+                                                       required="" value="{$res.age}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-1 control-label no-padding-right">教龄</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="teachage" placeholder=""
+                                                       required="" value="{$res.teachage}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-1 control-label no-padding-right">联系方式</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="tel" placeholder=""
+                                                       required="" value="{$res.tel}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-1 col-sm-10">
+                                                <button type="submit" class="btn btn-primary">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div><!--/col-md-12 -->
+            </div><!-- /row -->
+
+        </section>
+    </section>
+
+    <!--main content end-->
+</section>
+{include file="public/footer" /}
+</body>
+</html>

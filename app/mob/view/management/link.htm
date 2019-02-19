@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="__MOB__/js/jquery-2.1.4.js"></script>
+	<link rel="stylesheet" type="text/css" href="__MOB__/manage/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="__MOB__/manage/css/style.css">
+</head>
+<body>
+	<div class="am-cf admin-main" style="padding-top: 0px;">
+			<!-- content start -->
+			<div class="admin-content">
+				<div class="admin-content-body">
+
+
+
+					<div class="container" style="padding: 0px 10px 0px 10px">
+						<div class="am-g">
+							{volist name='listlink' id='v'}
+								
+									<span style="font-size: 16px;">链接{$v.lid}：</span>
+									<input type="text" style="width: 600px;" value="{$v.link}" class="link huoqu-input" item='{$v.id}'>
+									{if condition="$v['switch'] eq 0"}
+									<input type="button" value="开启" class="but btn btn-success radius" itstut="{$v.switch}">
+									{/if}
+									{if condition="$v['switch'] eq 1"}
+									<input type="button" value="关闭" class="but btn btn-danger radius" itstut="{$v.switch}">
+									{/if}
+									<p style="color: #d60a25;padding: 4px 58px;line-height: 2em;font-size: 14px;">例如:www.baidu.com</p>
+								
+							{/volist}
+							
+						</div>
+
+
+						
+					</div>
+
+				</div>
+				<!-- content end -->
+			</div>
+		</div>
+
+</body>
+</html>
+<script type="text/javascript">
+$(document).ready(function(){
+     $(".but").click(function(){
+         var link = $(this).prev('.link').val();//链接地址
+         var id = $(this).prev('.link').attr('item');//ID
+         var stuat = $(this).attr('itstut');//状态
+         $.ajax({
+	      type:"POST",
+	      url:"{:url('changelink')}",
+	      dataType:"json",
+	      data:{link:link,id:id,stuat:stuat,areaid:{$areaid}},
+	      success:function (msg)
+	      {
+	             if(msg==3)
+	             {
+	             	alert('请先关闭其他开启的的链接，在开启新链接');
+	             	return false;
+	             }
+	             if(msg==1)
+	             {
+	             	alert('操作成功!!')
+	             	window.location.reload();
+	             }
+	             if(msg==2)
+	             {
+	             	alert('操作失败!!')
+	             	return false;
+	             }
+	             if(msg==4)
+	             {
+	             	alert('该操作失败!!')
+	             	return false;
+	             }
+	      }
+  })
+ 	});
+ });
+</script>

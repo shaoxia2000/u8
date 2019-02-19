@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="description" content="">
+  <script src="__MOB__/js/jquery-2.1.4.js"></script>
+  <link rel="stylesheet" type="text/css" href="__MOB__/manage/css/style.css" media="all" />
+<link rel="stylesheet" href="__MOB__/manage/css/amazeui.min.css">
+<link rel="stylesheet" type="text/css" href="__MOB__/manage/css/Hui-iconfont/1.0.8/iconfont.css" />
+
+
+  <style type="text/css">
+  .top-select select{    padding: 10px;  margin: 15px 0;}
+    table{width: 100%;border: none;}
+  	table thead tr th,tbody tr td{    padding: 6px 10px;  text-align: center;width: 12%;    border: none;}
+  	tbody tr td:first-child{width: 50%;}
+  	.tancipnt{    border: 1px solid #ccc;
+    padding: 6px 10px;
+    width: 100%;
+    color: #000;}
+  </style>
+</head>
+<body>
+
+	<div class="am-cf admin-main" style="padding-top: 0px;">
+			<!-- content start -->
+			<div class="admin-content">
+				<div class="admin-content-body">
+
+					<div class="container" style="padding: 0px 10px 0px 10px">
+
+						<div class="am-g" style="margin-top: 5px;">
+							<div class="am-u-sm-12">
+								
+									<table cellpadding="1" cellspacing="0" border="1" class="am-table am-table-striped am-table-hover table-main">
+									<thead>
+										<tr>
+											<th>区名称</th>
+											<th>区ID</th>
+											<th>操作</th></tr>
+									</thead>	
+									<tbody id='schooldata'>
+										 {volist name='alist' id='v'}
+										 <tr>
+										 	<td>{$v.area_name}</td>
+										 	<td>{$v.area_id}</td>
+										 	{if condition="$v.area_id neq 11"}
+										 		<td><a href='#' style='background: #009688;padding: 4px 10px;border-radius: 4px;color: #fff;' class="btn radius btn-danger size-L" ><i class='Hui-iconfont Hui-iconfont-close2' style="padding-right: 3px;"></i>禁用</a></td>
+										 		<!-- <td><a href='#' style='background: #009688;padding: 4px 10px;border-radius: 4px;color: #fff;' class="btn radius btn-primary size-L" onClick="modaldemo({$v.area_id})"><i class='Hui-iconfont Hui-iconfont-arrow1-right'></i>入口</a></td> -->
+											{/if}
+								
+										 </tr>	
+										 {/volist}
+									</tbody>
+
+								
+									</table>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- content end -->
+			</div>
+		</div>
+		<!-- 弹出框 -->
+		<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content radius">
+					<div class="modal-header">
+						<h3 class="modal-title">输入推送密码</h3>
+						<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+					</div>
+					<div class="modal-body">
+						<input type="text" value="" placeholder="请输入密码" class="tancipnt" id='password'> 
+					</div>
+					<div class="modal-footer">
+						<input type="hidden" id='areaid' value="">
+						<button class="btn btn-primary radius" onClick='sure()'>确定</button>
+						<button class="btn btn-danger radius" data-dismiss="modal" aria-hidden="true">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script type="text/javascript" src="__MOB__/manage/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__MOB__/manage/js/layer.js"></script>
+	<script type="text/javascript" src="__MOB__/manage/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="__MOB__/manage/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+function modaldemo(areaid)
+{
+	$("#modal-demo").modal("show");
+	$("#areaid").val(areaid);
+}
+	
+
+</script>
+</body>
+</html>
+<script type="text/javascript">
+function sure() 
+{
+	var  password = $('#password').val();
+	if(password=='')
+	{
+		alert('请输入密码');
+		return false;
+	}
+	var  areaid = $('#areaid').val();
+	$.ajax({
+	      type:"POST",
+	      url:"{:url('confirmpusn')}",
+	      dataType:"json",
+	      data:{areaid:areaid,password:password},
+	      success:function (msg)
+	      {
+	            if(msg==3)
+	            {
+	            	alert('密码不正确');
+	            }else{
+	            	alert('推送中....');
+	            	$("#modal-demo").modal("hide");
+	            	$("#password").val('');
+	            }
+	      }
+  })
+}
+</script>

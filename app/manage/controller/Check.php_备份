@@ -1,0 +1,229 @@
+<?php
+/**
+ * Created by shaoxia2018.
+ * Date: 2018/6/5
+ * Time: 16:17
+ */
+
+namespace app\manage\controller;
+
+use app\common\model\Recordassign as RecordassignModel;
+use app\common\model\Samename as SamenameModel;
+use app\common\model\Teachergroup as TeachergroupModel;
+use Overtrue\Pinyin\Pinyin;
+use Predis\Client as Redis;
+use think\Config;
+use think\Session;
+
+
+class Check extends Common
+{
+	public function checksfz()
+	{
+		$config = Config::get('redis');
+		$redis = new Redis($config);
+		$key = 'newsfz';
+		$dataredis = $redis->smembers($key);
+//		$redisdata = $this->doComments($dataredis);
+		halt($dataredis);
+	}
+	
+	public function doComments($data)
+	{
+		foreach ($data as $v) {
+			list($sfz, $schid) = explode('==||==', $v);
+			$newCom[$sfz] = $schid;
+		}
+		return $newCom;
+	}
+	
+	public function checksbt(){
+		$schid = input('schid');
+		$res = sbtarr($schid);
+		$data = explode(",", $res);
+		foreach ($data as $v) {
+			$name = db('classes' . $schid)->where('id', $v)->value('name');
+			$cno = db('classes' . $schid)->where('id', $v)->value('cno') - 1;
+			
+			echo '姓名：' . $name . '-组号:' . IntToChr($cno).'　id号:'.$v.'<br>';
+			
+		}
+	}
+	/**
+	 * 根据班级表id检查返回双胞胎数据
+	 */
+//	public function checksbt($schid)
+//	{
+//
+//		$schtype = db('school')->where(['schid'=>$schid])->value('schtype');
+//
+//		$data = db('classes' . $schid)->where('sbt', 'gt', '0')->column('sbt,id,name','id');
+//		$ids = array_column($data, 'sbt');
+//		if(!empty($ids)){
+//			$psbt = db('classes' . $schid)->where('id','in', $ids)->column('sbt,id,name','id');
+//			$arr = array();
+//			foreach($psbt as $v) {
+//				$arr[$v['id']][$v['id']] = $v['id'];
+//				foreach ($data as $dv) {
+//					if ($dv['sbt'] == $v['id']) {
+//						$arr[$v['id']][] = $dv['id'];
+//						$hasSbt[] = $dv['id'];
+//					}
+//				}
+//				$hasSbt[] = $v['id'];
+//			}
+//
+//			foreach($arr as $sbtarr){
+//				$len = db('classes' . $schid)->where('id','in', $sbtarr)->group('cno')->count();
+//				if($len > 1){
+//					$res=db('classes' . $schid)->where('id','in', $sbtarr)->where('sbt',null)->value('cno');
+//
+//					if($schtype == 1){
+//
+//						$oldSno = db('classes' . $schid)->where('id','in', $sbtarr)->where('sbt is not null')->column('id,sex,cno','id');
+//						// 更新
+//						$resnew=db('classes' . $schid)->where('id','in', $sbtarr)->where('sbt is not null')->update(['cno'=>$res]);
+//						foreach($oldSno as $k => $v){
+//							$near = db('classes' . $schid)->where(['sex'=>$v['sex']])->where(['cno'=>$res])->where('id','not in', $hasSbt)->find();
+//							if(empty($near)){
+//								$near = db('classes' . $schid)->where(['sex'=>$v['sex']])->where(['cno'=>$res])->where('id','not in', $hasSbt)->find();
+//							}
+//							db('classes' . $schid)->where(['id'=>$near['id']])->update(['cno'=>$v['cno']]);
+//
+//						}
+//					}else{
+//						$oldSno = db('classes' . $schid)->where('id','in', $sbtarr)->where('sbt is not null')->column('id,sex,cno,zcj','id');
+//						// 更新
+//						$resnew=db('classes' . $schid)->where('id','in', $sbtarr)->where('sbt is not null')->update(['cno'=>$res]);
+//
+//						foreach($oldSno as $k => $v){
+//							$near = db('classes' . $schid)->where('zcj','lt',$v['zcj'])->where(['sex'=>$v['sex']])->where(['cno'=>$res])->where('id','not in', $hasSbt)->order('zcj desc')->find();
+//							if(empty($near)){
+//								$near = db('classes' . $schid)->where('zcj','gt',$v['zcj'])->where(['sex'=>$v['sex']])->where(['cno'=>$res])->where('id','not in', $hasSbt)->order('zcj asc')->find();
+//							}
+//							db('classes' . $schid)->where(['id'=>$near['id']])->update(['cno'=>$v['cno']]);
+//
+//						}
+//
+//					}
+//
+//				}
+//			}
+//
+//		}
+//
+//
+//
+//
+//
+////		$res = sbtarr($schid);
+////		$data = explode(",", $res);
+//
+//
+////		if (sbtarr($schid) != 0) {
+////			$res = db('classes' . $schid)->where('id', 'in', sbtarr($schid))->where('sbt', 'gt', 0)->distinct('sbt')->select();
+////			foreach ($res as $k => $v) {
+////				$zidarr = db('classes' . $schid)->where('sbt', $v['sbt'])->select();
+////				dump($zidarr);
+////			}
+////		}
+//
+//
+////		foreach ($data as $v) {
+////			$name = db('classes' . $schid)->where('id', $v)->value('name');
+////			$cno = db('classes' . $schid)->where('id', $v)->value('cno');
+////			echo '姓名：' . $name . '-组号:' . IntToChr($cno) . '　ID:' . $v . '<br>';
+////
+////		}
+//	}
+	
+	/**
+	 * 根据班级表id，及分班数量检查返回拼音重名数据
+	 */
+	public function checksname()
+	{
+		$schid = input('schid');
+		$sbtarr = sbtarr($schid);
+		$pinyin = new Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
+		$data = db('classes' . $schid)->field('id,name')->where('id', 'not in', $sbtarr)->select();
+		foreach ($data as $k => $v) {
+			$name = $pinyin->permalink($v['name']);
+			$newCom[$v['id']] = $name;
+		}
+		foreach ($newCom as $k => $v) {
+			$arrn[$v][] = $k;
+		}
+		
+		foreach ($arrn as $k => $v) {
+			if (count($v) > 1) {
+				echo $k . '重复下标为:　　<br>';
+				foreach ($v as $vv) {
+					$res = db('classes' . $schid)->field('sex, cno, name')->where('id', $vv)->find();
+					echo $vv . '===' . '名字：' . $res['name'] . '===' . '最终班：' . $res['cno'] . '<br>';
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 单独学校重新测试方法
+	 */
+	public function checkreset()
+	{
+		$schid = input('schid');
+		//删除同音同名记录
+		SamenameModel::destroy($schid);
+		//重置教师组表状态
+		$data = ['astatus' => 0, 'gstatus' => 0];
+		$where = ['schid' => $schid];
+		$field = ['astatus', 'gstatus'];
+		TeachergroupModel::update($data, $where, $field);
+		//重置整体分组记录表
+		RecordassignModel::where(['areaid' => Session::get('area_id')])->setDec('assigngroupnums');
+//
+		//删除学生表记录
+		$dbname = "bk_classes" . $schid;
+		$isclasses = db()->query("SHOW TABLES LIKE '{$dbname}'");
+		if ($isclasses) {
+			$sqldel = "DROP TABLE `{$dbname}`";
+			db()->execute($sqldel);
+		}
+		
+	}
+	
+	/**
+	 * 整个区重新测试方法
+	 */
+	public function checkresetall()
+	{
+		$map['status'] = ['eq', 1];
+		$map['astatus'] = ['eq', 1];
+		$map['gstatus'] = ['eq', input('gstatus')];
+		$map['areaid'] = ['eq', input('areaid')];
+		
+		$databig = TeachergroupModel::where($map)->select();
+		foreach ($databig as $k => $v) {
+			$this->checkreset($v['schid']);
+		}
+		echo "区重置成功";
+	}
+	
+	
+	/**
+	 * 教师组批量更新学校类型
+	 */
+	public function checkupdateall()
+	{
+		
+		$databig = TeachergroupModel::select();
+		foreach ($databig as $k => $v) {
+			$data = ['schtype' => GetSchooltype($v['schid'])];
+			$where = ['id' => $v['id']];
+			$field = ['schtype'];
+			TeachergroupModel::update($data, $where, $field);
+		}
+		echo "区重置成功";
+	}
+	
+	
+}

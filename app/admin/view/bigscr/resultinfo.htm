@@ -1,0 +1,319 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="description" content="">
+
+	<meta name="author" Content="">
+
+	<meta name="renderer" content="webkit">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<title>先知分班大屏演示</title>
+
+	<link rel="stylesheet" type="text/css" href="__BS__/css/bootstrap.css">
+
+	<link rel="stylesheet" type="text/css" href="__BS__/css/fenbmecss.css">
+	<link rel="stylesheet" type="text/css" href="__BS__/css/loading.css">
+
+	<script src="__BS__/js/jquery.min.js"></script>
+
+	<script type="text/javascript" src="__BS__/js/bootstrap.js"></script>
+
+	<!-- 自动时间 -->
+
+	<script src="__BS__/js/jquery.leoweather.min.js"></script>
+	<script type="text/javascript">
+		function alert(e){
+			$("body").append('<div id="msg"><div id="msg_top">温馨提示<span class="msg_close">×</span></div><div id="msg_cont">'+e+'</div><div class="msg_close" id="msg_clear">确定</div></div><div class="mask"></div>');
+        $(".msg_close").click(function (){
+            $("#msg").remove();
+            $(".mask").hide();
+        });
+    }
+	</script>
+	<style>
+    #msg{
+        width:300px;
+        position: fixed;
+        z-index:999;
+        top: 49%;
+        margin-top:-80px;
+        left:50%;
+        margin-left:-133px;
+        background:#fff;
+        box-shadow:5px 5px 8px #999;
+        font-size:17px;
+        color:#666;
+        border:1px solid #f8f8f8;
+        text-align: center;
+        line-height: 2rem;
+        display:inline-block;
+            padding: 20px 0;
+        border-radius:10px;
+    }
+    #msg_top{
+        background:#f8f8f8;
+        padding:5px 15px 5px 20px;
+        text-align:center;
+    }
+    #msg_top span{
+        font-size:22px;
+        float:right;
+        cursor:pointer;
+    }
+    #msg_cont{
+        padding:15px 20px 20px;
+        text-align:center;
+    }
+    #msg_clear{
+        display:inline-block;
+        color:#fff;
+        padding:5px 15px;
+        background:#8fc31f;
+        border-radius:2px;
+       
+        margin-right:15px;
+        cursor:pointer;
+    }
+    .mask {
+	    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: .6;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 333;
+}
+</style>
+</head>
+
+<body>
+	{include file="public/bheader" /}
+	<div class="container-fluid">
+
+		<!-- 内容开始 -->
+		<section>
+    <div class="steps">
+
+        <!-- 进度条步骤开始 -->
+
+        <div class="stepbj" id="step">
+            <ul class="buzifenz">
+                <li class="onn"><em>1</em></li>
+                <li class="onn"><em>2</em></li>
+                <li class="onn"><em>3</em></li>
+            </ul>
+        </div><!-- 背景 -->
+
+        <div class="container">
+            <div class="steps-list">
+
+                <ul>
+                    <li><a href="{:url('bigscr/cheader')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_06.png">
+                            <span>机选家长</span>
+                        </div>
+                    </a>
+                    </li>
+
+                    <li><a href="{:url('bigscr/sedheader')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_09.png">
+                            <span>选定家长</span>
+                        </div>
+                    </a></li>
+
+                    <li><a href="{:url('bigscr/teacherfp')}">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_03.png">
+                            <span>教师分配</span>
+                        </div>
+                    </a></li>
+                    <li><a href="resultinfo/?id=1">
+                        <div class="steps-list-div">
+                            <img src="__BS__/images/icon_12.png">
+                            <span>结果公示</span>
+                        </div>
+                    </a></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <!-- 进度条步骤结束 -->
+    </div>
+
+</section>
+		<section>
+
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<!-- 学生待分配统计列表开始 -->
+
+					<div class="col-md-12">
+
+						<div class="con-kuang tuisong">
+
+							<!-- 标题开始 -->
+
+							<div class="fenp-title fenp-title5">
+								班主任分配结果公示
+								<!-- <span>{$tasktitle}</span> -->
+							</div>
+
+							<!-- 标题结束 -->
+
+							<div class="col-md-2 jiaoshi-toux">
+
+								<ul id="myTab" class="nav nav-tabs">
+									{volist name="rem" id="vo"}
+									<li>
+
+										<a href="#{$key+1}" data-toggle="tab" id="s{$key+1}">
+
+											<img src="../../../public/{$vo.tp}">
+											{$vo.cno|daxie}班
+											<span class="laoshidaih">{$vo.tname}</span>
+
+											<span class="badge">{$vo.cno}</span>
+
+										</a>
+
+									</li>
+									{/volist}
+								</ul>
+
+							</div>
+
+							<!-- 头像列表开始 -->
+							<!-- <div class=""></div>
+						-->
+						<div class="touxi-list col-md-10 xuestoux xuesheng-list ">
+
+							<div id="myTabContent" class="tab-content">
+								{volist name="newrem" id="vo"}
+								<div class='tab-pane fade in active' id="{$vo.cno}">
+
+									<ul>
+										{volist name="vo.classes" id="vos"}
+										<li>
+											<img src="__BS__/images/student.png">
+											<span>{$vos.name}</span>
+										</li>
+										{/volist}
+									</ul>
+
+								</div>
+								{/volist}
+							</div>
+
+						</div>
+
+						
+
+					</div>
+
+				</div>
+
+				<!-- 学生待分配统计列表结束 -->
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- 按钮开始 -->
+
+	<div class="fenpeijieg-ann">
+
+		<a  href="#"style="text-align: center;" onclick="send({$sid})" >结果推送公众号</a>
+
+	</div>
+	<!-- 头像列表结束 -->
+						<!-- alert弹出框 开始 -->
+						<input type="button"  id="bootbox" value="123">
+						<!-- alert弹出框 结束 -->
+
+	<!-- 按钮结束 -->
+
+	<!-- 内容结束 -->
+</div>
+
+<script>
+
+var touchid={$Request.param.id};
+
+//alert(touchid);
+
+$("#s"+touchid).trigger("click");
+
+</script>
+
+</body>
+
+</html>
+<script type="text/javascript" src="__BS__/js/loading.js"></script>
+<script>
+function send(id)
+{
+	$('.tuisong').loading({
+		loadingWidth:220,
+		title:'温馨提示',
+		name:'test',
+		titleColor:'#fff',
+		discColor:'#EDEEE9',
+		discription:'正在微信推送中,请耐心等待一下',
+		direction:'column',
+		type:'origin',
+		originBg:'',
+		originDivWidth:40,
+		originDivHeight:40,
+		originWidth:6,
+		originHeight:6,
+		smallLoading:false,
+		loadingBg:'rgba(56,43,14,0.8)',
+		loadingMaskBg:'rgba(66,66,66,0.2)'
+	});
+
+	setTimeout(function(){
+		removeLoading('test');
+		sendwx(id);
+	},4000);
+
+
+}
+function sendwx(id)
+{
+	$.ajax({
+            type:"POST",
+            url:"http://fb.xianzhiedu.com.cn/mob/wx/Wxsend",
+            dataType:"json",
+            data:{id:id},
+            success:function (msg)
+            {
+               if(msg==1)
+               {
+		         	alert('请查看微信公众号内推送信息！');
+		       }
+		    }
+
+        })
+}
+</script>

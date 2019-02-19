@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>先知预报名分班平台</title>
+
+  <meta name="description" content="Dashboard">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!--Basic Styles-->
+  <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+  <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+  <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+  <!--Beyond styles-->
+  <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+  <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+  <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+  <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid" media="all">
+<link rel="stylesheet" type="text/css" href="__ADMIN__/style/loading/loading.css">
+
+</head>
+
+<body>
+  <!-- 头部 -->
+  {include file="public/header" /}
+  <!-- /头部 -->
+
+  <div class="main-container container-fluid">
+
+    <div class="page-container">
+      <!-- Page Sidebar -->
+      {include file="public/left" /}
+      <!-- /Page Sidebar -->
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Page Breadcrumb -->
+        <div class="page-breadcrumbs">
+          <ul class="breadcrumb">
+            <li class="active">控制面板</li>
+          </ul>
+        </div>
+        <!-- /Page Breadcrumb -->
+
+        <!-- Page Body -->
+        <div class="page-body">
+<button class="btn btn-success" id="successbtn" data-toggle="modal" data-target="#modal-success" style="display: none;">Success</button>
+          <div class="row" >
+
+            <div class="col-md-12" >
+                <!-- 进度条开始 -->
+                  <div id="contain">
+                        <div class="progressbar" id="progressbar">
+                        <!-- 球1 -->
+                          <div class='wrap' id='wrap1'>
+                            <div class='ball' id='ball1'></div>
+                          </div>
+                      <!-- 球2 -->
+                          <div class='wrap' id='wrap2'>
+                            <div class='ball' id='ball2'></div>
+                          </div>
+                      <!-- 球3 -->
+                          <div class='wrap' id='wrap3'>
+                            <div class='ball' id='ball3'></div>
+                          </div>
+                      <!-- 球4 -->
+                          <div class='wrap' id='wrap4'>
+                            <div class='ball' id='ball4'></div>
+                          </div>
+                      <!--球5 -->
+                          <div class='wrap' id='wrap5'>
+                            <div class='ball' id='ball5'></div>
+                          </div>
+
+
+                      </div>
+                    <!-- 加载条开始 -->
+
+                      <div class="percent">
+                         <span id="wenzi" class="letterpressText">分班中</span>
+                       <input type="text" id="percent"  class="baifenb" disabled="disabled" />
+
+                      </div>
+                    <!--  加载条结束 -->
+                  </div>
+
+                <!-- 进度条结束 -->
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- 弹出框开始 隐藏部分-->
+  <div id="modal-success" class="modal modal-message modal-success fade in" style="display: none;" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-title">完成此次分班</div>
+
+
+                <div class="modal-footer">
+                <button type="button"  class="btn btn-success"><a href="{:url('task/index')}" style="color:#fff;">完成</a></button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+   <!--  弹出框结束 隐藏部分-->
+  <!--Basic Scripts-->
+  <script src="__ADMIN__/style/jquery_002.js"></script>
+  <script src="__ADMIN__/style/bootstrap.js"></script>
+  <script src="__ADMIN__/style/jquery.js"></script>
+  <!--Beyond Scripts-->
+
+    <script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+  <script type="text/javascript">
+// 换肤js
+     $(document).ready(function() {
+        var skins=$.cookie("styleid");
+        if(skins!=null){
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss"+skins+".css");
+
+             }else{
+
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss.css");
+
+           }
+
+     });
+
+        function changestyle(id){
+
+            $("#sid").attr("href","__ADMIN__/style/skins/mycss"+id+".css");
+            $.cookie('styleid', id, { path: '/'});
+        }
+      </script>
+  <script src="__ADMIN__/style/beyond.js"></script>
+  <script src="__ADMIN__/style/toastr.js"></script>
+  <script src="__ADMIN__/style/wizard-custom.js"></script>
+<!--   <script src="__ADMIN__/style/bootbox.js"></script> -->
+<!-- 进度条js -->
+<script type="text/javascript" src="__ADMIN__/style/loading/loading.js"></script>
+  <!--     皮肤互换js -->
+  <script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+  <script type="text/javascript">
+
+
+// 弹出框js
+         $("#bootbox-success").on('click', function () {
+            bootbox.dialog({
+                message: $("#modal-success").html(),
+                }
+        });
+</script>
+</body>
+</html>

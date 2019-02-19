@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <title>成绩管理</title>
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/style/skins/mycss.css" id="sid"></head>
+<body>
+    <!-- 头部 -->
+{include file="public/header" /}
+    <!-- /头部 -->
+
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            {include file="public/left" /}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#">学校管理</a>
+                        </li>
+                        <li class="active">成绩管理</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+<!--  返回键开始 -->
+                <div class="page-header position-relative">
+                    <!--  标题 -->
+                    <div class="header-title">
+                        <h1>成绩管理</h1>
+                    </div>
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                        <!--  返回上一页 -->
+                        <a class="sidebar-returnn" href="javascript:history.go(-1)"> <i class="fa fa-reply-all"></i>
+                        </a>
+                        <!--  左侧隐藏 -->
+                        <a class="sidebar-toggler" href="#"> <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <!-- 刷新 -->
+                        <a class="refresh" id="refresh-toggler" href="">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <!--  全屏 -->
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End--> </div>
+                <!--  返回键结束 -->
+                <!-- Page Body -->
+                <div class="page-body">
+                <form class="form-inline" style="margin-bottom: 20px;" action="" method="get">
+                    <div class="form-group">
+                        <select name="findxq" class="form-control"  id="findschool"><!-- //onchange="choose_school()" -->
+                            <option value="">——选择所属学校——</option>
+                            {volist name="newlist" id="vo" }
+                            <option {if condition="$findxq eq $vo['id']"}selected="selected"{/if} value="{$vo.id}">{$vo.name}</option>
+                            {/volist}
+                        </select>
+                        <select name="task" class="form-control" id="task">
+                            <option value="">——选择任务——</option>
+                            {volist name="list" id="vo" }
+                            <option {if condition="$taskid eq $vo['taskid']"}selected="selected"{/if} value="{$vo.taskid}">{$vo.title}</option>
+                            {/volist}
+                        </select>
+                        <input type="text" class="form-control" id="exampleInputName2"  name ='find' value="{$find}" placeholder="搜索姓名关键字">
+                    </div>
+                    <button type="button" class="btn btn-default" id="but">搜索</button>
+                </form>  
+
+<!-- <form class="form-inline" style="margin-bottom: 20px;" action="" method="post">
+    <button type="button" tooltip="成绩录入" class="btn btn-sm btn-success" onClick="javascript:window.location.href = '{:url('add')}'">
+    <i class="fa fa-plus"></i>
+    成绩录入
+    </button> 
+</form> -->
+
+<!-- Page Body -->
+<!-- <div class="page-body"> -->
+
+    <!-- <div class="row"> -->
+        <!-- <div class="col-lg-12 col-sm-12 col-xs-12"> -->
+            <!-- <div class="widget"> -->
+                <!-- <div class="widget-header bordered-bottom bordered-green">
+                    <span class="widget-caption">成绩统计</span>
+                </div> -->
+                <div class="widget-body" style="    overflow: hidden;">
+                    <div class="col-xs-12 col-md-12">
+                        <div class="well with-header  with-footer">
+                            <div class="header">入学考试</div>
+                            <table class="table table-hover">
+                                <thead >
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>总成绩</th>
+                                        <th>性别</th>
+                                        <th>民族</th>
+                                        <th>生日</th>
+                                        <th>地址</th>
+                                        <th>任务名称</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="datalist" id="vo"}
+                                    <tr>
+                                        <td>{$vo.name}</td>
+                                        <td>{$vo.zcj}</td>
+                                        <td>{$vo.sex}</td>
+                                        <td>{$vo.nation}</td>
+                                        <td>{$vo.birthday}</td>
+                                        <td>{$vo.address}</td>
+                                        <td>{$vo.title}</td>
+                                    </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                        {if condition="$datalist neq ''"}
+                                {$datalist->render()}
+                        {/if}
+                    </div>
+                </div>
+            <!-- </div> -->
+        <!-- </div> -->
+    <!-- </div> -->
+<!-- </div> -->
+</div>
+<!-- /Page Body -->
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>
+    </div>
+        <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+<!--     皮肤互换js -->
+    <script type="text/javascript" src="__ADMIN__/style/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="__ADMIN__/style/cookie.js"></script>
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        var skins=$.cookie("styleid");
+        if(skins!=null){
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss"+skins+".css");
+
+        }else{
+
+             $("#sid").attr("href","__ADMIN__/style/skins/mycss.css");
+
+        }
+           //学校任务
+        $("#findschool").on("change",function(){
+                    var id = $("#findschool option:selected").val();
+                    $.ajax({
+                        url:"{:url('Mark/choose')}",
+                        type:'post',
+                        dataType:'json',
+                        data:{id:id},
+                        success:function(t) {
+                            if(t.exist==1)
+                            {
+                                var arr = t.txt;
+                                var str = '<option value="">请选择任务</option>';
+                                $.each(arr,function(index,value){
+                                     str += "<option value="+index+">任务"+value+"</option>";
+                                });
+                                $("#task").html(str);
+                            }else
+                            {
+                                var str='<option value="">请选择任务</option><option value="无分班任务" selected>无分班任务</option>';
+                                $("#task").html(str);
+
+                            }
+                        }
+                    });
+            });
+
+        });
+        $("#but").on("click",function(){
+                var id = $("#findschool option:selected").val();
+                var task = $("#task option:selected").val();
+                if(id=='')
+                {
+                    alert('请选择学校!!'); 
+                    return false; 
+                }
+                if(task=='无分班任务')
+                {
+                    alert('该学校下无分班任务!!');
+                    return false; 
+                }
+                document.getElementById("but").setAttribute("type", "submit");
+        })
+        function changestyle(id){
+
+            $("#sid").attr("href","__ADMIN__/style/skins/mycss"+id+".css");
+            $.cookie('styleid', id, { path: '/'});
+        }
+    </script>
+
+</body></html>

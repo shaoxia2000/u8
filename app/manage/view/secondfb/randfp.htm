@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>二次分班随机抽选界面</title>
+
+	{load href="__ASSETS__/js/jquery-1.8.3.min.js"}
+
+	{load href="__ASSETS__/layui/layui.js"}
+
+	{load href="__ASSETS__/layui/css/layui.css"}
+
+	<script>
+
+		
+
+		$(function () {
+
+			layui.use(['layer'], function () {
+
+				var layer = layui.layer;
+
+			})
+
+		});
+
+		
+
+		var g_Interval = "1";
+
+		var g_PersonCount = "{$min}";//参加抽奖人数
+
+		var g_Timer;
+
+		var running = false;
+
+		
+
+		function beginRndNum(trigger) {
+
+			if (running) {
+
+				running = false;
+
+				clearTimeout(g_Timer);
+
+				$(trigger).val("开始");
+
+				$('#ResultNum').css('color', 'red');
+
+				$("#btn").hide();
+
+				var UPURL = "{:url('secondfb/randfp')}";
+
+				var classcc = $('#ResultNum').text();
+
+				var classid = classcc.replace('班', '');
+
+				var id = "{$Request.param.id}";
+
+				$.post(
+
+					UPURL,
+
+					{"id": id, "classid": classid},
+
+					function () {
+
+					}, 'json'
+
+				)
+
+				layer.msg('分班抽选结果产生！<span name="count" style="color: red;">3</span>秒后跳转', {
+
+					icon: 1,
+
+					success: function (layero, index) {
+
+						var countElem = layero.find('span[name="count"]');
+
+						var timer = setInterval(function () {
+
+							var countTemp = parseInt(countElem.text()) - 1;
+
+							countTemp === 0 ? clearInterval(timer) : countElem.text(countTemp);
+
+						}, 1000)
+
+					}
+
+				}, function () {
+
+					parent.location.reload();
+
+				});
+
+				
+
+			}
+
+			else {
+
+				running = true;
+
+				$('#ResultNum').css('color', 'black');
+
+				$(trigger).val("停止");
+
+				beginTimer();
+
+			}
+
+		}
+
+		
+
+		function updateRndNum() {
+
+			var num = Math.floor(Math.random() * g_PersonCount + 1)+{$max};
+
+			$('#ResultNum').html(num + '班');
+
+		}
+
+		
+
+		function beginTimer() {
+
+			g_Timer = setTimeout(beat, g_Interval);
+
+		}
+
+		
+
+		function beat() {
+
+			g_Timer = setTimeout(beat, g_Interval);
+
+			updateRndNum();
+
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+<style type="text/css">
+
+body{background-color:#fff;text-align:center;padding-top:50px;}
+#Result{border:3px solid #1ab394;margin:0 auto;text-align:center;width:400px;padding:50px 0;background:#efe;}
+#ResultNum{font-size:50pt;font-family:Verdana}
+#Button{margin:50px 0 0 0;}
+#Button input{font-size:24px;}
+#btn{background-color:#1ab394;border:1px solid #1ab394;width:20%;height:45px;margin:0em auto;font-size:1em;border-radius:2.5px;-moz-border-radius:2.5px;-webkit-border-radius:2.5px;color:#FFF;}
+</style>
+
+
+
+<h1 style="color:#1ab394;line-height: 3em">一键二次分班已执行</h1>
+
+
+
+<!--<div id="Result" style="color:#1ab394">-->
+
+	<!--<span id="ResultNum">0</span>-->
+
+<!--</div>-->
+
+
+
+<!--<div id="Button">-->
+
+	<!--<input type='button' id="btn" value='开始' onclick='beginRndNum(this)'/>-->
+
+<!--</div>-->
+
+</body>
+
+</html>

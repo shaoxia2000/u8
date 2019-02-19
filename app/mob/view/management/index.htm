@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="description" content="">
+  <script src="__MOB__/js/jquery-2.1.4.js"></script>
+<link rel="stylesheet" type="text/css" href="__MOB__/manage/css/style.css" />
+<link rel="stylesheet" href="__MOB__/manage/css/amazeui.min.css">
+<link rel="stylesheet" type="text/css" href="__MOB__/manage/css/Hui-iconfont/1.0.8/iconfont.css" />
+
+  <style type="text/css">
+  .top-select select{      padding: 6px 10px; margin: 10px 15px;  float: right;  border: 1px solid #ccc;}
+    table{width: 100%;border: none;}
+  	table thead tr th,tbody tr td{    padding: 6px 10px;  text-align: center;width: 12%;    border: none;}
+  	tbody tr td:first-child{width: 50%;}
+  	.xuanz{    float: right; line-height: 58px;}
+  </style>
+</head>
+<body>
+	<div class="am-cf admin-main" style="padding-top: 0px;">
+			<!-- content start -->
+			<div class="admin-content">
+				<div class="admin-content-body">
+
+					<div class="container" style="padding: 0px 10px 0px 10px">
+						<div class="am-g">
+							<div class="top-select">
+								
+								<select name='alist' onchange="show_areaid(this.options[this.options.selectedIndex].value)">
+									<option value ="0">请选择区域</option>
+									{volist name="alist" id="vo"}
+								  	<option value ="{$vo.area_id}">{$vo.area_name}</option>
+									{/volist}
+								</select>
+								<div class="xuanz">请选择区域</div>
+							</div>
+
+						</div>
+
+						<div class="am-g" style="margin-top: 5px;">
+							<div class="am-u-sm-12">
+								
+									<table cellpadding="1" cellspacing="0" border="1" class="am-table am-table-striped am-table-hover table-main">
+										<thead>
+											<tr>
+												<th>学校名称</th>
+												<th>学校类型</th>
+												<th>区ID</th>
+												<th>校ID</th>
+												<th>操作</th></tr>
+										</thead>
+										<tbody id='schooldata'>
+
+										</tbody>
+									</table>
+
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- content end -->
+			</div>
+		</div>
+
+</body>
+</html>
+<script type="text/javascript">
+function show_areaid(aid)
+{
+	if(aid==0)
+	{
+		alert('请选择区域');
+		return false;
+	}
+	$.ajax({
+	      type:"POST",
+	      url:"{:url('show_school')}",
+	      dataType:"json",
+	      data:{aid:aid},
+	      success:function (msg)
+	      {
+	              var box = ""
+	              $.each(msg, function (index, item)
+	              {
+	                     box+="<tr>";
+	                     box+="<td>"+item.schname+"</td>";
+	                     box+="<td>"+item.schtype+"</td>";
+	                     box+="<td>"+item.areaid+"</td>";
+	                     box+="<td>"+item.schid+"</td>";
+	                     box+="<td><a href='{:url('operating')}?schid="+item.schid+"' style='background: #009688;padding: 4px 10px;border-radius: 4px;color: #fff;'><i class='Hui-iconfont Hui-iconfont-arrow1-right'></i>入口</a></td>";
+	                     box+="</tr>";
+	              });
+	              $("#schooldata").html(box);
+	      }
+  })
+}
+</script>

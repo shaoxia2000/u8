@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>{$schname}</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+      <meta name="description" content="">
+
+      <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+      <link rel="stylesheet" href="__MOB__/css/demos.css">
+  </head>
+
+  <body ontouchstart>
+
+    {if condition="$schtype eq 3"}
+    <header class='demos-header'>
+      <h1 class="demos-title" style="font-size: 23px;">{$schname} 第{$fcengid+1}-{$cno}组 签到</h1>
+    </header>
+    {/if}
+
+    {if condition="$schtype neq 3"}
+    <header class='demos-header'>
+      <h1 class="demos-title" style="font-size: 23px;">{$schname} 第{$cno}组 签到</h1>
+    </header>
+    {/if}
+
+    <div class="weui-cells weui-cells_form margin100">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">学生姓名</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请输入学生姓名" id="sname">
+        </div>
+      </div>
+       <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">学生身份证</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请输入学生身份证" id="snum">
+        </div>
+      </div>
+       <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">家长姓名</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请输入家长姓名" id="pname">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">家长手机号</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请输入家长手机号" id="tel">
+        </div>
+    </div>
+    {if condition="$schtype eq 3"}
+      <input type="hidden" id="fcengid" value="{$fcengid}">
+    {/if}
+      <input type="hidden" id="schid" value="{$schid}">
+      <input type="hidden" id="schtype" value="{$schtype}">
+      <input type="hidden" id="cno" value="{$cno}">
+      <input type="hidden" id="cnot" value="{$cnot}">
+    <div class="weui-btn-area">
+      <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+    </div>
+    </div>
+
+     <div class="kong"></div>
+ <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://nfb.xianzhiedu.com.cn/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+    <script src="__MOB__/js/jquery-2.1.4.js"></script>
+    <script src="__MOB__/js/fastclick.js"></script> 
+    <script>   $(function() {     FastClick.attach(document.body);   }); </script> 
+    <script src="__MOB__/js/jquery-weui.min.js"></script>
+
+    <script>
+      $("#showTooltips").click(function() {
+        var sname = $('#sname').val();
+        var snum = $('#snum').val();
+        var pname = $('#pname').val();
+        var tel = $('#tel').val();
+        var schid = $('#schid').val();
+        var schtype = $('#schtype').val();
+        var cno = $('#cno').val();
+        var cnot = $('#cnot').val();
+        if(schtype == 3)
+        {
+            var fcengid = $('#fcengid').val();
+        }else
+        {
+            var fcengid = 'no';
+        }
+        
+        
+        if(sname=='') 
+        {
+            $.toptip('请输入学生姓名');
+            return false;
+        }
+        if(snum=='') 
+        {
+            $.toptip('请输入学生身份证号');
+            return false;
+        }
+        if(pname=='') 
+        {
+            $.toptip('请输入家长姓名');
+            return false;
+        }
+        if(!tel || !/1[3|4|5|7|8]\d{9}/.test(tel)) 
+        {
+            $.toptip('请输入手机号');
+            return false;
+        }
+        $.ajax({
+          type:"POST",
+          url:"{:url('checkform')}",
+          dataType:"json",
+          data:{sname:sname,snum:snum,pname:pname,tel:tel,schid:schid,schtype:schtype,cno:cno,fcengid:fcengid,cnot:cnot},
+          success:function (msg)
+          {
+              
+              if(msg ==6 )
+              { 
+                  $.toptip('学校分组未确认，暂无法签到!');
+                  return false;
+              }
+              if(msg ==1 )
+              {
+                if(schtype==3)
+                {
+                  window.location.href = "{:url('msg')}?msg=1&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid="+fcengid;
+                }else
+                {
+                  window.location.href = "{:url('msg')}?msg=1&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid=no";
+                }
+                
+              }
+              if(msg ==2 )
+              {
+                if(schtype==3)
+                {
+                  window.location.href = "{:url('msg')}?msg=2&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid="+fcengid;
+                }else
+                {
+                  window.location.href = "{:url('msg')}?msg=2&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid=no";
+                }
+              }
+              if(msg ==3 )
+              {
+                if(schtype==3)
+                {
+                  window.location.href = "{:url('msg')}?msg=3&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid="+fcengid;
+                }else
+                {
+                  window.location.href = "{:url('msg')}?msg=3&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid=no";
+                }
+              }
+              if(msg ==4 )
+              {
+                if(schtype==3)
+                {
+                  window.location.href = "{:url('msg')}?msg=4&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid="+fcengid;
+                }else
+                {
+                  window.location.href = "{:url('msg')}?msg=4&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid=no";
+                }
+              }
+              if(msg ==5 )
+              {
+                 if(schtype==3)
+                {
+                  window.location.href = "{:url('msg')}?msg=5&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid="+fcengid;
+                }else
+                {
+                  window.location.href = "{:url('msg')}?msg=5&schid="+schid+"&schtype="+schtype+"&cno="+cno+"&fcengid=no";
+                }
+              }
+          }
+        })
+        // else $.toptip('提交成功', 'success');
+      });
+    </script>
+  </body>
+</html>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+    WeixinJSBridge.call('hideOptionMenu'); 
+  });
+</script>

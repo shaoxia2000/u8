@@ -1,0 +1,95 @@
+{extend name="public/_template" /}
+{block name="content"}
+<!--Start Breadcrumb-->
+<div class="row">
+    <div class="col-xs-12" id="breadcrumb">
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    数据准确性校验
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    校验结果
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    {$school.schname}
+                </a>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-table"></i>
+                    <span>{$school.schname}</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            {volist name='ptitle' id="t"}
+                            <th>{$t}</th>
+                            {/volist}
+                            {if $school.schtype neq 1}
+                            {volist name="field" id="f"}
+                            <th>{$f|getChineseByEnglish}</th>
+                            {/volist}
+                            {/if}
+                            <th>描述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name="datas" id="data"}
+                        <tr>
+                            {foreach name="ptitle" item="v" key="pk"}
+                            <td>{$data[$pk]}</td>
+                            {/foreach}
+                            {if $school.schtype neq 1}
+                            {volist name="field" id="f"}
+                            <td>{$data[$f]|round=###,3}</td>
+                            {/volist}
+                            {/if}
+                            <td>
+                                <span class="txt-danger">{$data.err_ave}{$data.err_sex}{$data.err_age}</span>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box-content">
+    <div class="col-md-offset-11 text-right">
+        <a target="_blank" href="{:url('report/average',array('sid'=>$school.schid))}" class="btn btn-primary btn-xs">
+            <i class="fa fa-download""></i>导出
+        </a>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        WinMove();
+    })
+</script>
+{/block}

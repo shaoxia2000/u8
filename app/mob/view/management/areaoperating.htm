@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="description" content="">
+  <script src="__MOB__/js/jquery-2.1.4.js"></script>
+  <link rel="stylesheet" type="text/css" href="__MOB__/manage/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="__MOB__/manage/css/style.css">
+<style type="text/css">
+	em {
+    font-style: normal;
+}
+</style>
+</head>
+<body>
+	<div class="am-cf admin-main" style="padding-top: 0px;">
+			<!-- content start -->
+			<div class="admin-content">
+				<div class="admin-content-body">
+
+					<div class="container" style="padding: 0px 10px 0px 10px">
+						<div class="am-g line-hei">
+							<span>查询始停</span>
+							{if condition='$statustart eq 0'}
+								<button onclick="areastart({$areaid})" class="btn btn-success radius">开启</button>
+							{/if}
+							{if condition='$statustart eq 1'}
+								<button onclick="areastart({$areaid})" class="btn btn-danger radius">关闭</button>
+							{/if}
+							
+						</div>
+
+						<div class="am-g line-hei">
+							<span>开启系统维护页面</span>
+							{if condition='$statuerro eq 0'}
+								<button onclick="areaerro({$areaid})" class="btn btn-success radius">开启</button>
+							{/if}
+							{if condition='$statuerro eq 1'}
+								<button onclick="areaerro({$areaid})" class="btn btn-danger radius">关闭</button>
+							{/if}
+							
+							<input type="text"  id='errotext' placeholder="请输入提示语" class="huoqu-input">
+							
+						</div>
+
+						<div  class="am-g  qu-span" style="padding: 0;">
+							<div style="font-size: 16px;">
+								<em>APPID：</em>
+								<input type="text" value="{$appid}" readonly="readonly" id="appid" class="huoqu-input"></div>
+							<span> <em>APPSECRET：</em>
+								<input type="text" value="{$appsecret}" readonly="readonly" id="appsecret" class="huoqu-input"></span>
+							<input type="button" onclick="access()" value="点击获取access_token" class="btn btn-primary radius">							
+							<div style="font-size: 16px;    line-height: 3em;">access_token：</div>
+							<textarea id="content"readonly="readonly" class="textarea"></textarea>
+						</div>
+						
+					</div>
+
+				</div>
+				<!-- content end -->
+			</div>
+		</div>
+
+
+</body>
+</html>
+<script type="text/javascript">
+//获取access_token
+function access() 
+{
+	var  appid = $('#appid').val();
+	var  appsecret = $('#appsecret').val();
+	$.ajax({
+	      type:"POST",
+	      url:"{:url('access_token')}",
+	      dataType:"json",
+	      data:{appid:appid,appsecret:appsecret},
+	      success:function (msg)
+	      {
+	            $("#content").text(msg);
+	      }
+  })
+}
+//开启停止查询功能
+function areastart(aid) 
+{
+	$.ajax({
+	      type:"POST",
+	      url:"{:url('areastart')}",
+	      dataType:"json",
+	      data:{aid:aid},
+	      success:function (msg)
+	      {
+	            if(msg==1)
+	            {
+	            	alert('操作成功');
+	            	window.location.reload();
+	            }else{
+	            	alert('操作失败');
+	            }
+	      }
+  })
+}
+//开启停止报错页面
+function areaerro(aid) 
+{
+	var errotext = $("#errotext").val();
+	$.ajax({
+	      type:"POST",
+	      url:"{:url('areaerro')}",
+	      dataType:"json",
+	      data:{aid:aid,errotext:errotext},
+	      success:function (msg)
+	      {
+	            if(msg==1)
+	            {
+	            	alert('操作成功');
+	            	window.location.reload();
+	            }else{
+	            	alert('操作失败');
+	            }
+	      }
+  })
+}
+</script>

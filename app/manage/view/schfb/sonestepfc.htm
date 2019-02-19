@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="author" Content="">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>首页</title>
+	{load href="__ASSETS__/bigscr/classes/css/bootstrap.css"}
+	{load href="__ASSETS__/bigscr/classes/css/fenbmecss.css"}
+	{load href="__ASSETS__/bigscr/classes/js/jquery.min.js"}
+	{load href="__ASSETS__/bigscr/classes/js/bootstrap.js"}
+	{load href="__ASSETS__/bigscr/classes/js/jquery.leoweather.min.js"}
+	<style type="text/css">
+		.selectHov {
+			background: #a7a7a7 !important
+		}
+
+		.stu-ul {
+			overflow: hidden;
+			clear: both;
+			overflow-y: auto;
+			height: 600px;
+		}
+	</style>
+
+</head>
+<body>
+<!-- 内容开始 -->
+<div class="container-fluid">
+	<h1 class="stu-list">学生分组{$Request.param.id}组-现场签到家长抽选</h1>
+	<div class="stu-ul">
+		<ul>
+			{volist name="data" id="vo"}
+			<li><span>{$vo.pname}</span></li>
+			{/volist}
+		</ul>
+	</div>
+	<div class="fenpeijieg-ann jiaz" style="left: 65px"><a href="javascript:" onClick="jiazXuan()">抽选学生家长</a></div>
+
+</div>
+<!--内容结束-->
+
+
+<script type="text/javascript">
+    var intval_btn = null;
+    var arr = new Array();
+
+    function randomFrom(lowerValue, upperValue) {
+        return Math.floor(Math.random() * (upperValue - lowerValue + 1) + lowerValue);
+    }
+
+    function jiazXuan() {
+        if (!intval_btn) {
+            var len = $(".stu-ul:eq(0) li").length - 1;
+            $(".jiaz a").html("点击抽选停止")
+            intval_btn = setInterval(function () {
+                var random = randomFrom(0, len);
+                $(".selectHov").removeClass('selectHov');
+                $(".stu-ul li:eq(" + random + ")").addClass('selectHov');
+            }, 100)
+
+        } else {
+            clearInterval(intval_btn);
+            intval_btn = null;
+            var xid = $(".selectHov").attr('id');
+            console.log(xid);
+            $(".jiaz a").html("学生家长抽选")
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>{$schname}</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+      <meta name="description" content="">
+
+      <link rel="stylesheet" href="__MOB__/css/weui.css" type="text/css">
+     <link rel="stylesheet" href="__MOB__/css/weui.min.css" type="text/css">
+      <link rel="stylesheet" href="__MOB__/css/jquery-weui.min.css" type="text/css">
+
+      <link rel="stylesheet" href="__MOB__/css/demos.css">
+
+    <style>
+.placeholder{margin:5px;padding:0 10px;background-color:#ebebeb;height:2.3em;line-height:2.3em;text-align:center;color:#cfcfcf;}
+.weui-grid:before{border-right:1px solid #c7c7c7;}
+.weui-grid:after{border-bottom:1px solid #c7c7c7;}
+.weui-grids:before{border-top:1px solid #c7c7c7;}
+.weui-grid:after{border-bottom:1px solid #c7c7c7;}
+    </style>
+  </head>
+
+  <body ontouchstart>
+
+    <header class='demos-header'>
+      <h1 class="demos-title">{$schname}</h1>
+    </header>
+
+
+   <div class="page grid js_show margin100">
+   <!-- 高中 -->
+    {if condition="$schtype eq 3"}
+      <div class="weui-grids">
+
+      {volist name="zulist" id="vo"}
+          <a href="{:url('Gcheck',array('schid'=>$id,'schtype'=>$schtype,'cno'=>$vo.cno,'fcengid'=>$vo.fcengid))}" class="weui-grid">
+      
+              <p class="weui-grid__label">{$vo.fz}</p>
+          </a>
+      {/volist}
+      </div>
+    {/if}
+  <!-- 中、小学 -->
+    {if condition="$schtype neq 3"}
+      <div class="weui-grids">
+
+      {volist name="zulist" id="vo"}
+          <a href="{:url('Xcheck',array('schid'=>$id,'schtype'=>$schtype,'cno'=>$vo.cno))}" class="weui-grid">
+      
+              <p class="weui-grid__label">{$vo.fz}</p>
+          </a>
+      {/volist}
+      </div>
+    {/if}
+</div>
+ <div class="kong"></div>
+ <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link"><img src="http://nfb.xianzhiedu.com.cn/public/groupphoto/icon_footer_link.png" style="width: 100px;"></a>
+        </p>
+    </div>
+    <script src="__MOB__/js/jquery-2.1.4.js"></script> 
+    <script src="__MOB__/js/fastclick.js"></script> 
+    <script>   $(function() {     FastClick.attach(document.body);   }); </script>  
+    <script src="__MOB__/js/jquery-weui.min.js"></script>
+  </body>
+</html>
+<script type="text/javascript">
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		WeixinJSBridge.call('hideToolbar');
+		WeixinJSBridge.call('hideOptionMenu'); 
+	});
+</script>

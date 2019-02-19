@@ -1,0 +1,27 @@
+{extend name="public/_template" /}
+{block name="content"}
+<!--Start Breadcrumb-->
+<div class="row">
+    <div class="col-xs-12" id="breadcrumb">
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    结果校验
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    校验结果
+                </a>
+            </li>
+        </ol>
+    </div>
+</div>
+{taglib name="app\check\taglib\ResultCheck" /}
+{ResultCheck:show sid="1" /}
+<script type="text/javascript">
+    $(function(){
+        WinMove();
+    })
+</script>
+{/block}
